@@ -1,0 +1,451 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3D-Printed Case Preview</title>
+<style>
+:root{
+  --bg:#f4f3f0; --panel:#ffffffcc; --border:#d8d5cf; --text:#2b2a28; --muted:#6b6862; --accent:#c15b3a;
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#232128d9; --border:#3a3742; --text:#eae7f0; --muted:#a8a3b3; --accent:#e07a55;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#232128d9; --border:#3a3742; --text:#eae7f0; --muted:#a8a3b3; --accent:#e07a55;
+  color-scheme: dark;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overflow:hidden;}
+#viewport{position:fixed;inset:0;}
+#viewport canvas{display:block;touch-action:none;}
+.panel{
+  position:absolute;background:var(--panel);border:1px solid var(--border);border-radius:12px;
+  padding:12px 14px;backdrop-filter:blur(6px);box-shadow:0 4px 20px rgba(0,0,0,0.12);
+  font-size:13px;max-width:min(300px, calc(100vw - 32px));
+}
+#title-panel{top:calc(16px + env(safe-area-inset-top,0px));left:16px;}
+#title-panel h1{margin:0 0 2px;font-size:15px;font-weight:650;}
+#title-panel p{margin:0;color:var(--muted);font-size:12px;line-height:1.4;}
+#controls-panel{top:calc(16px + env(safe-area-inset-top,0px));right:16px;max-height:calc(100vh - 32px);overflow-y:auto;}
+#legend-panel{bottom:calc(16px + env(safe-area-inset-bottom,0px));left:16px;}
+.row{display:flex;align-items:center;gap:8px;margin:6px 0;}
+.row label{flex:1;font-size:12.5px;cursor:pointer;}
+.section-title{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:10px 0 4px;font-weight:600;}
+.section-title:first-child{margin-top:0;}
+input[type="range"]{width:100%;accent-color:var(--accent);}
+.seg{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{flex:1;padding:6px 4px;border:none;background:transparent;color:var(--text);font-size:12px;cursor:pointer;}
+.seg button.active{background:var(--accent);color:#fff;}
+input[type="checkbox"]{width:15px;height:15px;accent-color:var(--accent);flex-shrink:0;}
+.swatch{width:12px;height:12px;border-radius:3px;flex-shrink:0;border:1px solid rgba(0,0,0,0.15);}
+.legend-row{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:12px;}
+.hint{color:var(--muted);font-size:11px;margin-top:8px;line-height:1.4;}
+#loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;}
+#compass{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom,0px));right:16px;width:84px;height:84px;background:var(--panel);border:1px solid var(--border);border-radius:12px;backdrop-filter:blur(6px);}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="loading">Loading preview…</div></div>
+<canvas id="compass" width="168" height="168"></canvas>
+
+<div class="panel" id="title-panel">
+  <h1>Cornison — 3D-Printed Case</h1>
+  <p>First-pass geometry, generated from the real board. Drag to rotate, scroll/pinch to zoom.</p>
+</div>
+
+<div class="panel" id="controls-panel">
+  <div class="section-title">Half</div>
+  <div class="seg" id="side-seg">
+    <button data-side="both" class="active">Both</button>
+    <button data-side="left">Left</button>
+    <button data-side="right">Right</button>
+  </div>
+
+  <div class="section-title">View</div>
+  <div class="seg" id="framing-seg">
+    <button data-framing="behind" class="active">Behind</button>
+    <button data-framing="front">Front</button>
+    <button data-framing="bottom">Bottom</button>
+  </div>
+  <div class="hint" style="margin-top:6px;">Behind vs Front can't both have the arrow-key half on-screen-right AND the thumb clusters nearest you — same reason a photo from behind your shoulder matches your own left/right, but a face-on photo mirrors it. The LEFT/RIGHT labels and compass are always ground truth. Bottom looks up at the underside — feet and the MagSafe recess. You can also just drag past horizontal at any time to look underneath.</div>
+
+  <div class="section-title">Explode view</div>
+  <input type="range" id="explode" min="0" max="1" step="0.01" value="0">
+
+  <div class="section-title">Finish</div>
+  <div class="seg" id="finish-seg">
+    <button data-finish="black" class="active">Black</button>
+    <button data-finish="grey">Grey</button>
+    <button data-finish="navy">Navy</button>
+    <button data-finish="terracotta">Terracotta</button>
+  </div>
+
+  <div class="section-title">Layers</div>
+  <div id="layer-toggles"></div>
+
+  <div class="hint">MagSafe ring size and wall openings are first-pass guesses — measure the real parts before ordering. The plate extends over the MCU/OLED area; the OLED module plugs in from above.</div>
+</div>
+
+<div class="panel" id="legend-panel">
+  <div class="legend-row"><span class="swatch" style="background:#3a3a3a"></span>Keycaps</div>
+  <div class="legend-row"><span class="swatch" style="background:#0f5132"></span>PCB (context only)</div>
+  <div class="legend-row"><span class="swatch" style="background:#111"></span>Switch plate — also covers the MCU; OLED plugs in through a slot</div>
+  <div class="legend-row"><span class="swatch" style="background:#333"></span>Case tray — the 7 posts inside are PCB screw mounts</div>
+  <div class="legend-row"><span class="swatch" style="background:#e8b7c9"></span>MagSafe ring — recessed into the outside bottom face</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+<script>
+const STL_B64 = __STL_JSON__;
+const GEOM = __GEOM_JSON__;
+const Z = __Z_JSON__;
+
+const FINISHES = {
+  black:      {case:0x2b2a28, plate:0x0d0d0d},
+  grey:       {case:0x8a8a8a, plate:0x1a1a1a},
+  navy:       {case:0x2b3350, plate:0x0d0d0d},
+  terracotta: {case:0xb0532f, plate:0x1a1a1a},
+};
+let currentFinish = "black";
+
+// ---- binary STL -> BufferGeometry ----
+function base64ToBuffer(b64){
+  const bin = atob(b64);
+  const len = bin.length;
+  const buf = new Uint8Array(len);
+  for (let i=0;i<len;i++) buf[i] = bin.charCodeAt(i);
+  return buf.buffer;
+}
+function parseSTL(buffer){
+  const view = new DataView(buffer);
+  const triCount = view.getUint32(80, true);
+  const positions = new Float32Array(triCount*9);
+  let offset = 84;
+  for (let i=0;i<triCount;i++){
+    offset += 12; // skip face normal, recompute later
+    for (let v=0; v<9; v++){
+      positions[i*9+v] = view.getFloat32(offset, true);
+      offset += 4;
+    }
+    offset += 2; // attribute byte count
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geo.computeVertexNormals();
+  return geo;
+}
+function stlMesh(key, color){
+  const geo = parseSTL(base64ToBuffer(STL_B64[key]));
+  const mat = new THREE.MeshStandardMaterial({color, roughness:0.55, metalness:0.05});
+  return new THREE.Mesh(geo, mat);
+}
+
+// ---- flat outline polygon -> extruded mesh (for the PCB context slab,
+// so it matches the real concave board shape instead of a bounding box) ----
+function shapeFromOutline(pts){
+  const shape = new THREE.Shape();
+  pts.forEach((p,i)=> i===0 ? shape.moveTo(p[0],p[1]) : shape.lineTo(p[0],p[1]));
+  shape.closePath();
+  return shape;
+}
+
+// ---- text label sprite (canvas texture, no external font/lib needed) ----
+function makeLabel(text){
+  const canvas = document.createElement("canvas");
+  canvas.width = 512; canvas.height = 128;
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "rgba(0,0,0,0)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.font = "bold 72px -apple-system, sans-serif";
+  ctx.fillStyle = "#e0793f";
+  ctx.strokeStyle = "rgba(0,0,0,0.6)";
+  ctx.lineWidth = 6;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.strokeText(text, canvas.width/2, canvas.height/2);
+  ctx.fillText(text, canvas.width/2, canvas.height/2);
+  const tex = new THREE.CanvasTexture(canvas);
+  const mat = new THREE.SpriteMaterial({map:tex, transparent:true, depthTest:false});
+  const sprite = new THREE.Sprite(mat);
+  sprite.scale.set(40, 10, 1);
+  return sprite;
+}
+
+// ---- scene setup ----
+const viewport = document.getElementById("viewport");
+const scene = new THREE.Scene();
+scene.background = null;
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 3000);
+const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+function resize(){
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+}
+viewport.appendChild(renderer.domElement);
+resize();
+window.addEventListener("resize", resize);
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+const dir1 = new THREE.DirectionalLight(0xffffff, 1.0); dir1.position.set(150,300,150); scene.add(dir1);
+const dir2 = new THREE.DirectionalLight(0xffffff, 0.4); dir2.position.set(-120,180,-160); scene.add(dir2);
+
+// ---- simple orbit controls (no external dep) ----
+// Verified offline with an exhaustive search over every (azimuth, elevation)
+// looking down at the board from above: there is NO angle that puts both
+// (a) the 3-thumb half on screen-left / arrow half on screen-right, AND
+// (b) the thumb clusters nearer the viewer than the MCU edge, at the same
+// time -- it's the same reason a photo from behind someone's shoulder
+// matches their own left/right, while a face-on photo mirrors it. So this
+// offers both as explicit presets instead of chasing an angle that can't
+// exist; the LEFT/RIGHT labels + compass stay correct (ground truth) in
+// either one.
+const target = new THREE.Vector3(150, 8, -65);
+const RADIUS = 300, ELEVATION = 0.6;
+const BEHIND_AZIMUTH = Math.PI*0.22;      // labels match: arrow-half on-screen-right, MCU near
+const FRONT_AZIMUTH = BEHIND_AZIMUTH + Math.PI; // thumbs near the viewer; labels swap sides on screen
+const BOTTOM_ELEVATION = -0.6; // negative = looking up at the underside
+let radius = RADIUS, azimuth = BEHIND_AZIMUTH, elevation = ELEVATION;
+function updateCamera(){
+  // full range, not just looking-down: drag past horizontal to see the
+  // underside (feet, MagSafe recess) from below
+  const r = radius, e = Math.max(-Math.PI/2+0.02, Math.min(Math.PI/2-0.02, elevation));
+  camera.position.set(
+    target.x + r*Math.cos(e)*Math.sin(azimuth),
+    target.y + r*Math.sin(e),
+    target.z + r*Math.cos(e)*Math.cos(azimuth)
+  );
+  camera.lookAt(target);
+}
+updateCamera();
+let dragging=false, lastX=0, lastY=0;
+renderer.domElement.addEventListener("pointerdown", e=>{ dragging=true; lastX=e.clientX; lastY=e.clientY; renderer.domElement.setPointerCapture(e.pointerId); });
+renderer.domElement.addEventListener("pointermove", e=>{
+  if(!dragging) return;
+  azimuth -= (e.clientX-lastX)*0.006;
+  elevation += (e.clientY-lastY)*0.006;
+  lastX=e.clientX; lastY=e.clientY;
+  updateCamera();
+});
+renderer.domElement.addEventListener("pointerup", ()=> dragging=false);
+renderer.domElement.addEventListener("pointercancel", ()=> dragging=false);
+document.getElementById("framing-seg").addEventListener("click", e=>{
+  const btn = e.target.closest("button"); if(!btn) return;
+  [...document.getElementById("framing-seg").children].forEach(b=>b.classList.toggle("active", b===btn));
+  radius = RADIUS;
+  if(btn.dataset.framing === "bottom"){
+    elevation = BOTTOM_ELEVATION;
+    azimuth = BEHIND_AZIMUTH;
+  } else {
+    elevation = ELEVATION;
+    azimuth = btn.dataset.framing === "front" ? FRONT_AZIMUTH : BEHIND_AZIMUTH;
+  }
+  updateCamera();
+});
+renderer.domElement.addEventListener("wheel", e=>{
+  e.preventDefault();
+  radius = Math.max(60, Math.min(800, radius * (1 + e.deltaY*0.001)));
+  updateCamera();
+}, {passive:false});
+
+// ---- build one side's rig ----
+// Everything below is built directly in board coordinates (x, y-on-board,
+// z-up) and each side's whole rig is wrapped once in a group rotated -90
+// about X, which maps local z (height) to world Y (up) and local y (board
+// depth) to world -Z -- so every part just needs its real x/y/z, no
+// per-part sign-juggling.
+function buildSide(side){
+  const g = GEOM[side];
+  const rig = new THREE.Group();
+  rig.rotation.x = -Math.PI/2;
+
+  const parts = {};
+
+  const caseMesh = stlMesh(`case_${side}`, FINISHES[currentFinish].case);
+  parts.case = caseMesh;
+  rig.add(caseMesh);
+
+  const plateMesh = stlMesh(`plate_${side}`, FINISHES[currentFinish].plate);
+  plateMesh.position.z = Z.plate_z_base;
+  parts.plate = plateMesh;
+  rig.add(plateMesh);
+
+  // PCB slab: the real (concave) outline, not its bounding box -- a bbox
+  // slab pokes out past the case walls at every notch (tab bridges, thumb
+  // relief), which is what looked like the PCB "sticking out" before.
+  const pcbShape = shapeFromOutline(g.outline);
+  const pcbGeo = new THREE.ExtrudeGeometry(pcbShape, {depth: Z.pcb_t, bevelEnabled:false, curveSegments:1});
+  const pcbMat = new THREE.MeshStandardMaterial({color:0x0f5132, roughness:0.6, metalness:0.1});
+  const pcbMesh = new THREE.Mesh(pcbGeo, pcbMat);
+  pcbMesh.position.z = Z.pcb_z_base;
+  parts.pcb = pcbMesh;
+  rig.add(pcbMesh);
+
+  // LEFT/RIGHT label, floating above the keys, so there's no ambiguity
+  // about which rendered half is which regardless of camera angle
+  const bb = g.outline_bbox;
+  const label = makeLabel(side.toUpperCase());
+  label.position.set((bb[0]+bb[2])/2, (bb[1]+bb[3])/2, 45);
+  parts.label = label;
+  rig.add(label);
+
+  // keycaps
+  const keycapGroup = new THREE.Group();
+  const keycapMat = new THREE.MeshStandardMaterial({color:0x3a3a3a, roughness:0.6, metalness:0.02});
+  const keycapGeoCache = {};
+  g.keys.forEach(k=>{
+    const cacheKey = k.w;
+    if(!keycapGeoCache[cacheKey]) keycapGeoCache[cacheKey] = new THREE.BoxGeometry(k.w-1.2, 18-1.2, 7);
+    const mesh = new THREE.Mesh(keycapGeoCache[cacheKey], keycapMat);
+    mesh.position.set(k.x, k.y, Z.keycap_z_base + 3.5);
+    mesh.rotation.z = -k.rot * Math.PI/180;
+    keycapGroup.add(mesh);
+  });
+  parts.keycaps = keycapGroup;
+  rig.add(keycapGroup);
+
+  // MagSafe ring zone marker (flat ring just above the case bottom)
+  const [mx, my] = g.magsafe_center;
+  const ringGeo = new THREE.RingGeometry(Z.magsafe_id/2, Z.magsafe_od/2, 48);
+  const ringMat = new THREE.MeshBasicMaterial({color:0xe8b7c9, transparent:true, opacity:0.55, side:THREE.DoubleSide});
+  const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+  ringMesh.position.set(mx, my, 0.05);
+  parts.magsafe = ringMesh;
+  rig.add(ringMesh);
+
+  scene.add(rig);
+  return {rig, parts};
+}
+
+const rigs = { left: buildSide("left"), right: buildSide("right") };
+
+function applyFinish(name){
+  currentFinish = name;
+  const f = FINISHES[name];
+  ["left","right"].forEach(side=>{
+    const p = rigs[side].parts;
+    p.case.material.color.setHex(f.case);
+    p.plate.material.color.setHex(f.plate);
+  });
+}
+
+// ---- explode ----
+function layoutExplode(amt){
+  ["left","right"].forEach(side=>{
+    const p = rigs[side].parts;
+    p.case.position.z = 0;
+    p.pcb.position.z = Z.pcb_z_base + Z.pcb_t/2; // pcb doesn't move (reference)
+    p.plate.position.z = Z.plate_z_base + amt*10;
+    p.keycaps.children.forEach(k=> k.position.z = Z.keycap_z_base + 3.5 + amt*22);
+  });
+}
+layoutExplode(0);
+
+// ---- UI ----
+const LAYER_DEFS = [
+  {key:"case", label:"Case tray"},
+  {key:"pcb", label:"PCB (context)"},
+  {key:"plate", label:"Switch plate"},
+  {key:"keycaps", label:"Keycaps"},
+  {key:"magsafe", label:"MagSafe zone"},
+  {key:"label", label:"Left/Right labels"},
+];
+const togglesEl = document.getElementById("layer-toggles");
+LAYER_DEFS.forEach(L=>{
+  const row = document.createElement("div"); row.className = "row";
+  const cb = document.createElement("input"); cb.type="checkbox"; cb.checked=true; cb.id="tog-"+L.key;
+  const label = document.createElement("label"); label.htmlFor=cb.id; label.textContent=L.label;
+  row.append(cb, label);
+  togglesEl.appendChild(row);
+  cb.addEventListener("change", ()=>{
+    ["left","right"].forEach(side=>{
+      rigs[side].parts[L.key].visible = cb.checked;
+    });
+  });
+});
+
+document.getElementById("explode").addEventListener("input", e=> layoutExplode(parseFloat(e.target.value)));
+
+let currentSide = "both";
+document.getElementById("side-seg").addEventListener("click", e=>{
+  const btn = e.target.closest("button"); if(!btn) return;
+  currentSide = btn.dataset.side;
+  [...document.getElementById("side-seg").children].forEach(b=>b.classList.toggle("active", b===btn));
+  ["left","right"].forEach(side=>{
+    const show = currentSide==="both" || currentSide===side;
+    LAYER_DEFS.forEach(L=>{
+      const toggleOn = document.getElementById("tog-"+L.key).checked;
+      rigs[side].parts[L.key].visible = show && toggleOn;
+    });
+  });
+});
+
+document.getElementById("finish-seg").addEventListener("click", e=>{
+  const btn = e.target.closest("button"); if(!btn) return;
+  [...document.getElementById("finish-seg").children].forEach(b=>b.classList.toggle("active", b===btn));
+  applyFinish(btn.dataset.finish);
+});
+
+document.getElementById("loading").remove();
+
+// ---- compass: shows where board +X (the physical-right half, arrows/2
+// thumbs) projects on screen for the CURRENT camera angle. Read straight
+// off camera.matrixWorld (three.js's own live transform), not off any of
+// this page's own azimuth/elevation math, so it stays trustworthy even if
+// that math has a mistake somewhere else. Rotate/zoom and this updates. ----
+const compassCanvas = document.getElementById("compass");
+const cctx = compassCanvas.getContext("2d");
+function drawCompass(){
+  camera.updateMatrixWorld();
+  const e = camera.matrixWorld.elements;
+  const rightAxis = new THREE.Vector3(e[0], e[1], e[2]);   // camera's screen-right, in world space
+  const upAxis = new THREE.Vector3(e[4], e[5], e[6]);      // camera's screen-up, in world space
+  const worldX = new THREE.Vector3(1, 0, 0);                // board +X = the physical-right half
+  const sx = worldX.dot(rightAxis);
+  const sy = worldX.dot(upAxis);
+  const len = Math.hypot(sx, sy) || 1;
+  const ux = sx/len, uy = -sy/len; // canvas y grows downward
+
+  const w = 168, h = 168, cx = w/2, cy = h/2, r = 46;
+  cctx.clearRect(0,0,w,h);
+  cctx.font = "600 20px -apple-system, sans-serif";
+  cctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--muted") || "#888";
+  cctx.textAlign = "center"; cctx.textBaseline = "middle";
+  cctx.fillText("board +X", cx, cy - r - 16);
+
+  cctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--accent") || "#c15b3a";
+  cctx.fillStyle = cctx.strokeStyle;
+  cctx.lineWidth = 3;
+  cctx.beginPath();
+  cctx.moveTo(cx - ux*r, cy - uy*r);
+  cctx.lineTo(cx + ux*r, cy + uy*r);
+  cctx.stroke();
+  const ah = 9;
+  const ang = Math.atan2(uy, ux);
+  cctx.beginPath();
+  cctx.moveTo(cx + ux*r, cy + uy*r);
+  cctx.lineTo(cx + ux*r - ah*Math.cos(ang-0.4), cy + uy*r - ah*Math.sin(ang-0.4));
+  cctx.lineTo(cx + ux*r - ah*Math.cos(ang+0.4), cy + uy*r - ah*Math.sin(ang+0.4));
+  cctx.closePath();
+  cctx.fill();
+  cctx.font = "600 12px -apple-system, sans-serif";
+  cctx.fillText("RIGHT half", cx + ux*(r+18), cy + uy*(r+18));
+}
+
+function animate(){
+  requestAnimationFrame(animate);
+  drawCompass();
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>

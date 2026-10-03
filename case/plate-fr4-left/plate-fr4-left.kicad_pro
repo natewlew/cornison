@@ -1,0 +1,14 @@
+{
+  "board": {
+    "design_settings": {
+      "defaults": {
+        "board_outline_line_width": 0.1,
+        "silk_line_width": 0.15
+      }
+    }
+  },
+  "meta": {
+    "filename": "plate-fr4-left.kicad_pro",
+    "version": 1
+  }
+}

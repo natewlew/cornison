@@ -1,0 +1,22 @@
+# OS / editor noise
+.DS_Store
+__pycache__/
+*.pyc
+
+# KiCad local backups and caches -- .history is KiCad's own local
+# git-backed version history, an independent repo in its own right, not
+# meant to be tracked inside this one
+.history/
+fp-info-cache
+*.kicad_prl
+*-backups/
+
+# JLCPCB's fabrication-toolkit writes a fresh netlist.ipc per export;
+# the zip in production/ is the actual order record worth keeping
+case/plate-fr4-left/production/netlist.ipc
+case/plate-fr4-right/production/netlist.ipc
+pcb/production/netlist.ipc
+
+# case.py output -- regenerate with case/README.md's instructions
+case/out/
+case/out-prototype/

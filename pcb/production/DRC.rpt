@@ -1,0 +1,1559 @@
+** Drc report for corne-cherry-plus.kicad_pcb **
+** Created on 2026-09-26T11:28:26 **
+** Report includes: Errors, Warnings **
+
+** Found 442 DRC violations **
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.2000 mm)
+    Rule: board setup constraints hole; error
+    @(280.9795 mm, 59.5070 mm): Track [Net-(LED40-Pad2)] on F.Cu, length 11.8760 mm
+    @(279.1545 mm, 68.6950 mm): NPTH pad of SW34
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.2500 mm; actual 0.2246 mm)
+    Rule: board setup constraints hole; error
+    @(162.4575 mm, 92.4300 mm): Track [Net-(LED33-Pad2)] on F.Cu, length 9.7100 mm
+    @(167.1592 mm, 90.5804 mm): NPTH pad of SW42
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(39.1075 mm, 35.7800 mm): Footprint SW2
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(58.1075 mm, 31.0300 mm): Footprint SW3
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(77.1075 mm, 28.6550 mm): Footprint SW4
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(96.1075 mm, 31.0300 mm): Footprint SW5
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(20.1075 mm, 54.7800 mm): Footprint SW7
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(39.1075 mm, 54.7800 mm): Footprint SW8
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(58.1075 mm, 50.0300 mm): Footprint SW9
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(77.1075 mm, 47.6550 mm): Footprint SW10
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(96.1075 mm, 50.0300 mm): Footprint SW11
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(115.1075 mm, 52.4050 mm): Footprint SW12
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(20.1075 mm, 73.7800 mm): Footprint SW13
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(39.1075 mm, 73.7800 mm): Footprint SW14
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(58.1075 mm, 69.0300 mm): Footprint SW15
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(77.1075 mm, 66.6550 mm): Footprint SW16
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(96.1075 mm, 69.0300 mm): Footprint SW17
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(115.1075 mm, 71.4050 mm): Footprint SW18
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(86.6075 mm, 88.6550 mm): Footprint SW19
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(107.6075 mm, 91.4050 mm): Footprint SW20
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(129.8575 mm, 95.1550 mm): Footprint SW21
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(166.8645 mm, 95.1500 mm): Footprint SW42
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(219.6145 mm, 66.6500 mm): Footprint SW37
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(200.6145 mm, 69.0250 mm): Footprint SW38
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(181.6145 mm, 71.4000 mm): Footprint SW39
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(219.6145 mm, 85.6500 mm): Footprint SW40
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(189.1145 mm, 91.4000 mm): Footprint SW41
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(219.6145 mm, 28.6500 mm): Footprint SW25
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(200.6145 mm, 31.0250 mm): Footprint SW26
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(276.6145 mm, 54.7750 mm): Footprint SW28
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(238.6145 mm, 31.0250 mm): Footprint SW24
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(257.6145 mm, 54.7750 mm): Footprint SW29
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(257.6145 mm, 73.7750 mm): Footprint SW35
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(238.6145 mm, 69.0250 mm): Footprint SW36
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(276.6145 mm, 35.7750 mm): Footprint SW22
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(257.6145 mm, 35.7750 mm): Footprint SW23
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(238.6145 mm, 50.0250 mm): Footprint SW30
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(219.6145 mm, 47.6500 mm): Footprint SW31
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(200.6145 mm, 50.0250 mm): Footprint SW32
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(181.6145 mm, 52.4000 mm): Footprint SW33
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(276.6145 mm, 73.7750 mm): Footprint SW34
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(20.1075 mm, 35.7800 mm): Footprint SW1
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(115.1075 mm, 33.4050 mm): Footprint SW6
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(181.6075 mm, 33.4050 mm): Footprint SW27
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(238.6145 mm, 88.0250 mm): Footprint SW48
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(20.1075 mm, 92.7800 mm): Footprint SW43
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(276.6145 mm, 92.7750 mm): Footprint SW46
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(39.1075 mm, 92.7800 mm): Footprint SW44
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(257.6145 mm, 92.7750 mm): Footprint SW47
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(58.1075 mm, 88.0300 mm): Footprint SW45
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(27.7345 mm, 35.7769 mm): Footprint D1
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(46.7345 mm, 35.7800 mm): Footprint D2
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(65.7075 mm, 30.7800 mm): Footprint D3
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(84.7075 mm, 28.6550 mm): Footprint D4
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(103.7075 mm, 31.0300 mm): Footprint D5
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(122.7075 mm, 33.4050 mm): Footprint D6
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(27.7345 mm, 54.7769 mm): Footprint D7
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(46.7345 mm, 54.7800 mm): Footprint D8
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(65.7075 mm, 50.0300 mm): Footprint D9
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(84.7075 mm, 47.6550 mm): Footprint D10
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(103.7075 mm, 50.0300 mm): Footprint D11
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(122.7075 mm, 52.4050 mm): Footprint D12
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(27.7345 mm, 73.7769 mm): Footprint D13
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(46.7345 mm, 73.7800 mm): Footprint D14
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(65.7075 mm, 69.0300 mm): Footprint D15
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(84.7075 mm, 66.6550 mm): Footprint D16
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(103.7075 mm, 69.0300 mm): Footprint D17
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(122.7075 mm, 71.4050 mm): Footprint D18
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(76.1575 mm, 88.7700 mm): Footprint D19
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(95.1645 mm, 88.7650 mm): Footprint D20
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(98.0075 mm, 88.7650 mm): Footprint D21
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(20.1075 mm, 40.5300 mm): Footprint LED7
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(39.1075 mm, 40.5300 mm): Footprint LED8
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(58.1075 mm, 35.7800 mm): Footprint LED9
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(77.1075 mm, 33.4050 mm): Footprint LED10
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(96.1075 mm, 35.7800 mm): Footprint LED11
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(115.1075 mm, 38.1550 mm): Footprint LED12
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(20.1075 mm, 59.5300 mm): Footprint LED13
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(39.1075 mm, 59.5300 mm): Footprint LED14
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(58.1075 mm, 54.7800 mm): Footprint LED15
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(77.1075 mm, 52.4050 mm): Footprint LED16
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(96.1075 mm, 54.7800 mm): Footprint LED17
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(115.1075 mm, 57.1550 mm): Footprint LED18
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(20.1075 mm, 78.5300 mm): Footprint LED19
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(39.1075 mm, 78.5300 mm): Footprint LED20
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(58.1075 mm, 73.7800 mm): Footprint LED21
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(77.1075 mm, 71.4050 mm): Footprint LED22
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(115.1075 mm, 76.1550 mm): Footprint LED24
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(133.9711 mm, 97.5300 mm): Footprint LED27
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(219.6075 mm, 52.4050 mm): Footprint LED43
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(200.6075 mm, 54.7800 mm): Footprint LED44
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(181.6075 mm, 57.1550 mm): Footprint LED45
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(276.6075 mm, 78.5300 mm): Footprint LED46
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(257.6075 mm, 78.5300 mm): Footprint LED47
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(238.6075 mm, 73.7800 mm): Footprint LED48
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(219.6075 mm, 71.4050 mm): Footprint LED49
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(200.6075 mm, 73.7800 mm): Footprint LED50
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(181.6075 mm, 76.1550 mm): Footprint LED51
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(210.1075 mm, 93.4050 mm): Footprint LED52
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(190.3439 mm, 95.9881 mm): Footprint LED53
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(265.2145 mm, 35.7750 mm): Footprint D23
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(246.2145 mm, 31.0250 mm): Footprint D24
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(227.2145 mm, 28.6500 mm): Footprint D25
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(189.2075 mm, 33.4050 mm): Footprint D27
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(284.2145 mm, 54.6250 mm): Footprint D28
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(265.2145 mm, 54.7750 mm): Footprint D29
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(246.2145 mm, 50.0250 mm): Footprint D30
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(227.2145 mm, 47.6500 mm): Footprint D31
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(208.2145 mm, 50.0250 mm): Footprint D32
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(189.2075 mm, 52.4050 mm): Footprint D33
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(284.2145 mm, 73.7750 mm): Footprint D34
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(265.2145 mm, 73.7750 mm): Footprint D35
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(246.2145 mm, 69.0250 mm): Footprint D36
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(227.2145 mm, 66.6500 mm): Footprint D37
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(208.2145 mm, 69.0250 mm): Footprint D38
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(189.2075 mm, 71.4050 mm): Footprint D39
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(227.2145 mm, 85.6500 mm): Footprint D40
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(199.6645 mm, 88.6500 mm): Footprint D41
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(196.8145 mm, 88.6500 mm): Footprint D42
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(284.2145 mm, 35.7750 mm): Footprint D22
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(208.2145 mm, 31.0250 mm): Footprint D26
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(86.6075 mm, 93.4050 mm): Footprint LED25
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(106.3781 mm, 95.9931 mm): Footprint LED26
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(96.1075 mm, 73.7800 mm): Footprint LED23
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(276.6075 mm, 40.5300 mm): Footprint LED34
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(257.6075 mm, 40.5300 mm): Footprint LED35
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(238.6075 mm, 35.7800 mm): Footprint LED36
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(219.6075 mm, 33.4050 mm): Footprint LED37
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(200.6075 mm, 35.7800 mm): Footprint LED38
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(181.6075 mm, 38.1550 mm): Footprint LED39
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(276.6075 mm, 59.5300 mm): Footprint LED40
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(257.6075 mm, 59.5300 mm): Footprint LED41
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(238.6075 mm, 54.7800 mm): Footprint LED42
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(162.7509 mm, 97.5250 mm): Footprint LED54
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(27.7075 mm, 92.7800 mm): Footprint D43
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(265.2145 mm, 92.7750 mm): Footprint D47
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(284.2145 mm, 92.7750 mm): Footprint D46
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(246.2145 mm, 88.0250 mm): Footprint D48
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(65.7075 mm, 88.0300 mm): Footprint D45
+[footprint_type_mismatch]: Footprint component type doesn't match footprint pads (expected 'SMD'; actual 'Through hole')
+    Local override; error
+    @(46.7075 mm, 92.7800 mm): Footprint D44
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(135.9523 mm, 95.4984 mm): Pad 1 [VCC] of LED27 on B.Cu
+    @(134.7399 mm, 94.7984 mm): Pad 2 [Net-(LED24-Pad4)] of LED27 on B.Cu
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(131.9899 mm, 99.5616 mm): Pad 3 [GND] of LED27 on B.Cu
+    @(133.2023 mm, 100.2616 mm): Pad 4 [Net-(LED27-Pad4)] of LED27 on B.Cu
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(193.1814 mm, 95.9525 mm): Pad 1 [VDD] of LED53 on B.Cu
+    @(192.8190 mm, 94.6002 mm): Pad 2 [Net-(LED52-Pad4)] of LED53 on B.Cu
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(187.5064 mm, 96.0238 mm): Pad 3 [GNDA] of LED53 on B.Cu
+    @(187.8688 mm, 97.3760 mm): Pad 4 [Net-(LED50-Pad2)] of LED53 on B.Cu
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(108.8532 mm, 97.3810 mm): Pad 1 [VCC] of LED26 on B.Cu
+    @(109.2156 mm, 96.0288 mm): Pad 2 [Net-(LED25-Pad4)] of LED26 on B.Cu
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(103.9030 mm, 94.6052 mm): Pad 3 [GND] of LED26 on B.Cu
+    @(103.5406 mm, 95.9575 mm): Pad 4 [Net-(LED23-Pad2)] of LED26 on B.Cu
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(163.5197 mm, 100.2566 mm): Pad 1 [VDD] of LED54 on B.Cu
+    @(164.7321 mm, 99.5566 mm): Pad 2 [Net-(LED51-Pad4)] of LED54 on B.Cu
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(161.9821 mm, 94.7934 mm): Pad 3 [GNDA] of LED54 on B.Cu
+    @(160.7697 mm, 95.4934 mm): Pad 4 [Net-(LED33-Pad2)] of LED54 on B.Cu
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(100.9075 mm, 76.6050 mm): Track [VCC] on B.Cu, length 0.3000 mm
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(101.6075 mm, 57.5050 mm): Track [VCC] on B.Cu, length 0.6000 mm
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(100.5075 mm, 57.5050 mm): Track [VCC] on B.Cu, length 0.5657 mm
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(155.8375 mm, 72.1700 mm): Track [data_r] on F.Cu, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(182.1075 mm, 40.2050 mm): Track [VDD] on B.Cu, length 1.3000 mm
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(222.8075 mm, 54.4150 mm): Track [VDD] on B.Cu, length 0.5100 mm
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(189.6145 mm, 70.4820 mm): Track [Net-(D39-Pad2)] on B.Cu, length 1.1837 mm
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(259.9475 mm, 33.8550 mm): Track [row0_r] on B.Cu, length 0.0600 mm
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(200.4145 mm, 90.4250 mm): Track [row3_r] on B.Cu, length 0.7500 mm
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(213.2475 mm, 91.7907 mm): Track [Net-(LED49-Pad4)] on F.Cu, length 5.2157 mm
+[lib_footprint_mismatch]: Footprint 'M2_HOLE_v2' does not match copy in library 'kbd'
+    Local override; warning
+    @(127.8695 mm, 74.2540 mm): Footprint Ref**
+[lib_footprint_mismatch]: Footprint 'M2_HOLE_v2' does not match copy in library 'kbd'
+    Local override; warning
+    @(142.3015 mm, 82.7750 mm): Footprint Ref**
+[lib_footprint_mismatch]: Footprint 'M2_HOLE_v2' does not match copy in library 'kbd'
+    Local override; warning
+    @(27.5195 mm, 54.1395 mm): Footprint Ref**
+[lib_footprint_mismatch]: Footprint 'Breakaway_Tabs' does not match copy in library 'kbd'
+    Local override; warning
+    @(58.2368 mm, 21.8690 mm): Footprint REF**
+[lib_footprint_mismatch]: Footprint 'Breakaway_Tabs' does not match copy in library 'kbd'
+    Local override; warning
+    @(96.2075 mm, 21.8730 mm): Footprint REF**
+[lib_footprint_mismatch]: Footprint 'Breakaway_Tabs' does not match copy in library 'kbd'
+    Local override; warning
+    @(20.1630 mm, 102.1760 mm): Footprint REF**
+[lib_footprint_mismatch]: Footprint 'Breakaway_Tabs' does not match copy in library 'kbd'
+    Local override; warning
+    @(58.1230 mm, 102.1780 mm): Footprint REF**
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(39.1075 mm, 45.2800 mm): Footprint LED1
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(77.1075 mm, 38.1550 mm): Footprint LED2
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(115.1075 mm, 42.9050 mm): Footprint LED3
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(77.1075 mm, 76.1550 mm): Footprint LED5
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(115.1075 mm, 80.9050 mm): Footprint LED6
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(257.6075 mm, 45.2800 mm): Footprint LED28
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(219.6075 mm, 38.1550 mm): Footprint LED29
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(181.6075 mm, 42.9050 mm): Footprint LED30
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(257.6075 mm, 64.2800 mm): Footprint LED31
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(219.6075 mm, 76.1550 mm): Footprint LED32
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(181.6075 mm, 80.9050 mm): Footprint LED33
+[lib_footprint_mismatch]: Footprint 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm' does not match copy in library 'LED_SMD'
+    Local override; warning
+    @(39.1075 mm, 64.2800 mm): Footprint LED4
+[lib_footprint_mismatch]: Footprint 'M2_HOLE_v2' does not match copy in library 'kbd'
+    Local override; warning
+    @(154.4185 mm, 82.7850 mm): Footprint Ref**
+[lib_footprint_mismatch]: Footprint 'M2_HOLE_v2' does not match copy in library 'kbd'
+    Local override; warning
+    @(269.1875 mm, 54.1250 mm): Footprint Ref**
+[lib_footprint_mismatch]: Footprint 'M2_HOLE_v2' does not match copy in library 'kbd'
+    Local override; warning
+    @(168.8505 mm, 74.2640 mm): Footprint Ref**
+[lib_footprint_mismatch]: Footprint 'Breakaway_Tabs' does not match copy in library 'kbd'
+    Local override; warning
+    @(200.7375 mm, 21.8850 mm): Footprint REF**
+[lib_footprint_mismatch]: Footprint 'Breakaway_Tabs' does not match copy in library 'kbd'
+    Local override; warning
+    @(238.6495 mm, 21.8700 mm): Footprint REF**
+[lib_footprint_mismatch]: Footprint 'Breakaway_Tabs' does not match copy in library 'kbd'
+    Local override; warning
+    @(238.7420 mm, 102.1930 mm): Footprint REF**
+[lib_footprint_mismatch]: Footprint 'Breakaway_Tabs' does not match copy in library 'kbd'
+    Local override; warning
+    @(276.6560 mm, 102.1830 mm): Footprint REF**
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(129.6375 mm, 39.5050 mm): Footprint text of U1 (VCC)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(129.6770 mm, 31.9420 mm): Footprint text of U1 (RAW)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(129.6770 mm, 37.0855 mm): Footprint text of U1 (RST)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(129.6975 mm, 34.4800 mm): Footprint text of U1 (GND)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(130.4175 mm, 42.1700 mm): Footprint text of U1 (A3/F4)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(130.4175 mm, 44.6700 mm): Footprint text of U1 (A2/F5)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(130.4175 mm, 47.1700 mm): Footprint text of U1 (A1/F6)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(130.4175 mm, 49.7200 mm): Footprint text of U1 (A0/F7)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(130.4175 mm, 52.2700 mm): Footprint text of U1 (15/B1)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(130.4175 mm, 54.8200 mm): Footprint text of U1 (14/B3)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(130.4175 mm, 57.3700 mm): Footprint text of U1 (16/B2)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(130.4175 mm, 59.8700 mm): Footprint text of U1 (10/B6)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(134.7625 mm, 27.4700 mm): Footprint text of U1 (MicroUSB)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(134.7625 mm, 27.4700 mm): Footprint text of U1 (MicroUSB)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(138.2675 mm, 42.0200 mm): Footprint text of U1 (SDA/D1/2)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(138.2675 mm, 44.5200 mm): Footprint text of U1 (SCL/D0/3)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(138.9675 mm, 31.9700 mm): Footprint text of U1 (D3/TX0)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(138.9675 mm, 34.5200 mm): Footprint text of U1 (D2/RX1)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(139.5175 mm, 47.0200 mm): Footprint text of U1 (D4/4)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(139.5175 mm, 49.5700 mm): Footprint text of U1 (C6/5)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(139.5175 mm, 52.1200 mm): Footprint text of U1 (D7/6)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(139.5175 mm, 54.6700 mm): Footprint text of U1 (E6/7)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(139.5175 mm, 57.2200 mm): Footprint text of U1 (B4/8)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(139.5175 mm, 59.7200 mm): Footprint text of U1 (B5/9)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(139.7675 mm, 37.0700 mm): Footprint text of U1 (GND)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(139.7675 mm, 39.5200 mm): Footprint text of U1 (GND)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(139.7675 mm, 39.5200 mm): Footprint text of U1 (GND)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(156.6520 mm, 32.1120 mm): Footprint text of U2 (RAW)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(156.6520 mm, 37.2555 mm): Footprint text of U2 (RST)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(156.6520 mm, 39.7320 mm): Footprint text of U2 (VCC)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(156.7675 mm, 34.4500 mm): Footprint text of U2 (GND)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(157.5925 mm, 42.1400 mm): Footprint text of U2 (A3/F4)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(157.5925 mm, 44.6400 mm): Footprint text of U2 (A2/F5)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(157.5925 mm, 47.1400 mm): Footprint text of U2 (A1/F6)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(157.5925 mm, 49.6900 mm): Footprint text of U2 (A0/F7)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(157.5925 mm, 52.2400 mm): Footprint text of U2 (15/B1)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(157.5925 mm, 54.7900 mm): Footprint text of U2 (14/B3)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(157.5925 mm, 57.3400 mm): Footprint text of U2 (16/B2)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(157.5925 mm, 59.8400 mm): Footprint text of U2 (10/B6)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(161.9375 mm, 27.4400 mm): Footprint text of U2 (MicroUSB)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(161.9375 mm, 27.4400 mm): Footprint text of U2 (MicroUSB)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(165.4425 mm, 41.9900 mm): Footprint text of U2 (SDA/D1/2)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(165.4425 mm, 44.4900 mm): Footprint text of U2 (SCL/D0/3)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(166.1425 mm, 31.9400 mm): Footprint text of U2 (D3/TX0)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(166.1425 mm, 34.4900 mm): Footprint text of U2 (D2/RX1)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(166.6925 mm, 46.9900 mm): Footprint text of U2 (D4/4)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(166.6925 mm, 49.5400 mm): Footprint text of U2 (C6/5)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(166.6925 mm, 52.0900 mm): Footprint text of U2 (D7/6)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(166.6925 mm, 54.6400 mm): Footprint text of U2 (E6/7)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(166.6925 mm, 57.1900 mm): Footprint text of U2 (B4/8)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(166.6925 mm, 59.6900 mm): Footprint text of U2 (B5/9)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(166.9425 mm, 37.0400 mm): Footprint text of U2 (GND)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(166.9425 mm, 39.4900 mm): Footprint text of U2 (GND)
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(166.9425 mm, 39.4900 mm): Footprint text of U2 (GND)
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(134.7625 mm, 27.4700 mm): Footprint text of U1 (MicroUSB)
+    @(134.7625 mm, 27.4700 mm): Footprint text of U1 (MicroUSB)
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(139.7675 mm, 39.5200 mm): Footprint text of U1 (GND)
+    @(139.7675 mm, 39.5200 mm): Footprint text of U1 (GND)
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(161.9375 mm, 27.4400 mm): Footprint text of U2 (MicroUSB)
+    @(161.9375 mm, 27.4400 mm): Footprint text of U2 (MicroUSB)
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(166.9425 mm, 39.4900 mm): Footprint text of U2 (GND)
+    @(166.9425 mm, 39.4900 mm): Footprint text of U2 (GND)
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(204.5075 mm, 75.6300 mm): Segment of LED50 on B.Silkscreen
+    @(200.7629 mm, 76.2600 mm): Reference field of LED50
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(112.9275 mm, 86.6188 mm): Segment of SW20 on B.Silkscreen
+    @(111.3758 mm, 87.1555 mm): NPTH pad of SW20
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(113.3691 mm, 86.3231 mm): Segment of SW20 on B.Silkscreen
+    @(111.3758 mm, 87.1555 mm): NPTH pad of SW20
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(125.8219 mm, 98.9449 mm): Segment of SW21 on B.Silkscreen
+    @(125.7528 mm, 97.1846 mm): NPTH pad of SW21
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(126.0067 mm, 99.2248 mm): Segment of SW21 on B.Silkscreen
+    @(125.7528 mm, 97.1846 mm): NPTH pad of SW21
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(126.0799 mm, 99.4980 mm): Segment of SW21 on B.Silkscreen
+    @(125.7528 mm, 97.1846 mm): NPTH pad of SW21
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(123.3558 mm, 96.2163 mm): Segment of SW21 on B.Silkscreen
+    @(125.7528 mm, 97.1846 mm): NPTH pad of SW21
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(127.0006 mm, 90.5033 mm): Segment of SW21 on B.Silkscreen
+    @(125.7528 mm, 97.1846 mm): NPTH pad of SW21
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(127.0006 mm, 90.5033 mm): Segment of SW21 on B.Silkscreen
+    @(126.7281 mm, 90.4153 mm): NPTH pad of SW21
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(128.3598 mm, 95.2891 mm): Arc of SW21 on B.Silkscreen
+    @(125.7528 mm, 97.1846 mm): NPTH pad of SW21
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(126.3417 mm, 88.0445 mm): Segment of SW21 on B.Silkscreen
+    @(126.7281 mm, 90.4153 mm): NPTH pad of SW21
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(126.4399 mm, 88.2744 mm): Segment of SW21 on B.Silkscreen
+    @(126.7281 mm, 90.4153 mm): NPTH pad of SW21
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(126.6113 mm, 88.7775 mm): Segment of SW21 on B.Silkscreen
+    @(126.7281 mm, 90.4153 mm): NPTH pad of SW21
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(165.6001 mm, 89.7601 mm): Segment of SW42 on B.Silkscreen
+    @(167.1592 mm, 90.5804 mm): NPTH pad of SW42
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(169.1962 mm, 88.9887 mm): Segment of SW42 on B.Silkscreen
+    @(167.1592 mm, 90.5804 mm): NPTH pad of SW42
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(172.3214 mm, 95.0017 mm): Segment of SW42 on B.Silkscreen
+    @(167.1592 mm, 90.5804 mm): NPTH pad of SW42
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(172.3214 mm, 95.0017 mm): Segment of SW42 on B.Silkscreen
+    @(172.5339 mm, 94.8097 mm): NPTH pad of SW42
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(174.7803 mm, 95.6605 mm): Segment of SW42 on B.Silkscreen
+    @(172.5339 mm, 94.8097 mm): NPTH pad of SW42
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(167.4972 mm, 93.7859 mm): Arc of SW42 on B.Silkscreen
+    @(167.1592 mm, 90.5804 mm): NPTH pad of SW42
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(164.9921 mm, 89.7070 mm): Segment of SW42 on B.Silkscreen
+    @(167.1592 mm, 90.5804 mm): NPTH pad of SW42
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(165.2653 mm, 89.7802 mm): Segment of SW42 on B.Silkscreen
+    @(167.1592 mm, 90.5804 mm): NPTH pad of SW42
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(184.2145 mm, 47.6000 mm): Segment of SW33 on B.Silkscreen
+    @(177.8045 mm, 49.8600 mm): NPTH pad of SW33
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(184.2145 mm, 47.6000 mm): Segment of SW33 on B.Silkscreen
+    @(184.1545 mm, 47.3200 mm): NPTH pad of SW33
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(185.5145 mm, 46.4000 mm): Segment of SW33 on B.Silkscreen
+    @(184.1545 mm, 47.3200 mm): NPTH pad of SW33
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(185.8645 mm, 46.0000 mm): Segment of SW33 on B.Silkscreen
+    @(184.1545 mm, 47.3200 mm): NPTH pad of SW33
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(102.4347 mm, 88.8802 mm): Segment of SW20 on B.Silkscreen
+    @(104.5847 mm, 87.9654 mm): NPTH pad of SW20
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(102.6797 mm, 88.7387 mm): Segment of SW20 on B.Silkscreen
+    @(104.5847 mm, 87.9654 mm): NPTH pad of SW20
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(102.9022 mm, 88.4878 mm): Segment of SW20 on B.Silkscreen
+    @(104.5847 mm, 87.9654 mm): NPTH pad of SW20
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(104.8996 mm, 85.3995 mm): Segment of SW20 on B.Silkscreen
+    @(104.5847 mm, 87.9654 mm): NPTH pad of SW20
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(111.3612 mm, 87.4415 mm): Segment of SW20 on B.Silkscreen
+    @(104.5847 mm, 87.9654 mm): NPTH pad of SW20
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(111.3612 mm, 87.4415 mm): Segment of SW20 on B.Silkscreen
+    @(111.3758 mm, 87.1555 mm): NPTH pad of SW20
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(113.5658 mm, 86.1687 mm): Segment of SW20 on B.Silkscreen
+    @(111.3758 mm, 87.1555 mm): NPTH pad of SW20
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(107.0903 mm, 89.9930 mm): Arc of SW20 on B.Silkscreen
+    @(104.5847 mm, 87.9654 mm): NPTH pad of SW20
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(100.0075 mm, 63.0300 mm): Segment of SW17 on B.Silkscreen
+    @(98.6475 mm, 63.9500 mm): NPTH pad of SW17
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(100.3575 mm, 62.6300 mm): Segment of SW17 on B.Silkscreen
+    @(98.6475 mm, 63.9500 mm): NPTH pad of SW17
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(110.9375 mm, 66.3050 mm): Segment of SW18 on B.Silkscreen
+    @(111.2975 mm, 68.8650 mm): NPTH pad of SW18
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(109.4575 mm, 70.3050 mm): Segment of SW18 on B.Silkscreen
+    @(111.2975 mm, 68.8650 mm): NPTH pad of SW18
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(109.6575 mm, 70.1050 mm): Segment of SW18 on B.Silkscreen
+    @(111.2975 mm, 68.8650 mm): NPTH pad of SW18
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(109.8075 mm, 69.8050 mm): Segment of SW18 on B.Silkscreen
+    @(111.2975 mm, 68.8650 mm): NPTH pad of SW18
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(114.2425 mm, 70.1750 mm): Arc of SW18 on B.Silkscreen
+    @(111.2975 mm, 68.8650 mm): NPTH pad of SW18
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(119.0075 mm, 65.4050 mm): Segment of SW18 on B.Silkscreen
+    @(117.6475 mm, 66.3250 mm): NPTH pad of SW18
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(119.3575 mm, 65.0050 mm): Segment of SW18 on B.Silkscreen
+    @(117.6475 mm, 66.3250 mm): NPTH pad of SW18
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(117.7075 mm, 66.6050 mm): Segment of SW18 on B.Silkscreen
+    @(111.2975 mm, 68.8650 mm): NPTH pad of SW18
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(117.7075 mm, 66.6050 mm): Segment of SW18 on B.Silkscreen
+    @(117.6475 mm, 66.3250 mm): NPTH pad of SW18
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(119.5075 mm, 64.8050 mm): Segment of SW18 on B.Silkscreen
+    @(117.6475 mm, 66.3250 mm): NPTH pad of SW18
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(110.9375 mm, 47.3050 mm): Segment of SW12 on B.Silkscreen
+    @(111.2975 mm, 49.8650 mm): NPTH pad of SW12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(109.4575 mm, 51.3050 mm): Segment of SW12 on B.Silkscreen
+    @(111.2975 mm, 49.8650 mm): NPTH pad of SW12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(109.6575 mm, 51.1050 mm): Segment of SW12 on B.Silkscreen
+    @(111.2975 mm, 49.8650 mm): NPTH pad of SW12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(109.8075 mm, 50.8050 mm): Segment of SW12 on B.Silkscreen
+    @(111.2975 mm, 49.8650 mm): NPTH pad of SW12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(114.2425 mm, 51.1750 mm): Arc of SW12 on B.Silkscreen
+    @(111.2975 mm, 49.8650 mm): NPTH pad of SW12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(117.7075 mm, 47.6050 mm): Segment of SW12 on B.Silkscreen
+    @(111.2975 mm, 49.8650 mm): NPTH pad of SW12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(117.7075 mm, 47.6050 mm): Segment of SW12 on B.Silkscreen
+    @(117.6475 mm, 47.3250 mm): NPTH pad of SW12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(119.5075 mm, 45.8050 mm): Segment of SW12 on B.Silkscreen
+    @(117.6475 mm, 47.3250 mm): NPTH pad of SW12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(90.6575 mm, 48.7300 mm): Segment of SW11 on B.Silkscreen
+    @(92.2975 mm, 47.4900 mm): NPTH pad of SW11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(90.8075 mm, 48.4300 mm): Segment of SW11 on B.Silkscreen
+    @(92.2975 mm, 47.4900 mm): NPTH pad of SW11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(91.9375 mm, 44.9300 mm): Segment of SW11 on B.Silkscreen
+    @(92.2975 mm, 47.4900 mm): NPTH pad of SW11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(98.7075 mm, 45.2300 mm): Segment of SW11 on B.Silkscreen
+    @(92.2975 mm, 47.4900 mm): NPTH pad of SW11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(98.7075 mm, 45.2300 mm): Segment of SW11 on B.Silkscreen
+    @(98.6475 mm, 44.9500 mm): NPTH pad of SW11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(100.5075 mm, 43.4300 mm): Segment of SW11 on B.Silkscreen
+    @(98.6475 mm, 44.9500 mm): NPTH pad of SW11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(95.2425 mm, 48.8000 mm): Arc of SW11 on B.Silkscreen
+    @(92.2975 mm, 47.4900 mm): NPTH pad of SW11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(90.4575 mm, 48.9300 mm): Segment of SW11 on B.Silkscreen
+    @(92.2975 mm, 47.4900 mm): NPTH pad of SW11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(98.7075 mm, 64.2300 mm): Segment of SW17 on B.Silkscreen
+    @(92.2975 mm, 66.4900 mm): NPTH pad of SW17
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(98.7075 mm, 64.2300 mm): Segment of SW17 on B.Silkscreen
+    @(98.6475 mm, 63.9500 mm): NPTH pad of SW17
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(100.5075 mm, 62.4300 mm): Segment of SW17 on B.Silkscreen
+    @(98.6475 mm, 63.9500 mm): NPTH pad of SW17
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(95.2425 mm, 67.8000 mm): Arc of SW17 on B.Silkscreen
+    @(92.2975 mm, 66.4900 mm): NPTH pad of SW17
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(110.9375 mm, 28.3050 mm): Segment of SW6 on B.Silkscreen
+    @(111.2975 mm, 30.8650 mm): NPTH pad of SW6
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(117.7075 mm, 28.6050 mm): Segment of SW6 on B.Silkscreen
+    @(111.2975 mm, 30.8650 mm): NPTH pad of SW6
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(117.7075 mm, 28.6050 mm): Segment of SW6 on B.Silkscreen
+    @(117.6475 mm, 28.3250 mm): NPTH pad of SW6
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(119.5075 mm, 26.8050 mm): Segment of SW6 on B.Silkscreen
+    @(117.6475 mm, 28.3250 mm): NPTH pad of SW6
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(114.2425 mm, 32.1750 mm): Arc of SW6 on B.Silkscreen
+    @(111.2975 mm, 30.8650 mm): NPTH pad of SW6
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(119.0075 mm, 27.4050 mm): Segment of SW6 on B.Silkscreen
+    @(117.6475 mm, 28.3250 mm): NPTH pad of SW6
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(119.3575 mm, 27.0050 mm): Segment of SW6 on B.Silkscreen
+    @(117.6475 mm, 28.3250 mm): NPTH pad of SW6
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(109.4575 mm, 32.3050 mm): Segment of SW6 on B.Silkscreen
+    @(111.2975 mm, 30.8650 mm): NPTH pad of SW6
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(109.6575 mm, 32.1050 mm): Segment of SW6 on B.Silkscreen
+    @(111.2975 mm, 30.8650 mm): NPTH pad of SW6
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(109.8075 mm, 31.8050 mm): Segment of SW6 on B.Silkscreen
+    @(111.2975 mm, 30.8650 mm): NPTH pad of SW6
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(100.0075 mm, 44.0300 mm): Segment of SW11 on B.Silkscreen
+    @(98.6475 mm, 44.9500 mm): NPTH pad of SW11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(100.3575 mm, 43.6300 mm): Segment of SW11 on B.Silkscreen
+    @(98.6475 mm, 44.9500 mm): NPTH pad of SW11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(119.0075 mm, 46.4050 mm): Segment of SW12 on B.Silkscreen
+    @(117.6475 mm, 47.3250 mm): NPTH pad of SW12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(119.3575 mm, 46.0050 mm): Segment of SW12 on B.Silkscreen
+    @(117.6475 mm, 47.3250 mm): NPTH pad of SW12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(186.0145 mm, 45.8000 mm): Segment of SW33 on B.Silkscreen
+    @(184.1545 mm, 47.3200 mm): NPTH pad of SW33
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(177.4375 mm, 28.3050 mm): Segment of SW27 on B.Silkscreen
+    @(177.7975 mm, 30.8650 mm): NPTH pad of SW27
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(184.2075 mm, 28.6050 mm): Segment of SW27 on B.Silkscreen
+    @(177.7975 mm, 30.8650 mm): NPTH pad of SW27
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(184.2075 mm, 28.6050 mm): Segment of SW27 on B.Silkscreen
+    @(184.1475 mm, 28.3250 mm): NPTH pad of SW27
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(185.5075 mm, 27.4050 mm): Segment of SW27 on B.Silkscreen
+    @(184.1475 mm, 28.3250 mm): NPTH pad of SW27
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(185.8575 mm, 27.0050 mm): Segment of SW27 on B.Silkscreen
+    @(184.1475 mm, 28.3250 mm): NPTH pad of SW27
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(186.0075 mm, 26.8050 mm): Segment of SW27 on B.Silkscreen
+    @(184.1475 mm, 28.3250 mm): NPTH pad of SW27
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(175.9575 mm, 32.3050 mm): Segment of SW27 on B.Silkscreen
+    @(177.7975 mm, 30.8650 mm): NPTH pad of SW27
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(176.1575 mm, 32.1050 mm): Segment of SW27 on B.Silkscreen
+    @(177.7975 mm, 30.8650 mm): NPTH pad of SW27
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(176.3075 mm, 31.8050 mm): Segment of SW27 on B.Silkscreen
+    @(177.7975 mm, 30.8650 mm): NPTH pad of SW27
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(180.7425 mm, 32.1750 mm): Arc of SW27 on B.Silkscreen
+    @(177.7975 mm, 30.8650 mm): NPTH pad of SW27
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(177.4445 mm, 47.3000 mm): Segment of SW33 on B.Silkscreen
+    @(177.8045 mm, 49.8600 mm): NPTH pad of SW33
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(176.3145 mm, 50.8000 mm): Segment of SW33 on B.Silkscreen
+    @(177.8045 mm, 49.8600 mm): NPTH pad of SW33
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(180.7495 mm, 51.1700 mm): Arc of SW33 on B.Silkscreen
+    @(177.8045 mm, 49.8600 mm): NPTH pad of SW33
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(175.9645 mm, 51.3000 mm): Segment of SW33 on B.Silkscreen
+    @(177.8045 mm, 49.8600 mm): NPTH pad of SW33
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(176.1645 mm, 51.1000 mm): Segment of SW33 on B.Silkscreen
+    @(177.8045 mm, 49.8600 mm): NPTH pad of SW33
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(174.0107 mm, 95.5275 mm): Segment of SW42 on B.Silkscreen
+    @(172.5339 mm, 94.8097 mm): NPTH pad of SW42
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(174.5321 mm, 95.6306 mm): Segment of SW42 on B.Silkscreen
+    @(172.5339 mm, 94.8097 mm): NPTH pad of SW42
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(183.5810 mm, 91.2263 mm): Segment of SW41 on B.Silkscreen
+    @(184.7769 mm, 89.9326 mm): NPTH pad of SW41
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(183.5137 mm, 91.5549 mm): Segment of SW41 on B.Silkscreen
+    @(184.7769 mm, 89.9326 mm): NPTH pad of SW41
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(183.7666 mm, 87.5531 mm): Segment of SW41 on B.Silkscreen
+    @(184.7769 mm, 89.9326 mm): NPTH pad of SW41
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(190.3836 mm, 86.0906 mm): Segment of SW41 on B.Silkscreen
+    @(184.7769 mm, 89.9326 mm): NPTH pad of SW41
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(190.3836 mm, 86.0906 mm): Segment of SW41 on B.Silkscreen
+    @(190.2532 mm, 85.8357 mm): NPTH pad of SW41
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(187.9606 mm, 90.4358 mm): Arc of SW41 on B.Silkscreen
+    @(184.7769 mm, 89.9326 mm): NPTH pad of SW41
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(191.3287 mm, 84.5951 mm): Segment of SW41 on B.Silkscreen
+    @(190.2532 mm, 85.8357 mm): NPTH pad of SW41
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(191.5632 mm, 84.1181 mm): Segment of SW41 on B.Silkscreen
+    @(190.2532 mm, 85.8357 mm): NPTH pad of SW41
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(191.6564 mm, 83.8861 mm): Segment of SW41 on B.Silkscreen
+    @(190.2532 mm, 85.8357 mm): NPTH pad of SW41
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(175.9645 mm, 70.3000 mm): Segment of SW39 on B.Silkscreen
+    @(177.8045 mm, 68.8600 mm): NPTH pad of SW39
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(176.1645 mm, 70.1000 mm): Segment of SW39 on B.Silkscreen
+    @(177.8045 mm, 68.8600 mm): NPTH pad of SW39
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(183.3723 mm, 91.7998 mm): Segment of SW41 on B.Silkscreen
+    @(184.7769 mm, 89.9326 mm): NPTH pad of SW41
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(52.4575 mm, 29.9300 mm): Segment of SW3 on B.Silkscreen
+    @(54.2975 mm, 28.4900 mm): NPTH pad of SW3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(52.6575 mm, 29.7300 mm): Segment of SW3 on B.Silkscreen
+    @(54.2975 mm, 28.4900 mm): NPTH pad of SW3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(52.8075 mm, 29.4300 mm): Segment of SW3 on B.Silkscreen
+    @(54.2975 mm, 28.4900 mm): NPTH pad of SW3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(60.7075 mm, 26.2300 mm): Segment of SW3 on B.Silkscreen
+    @(54.2975 mm, 28.4900 mm): NPTH pad of SW3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(60.7075 mm, 26.2300 mm): Segment of SW3 on B.Silkscreen
+    @(60.6475 mm, 25.9500 mm): NPTH pad of SW3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(62.5075 mm, 24.4300 mm): Segment of SW3 on B.Silkscreen
+    @(60.6475 mm, 25.9500 mm): NPTH pad of SW3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(57.2425 mm, 29.8000 mm): Arc of SW3 on B.Silkscreen
+    @(54.2975 mm, 28.4900 mm): NPTH pad of SW3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(62.0075 mm, 25.0300 mm): Segment of SW3 on B.Silkscreen
+    @(60.6475 mm, 25.9500 mm): NPTH pad of SW3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(62.3575 mm, 24.6300 mm): Segment of SW3 on B.Silkscreen
+    @(60.6475 mm, 25.9500 mm): NPTH pad of SW3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(72.9375 mm, 23.5550 mm): Segment of SW4 on B.Silkscreen
+    @(73.2975 mm, 26.1150 mm): NPTH pad of SW4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(71.4575 mm, 27.5550 mm): Segment of SW4 on B.Silkscreen
+    @(73.2975 mm, 26.1150 mm): NPTH pad of SW4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(71.6575 mm, 27.3550 mm): Segment of SW4 on B.Silkscreen
+    @(73.2975 mm, 26.1150 mm): NPTH pad of SW4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(71.8075 mm, 27.0550 mm): Segment of SW4 on B.Silkscreen
+    @(73.2975 mm, 26.1150 mm): NPTH pad of SW4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(76.2425 mm, 27.4250 mm): Arc of SW4 on B.Silkscreen
+    @(73.2975 mm, 26.1150 mm): NPTH pad of SW4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(79.7075 mm, 23.8550 mm): Segment of SW4 on B.Silkscreen
+    @(73.2975 mm, 26.1150 mm): NPTH pad of SW4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(79.7075 mm, 23.8550 mm): Segment of SW4 on B.Silkscreen
+    @(79.6475 mm, 23.5750 mm): NPTH pad of SW4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(81.5075 mm, 22.0550 mm): Segment of SW4 on B.Silkscreen
+    @(79.6475 mm, 23.5750 mm): NPTH pad of SW4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(81.0075 mm, 22.6550 mm): Segment of SW4 on B.Silkscreen
+    @(79.6475 mm, 23.5750 mm): NPTH pad of SW4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(81.3575 mm, 22.2550 mm): Segment of SW4 on B.Silkscreen
+    @(79.6475 mm, 23.5750 mm): NPTH pad of SW4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(91.9375 mm, 25.9300 mm): Segment of SW5 on B.Silkscreen
+    @(92.2975 mm, 28.4900 mm): NPTH pad of SW5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(90.4575 mm, 29.9300 mm): Segment of SW5 on B.Silkscreen
+    @(92.2975 mm, 28.4900 mm): NPTH pad of SW5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(90.6575 mm, 29.7300 mm): Segment of SW5 on B.Silkscreen
+    @(92.2975 mm, 28.4900 mm): NPTH pad of SW5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(90.8075 mm, 29.4300 mm): Segment of SW5 on B.Silkscreen
+    @(92.2975 mm, 28.4900 mm): NPTH pad of SW5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(98.7075 mm, 26.2300 mm): Segment of SW5 on B.Silkscreen
+    @(92.2975 mm, 28.4900 mm): NPTH pad of SW5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(98.7075 mm, 26.2300 mm): Segment of SW5 on B.Silkscreen
+    @(98.6475 mm, 25.9500 mm): NPTH pad of SW5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(100.5075 mm, 24.4300 mm): Segment of SW5 on B.Silkscreen
+    @(98.6475 mm, 25.9500 mm): NPTH pad of SW5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(95.2425 mm, 29.8000 mm): Arc of SW5 on B.Silkscreen
+    @(92.2975 mm, 28.4900 mm): NPTH pad of SW5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(100.0075 mm, 25.0300 mm): Segment of SW5 on B.Silkscreen
+    @(98.6475 mm, 25.9500 mm): NPTH pad of SW5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(100.3575 mm, 24.6300 mm): Segment of SW5 on B.Silkscreen
+    @(98.6475 mm, 25.9500 mm): NPTH pad of SW5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(71.4575 mm, 46.5550 mm): Segment of SW10 on B.Silkscreen
+    @(73.2975 mm, 45.1150 mm): NPTH pad of SW10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(71.6575 mm, 46.3550 mm): Segment of SW10 on B.Silkscreen
+    @(73.2975 mm, 45.1150 mm): NPTH pad of SW10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(71.8075 mm, 46.0550 mm): Segment of SW10 on B.Silkscreen
+    @(73.2975 mm, 45.1150 mm): NPTH pad of SW10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(72.9375 mm, 42.5550 mm): Segment of SW10 on B.Silkscreen
+    @(73.2975 mm, 45.1150 mm): NPTH pad of SW10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(81.0075 mm, 41.6550 mm): Segment of SW10 on B.Silkscreen
+    @(79.6475 mm, 42.5750 mm): NPTH pad of SW10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(81.3575 mm, 41.2550 mm): Segment of SW10 on B.Silkscreen
+    @(79.6475 mm, 42.5750 mm): NPTH pad of SW10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(79.7075 mm, 42.8550 mm): Segment of SW10 on B.Silkscreen
+    @(73.2975 mm, 45.1150 mm): NPTH pad of SW10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(79.7075 mm, 42.8550 mm): Segment of SW10 on B.Silkscreen
+    @(79.6475 mm, 42.5750 mm): NPTH pad of SW10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(81.5075 mm, 41.0550 mm): Segment of SW10 on B.Silkscreen
+    @(79.6475 mm, 42.5750 mm): NPTH pad of SW10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(76.2425 mm, 46.4250 mm): Arc of SW10 on B.Silkscreen
+    @(73.2975 mm, 45.1150 mm): NPTH pad of SW10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(15.9375 mm, 87.6800 mm): Segment of SW43 on B.Silkscreen
+    @(16.2975 mm, 90.2400 mm): NPTH pad of SW43
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(14.4575 mm, 91.6800 mm): Segment of SW43 on B.Silkscreen
+    @(16.2975 mm, 90.2400 mm): NPTH pad of SW43
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(14.6575 mm, 91.4800 mm): Segment of SW43 on B.Silkscreen
+    @(16.2975 mm, 90.2400 mm): NPTH pad of SW43
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(14.8075 mm, 91.1800 mm): Segment of SW43 on B.Silkscreen
+    @(16.2975 mm, 90.2400 mm): NPTH pad of SW43
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(22.7075 mm, 87.9800 mm): Segment of SW43 on B.Silkscreen
+    @(16.2975 mm, 90.2400 mm): NPTH pad of SW43
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(22.7075 mm, 87.9800 mm): Segment of SW43 on B.Silkscreen
+    @(22.6475 mm, 87.7000 mm): NPTH pad of SW43
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(24.5075 mm, 86.1800 mm): Segment of SW43 on B.Silkscreen
+    @(22.6475 mm, 87.7000 mm): NPTH pad of SW43
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(19.2425 mm, 91.5500 mm): Arc of SW43 on B.Silkscreen
+    @(16.2975 mm, 90.2400 mm): NPTH pad of SW43
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(24.0075 mm, 86.7800 mm): Segment of SW43 on B.Silkscreen
+    @(22.6475 mm, 87.7000 mm): NPTH pad of SW43
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(24.3575 mm, 86.3800 mm): Segment of SW43 on B.Silkscreen
+    @(22.6475 mm, 87.7000 mm): NPTH pad of SW43
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(34.9375 mm, 87.6800 mm): Segment of SW44 on B.Silkscreen
+    @(35.2975 mm, 90.2400 mm): NPTH pad of SW44
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(33.4575 mm, 91.6800 mm): Segment of SW44 on B.Silkscreen
+    @(35.2975 mm, 90.2400 mm): NPTH pad of SW44
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(33.6575 mm, 91.4800 mm): Segment of SW44 on B.Silkscreen
+    @(35.2975 mm, 90.2400 mm): NPTH pad of SW44
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(33.8075 mm, 91.1800 mm): Segment of SW44 on B.Silkscreen
+    @(35.2975 mm, 90.2400 mm): NPTH pad of SW44
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(41.7075 mm, 87.9800 mm): Segment of SW44 on B.Silkscreen
+    @(35.2975 mm, 90.2400 mm): NPTH pad of SW44
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(41.7075 mm, 87.9800 mm): Segment of SW44 on B.Silkscreen
+    @(41.6475 mm, 87.7000 mm): NPTH pad of SW44
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(43.5075 mm, 86.1800 mm): Segment of SW44 on B.Silkscreen
+    @(41.6475 mm, 87.7000 mm): NPTH pad of SW44
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(38.2425 mm, 91.5500 mm): Arc of SW44 on B.Silkscreen
+    @(35.2975 mm, 90.2400 mm): NPTH pad of SW44
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(43.0075 mm, 86.7800 mm): Segment of SW44 on B.Silkscreen
+    @(41.6475 mm, 87.7000 mm): NPTH pad of SW44
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(43.3575 mm, 86.3800 mm): Segment of SW44 on B.Silkscreen
+    @(41.6475 mm, 87.7000 mm): NPTH pad of SW44
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(15.9375 mm, 30.6800 mm): Segment of SW1 on B.Silkscreen
+    @(16.2975 mm, 33.2400 mm): NPTH pad of SW1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(14.4575 mm, 34.6800 mm): Segment of SW1 on B.Silkscreen
+    @(16.2975 mm, 33.2400 mm): NPTH pad of SW1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(14.6575 mm, 34.4800 mm): Segment of SW1 on B.Silkscreen
+    @(16.2975 mm, 33.2400 mm): NPTH pad of SW1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(14.8075 mm, 34.1800 mm): Segment of SW1 on B.Silkscreen
+    @(16.2975 mm, 33.2400 mm): NPTH pad of SW1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(19.2425 mm, 34.5500 mm): Arc of SW1 on B.Silkscreen
+    @(16.2975 mm, 33.2400 mm): NPTH pad of SW1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(24.0075 mm, 29.7800 mm): Segment of SW1 on B.Silkscreen
+    @(22.6475 mm, 30.7000 mm): NPTH pad of SW1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(24.3575 mm, 29.3800 mm): Segment of SW1 on B.Silkscreen
+    @(22.6475 mm, 30.7000 mm): NPTH pad of SW1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(22.7075 mm, 30.9800 mm): Segment of SW1 on B.Silkscreen
+    @(16.2975 mm, 33.2400 mm): NPTH pad of SW1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(22.7075 mm, 30.9800 mm): Segment of SW1 on B.Silkscreen
+    @(22.6475 mm, 30.7000 mm): NPTH pad of SW1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(24.5075 mm, 29.1800 mm): Segment of SW1 on B.Silkscreen
+    @(22.6475 mm, 30.7000 mm): NPTH pad of SW1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(24.3575 mm, 48.3800 mm): Segment of SW7 on B.Silkscreen
+    @(22.6475 mm, 49.7000 mm): NPTH pad of SW7
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(24.0075 mm, 48.7800 mm): Segment of SW7 on B.Silkscreen
+    @(22.6475 mm, 49.7000 mm): NPTH pad of SW7
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(14.4575 mm, 53.6800 mm): Segment of SW7 on B.Silkscreen
+    @(16.2975 mm, 52.2400 mm): NPTH pad of SW7
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(14.6575 mm, 53.4800 mm): Segment of SW7 on B.Silkscreen
+    @(16.2975 mm, 52.2400 mm): NPTH pad of SW7
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(14.8075 mm, 53.1800 mm): Segment of SW7 on B.Silkscreen
+    @(16.2975 mm, 52.2400 mm): NPTH pad of SW7
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(15.9375 mm, 49.6800 mm): Segment of SW7 on B.Silkscreen
+    @(16.2975 mm, 52.2400 mm): NPTH pad of SW7
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(22.7075 mm, 49.9800 mm): Segment of SW7 on B.Silkscreen
+    @(16.2975 mm, 52.2400 mm): NPTH pad of SW7
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(22.7075 mm, 49.9800 mm): Segment of SW7 on B.Silkscreen
+    @(22.6475 mm, 49.7000 mm): NPTH pad of SW7
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(24.5075 mm, 48.1800 mm): Segment of SW7 on B.Silkscreen
+    @(22.6475 mm, 49.7000 mm): NPTH pad of SW7
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(19.2425 mm, 53.5500 mm): Arc of SW7 on B.Silkscreen
+    @(16.2975 mm, 52.2400 mm): NPTH pad of SW7
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(34.9375 mm, 30.6800 mm): Segment of SW2 on B.Silkscreen
+    @(35.2975 mm, 33.2400 mm): NPTH pad of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(41.7075 mm, 30.9800 mm): Segment of SW2 on B.Silkscreen
+    @(35.2975 mm, 33.2400 mm): NPTH pad of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(41.7075 mm, 30.9800 mm): Segment of SW2 on B.Silkscreen
+    @(41.6475 mm, 30.7000 mm): NPTH pad of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(43.5075 mm, 29.1800 mm): Segment of SW2 on B.Silkscreen
+    @(41.6475 mm, 30.7000 mm): NPTH pad of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(38.2425 mm, 34.5500 mm): Arc of SW2 on B.Silkscreen
+    @(35.2975 mm, 33.2400 mm): NPTH pad of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(43.0075 mm, 29.7800 mm): Segment of SW2 on B.Silkscreen
+    @(41.6475 mm, 30.7000 mm): NPTH pad of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(43.3575 mm, 29.3800 mm): Segment of SW2 on B.Silkscreen
+    @(41.6475 mm, 30.7000 mm): NPTH pad of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(33.4575 mm, 34.6800 mm): Segment of SW2 on B.Silkscreen
+    @(35.2975 mm, 33.2400 mm): NPTH pad of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(33.6575 mm, 34.4800 mm): Segment of SW2 on B.Silkscreen
+    @(35.2975 mm, 33.2400 mm): NPTH pad of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(33.8075 mm, 34.1800 mm): Segment of SW2 on B.Silkscreen
+    @(35.2975 mm, 33.2400 mm): NPTH pad of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(53.9375 mm, 25.9300 mm): Segment of SW3 on B.Silkscreen
+    @(54.2975 mm, 28.4900 mm): NPTH pad of SW3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(53.9375 mm, 44.9300 mm): Segment of SW9 on B.Silkscreen
+    @(54.2975 mm, 47.4900 mm): NPTH pad of SW9
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - PTH inside courtyard
+    - NPTH inside courtyard
+
+** End of Report **
