@@ -11,7 +11,7 @@ upstream ordering being correct at all, only on endpoints matching.
 
 Run with the same environment as case.py (needs ezdxf, which build123d
 already pulls in):
-  uv run --with build123d python3 dxf_to_loops.py <file.dxf>
+  uv run --with build123d python3 case/scripts/dxf_to_loops.py <file.dxf>
 """
 import math
 import sys

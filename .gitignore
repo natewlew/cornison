@@ -19,4 +19,7 @@ pcb/production/netlist.ipc
 
 # case.py output -- regenerate with case/README.md's instructions
 case/out/
-case/out-prototype/
+
+# gen_layout.py's scratch output -- its content gets merged into
+# firmware/qmk/cornison/keyboard.json by hand, not consumed from here
+firmware/qmk/layout.generated.json

@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
 """Extract everything the case generator needs from the real PCB:
 per-half outlines, switch poses, M2 hole centres, and the bounding boxes
-of the MCU/OLED/reset/TRRS parts. Written as board.json next to this
-script.
+of the MCU/OLED/reset/TRRS parts. Written as case/board.json.
 
-Run with KiCad's bundled python3 (has pcbnew):
-  /Applications/KiCad/KiCad.app/Contents/Frameworks/Python.framework/Versions/3.9/bin/python3 extract_board.py
+Run with KiCad's bundled python3 (has pcbnew), from the repo root:
+  ./build.sh extract
 """
 import json
 import math
 import os
 import pcbnew
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-PCB = os.path.join(HERE, "..", "pcb", "cornison.kicad_pcb")
-OUT = os.path.join(HERE, "board.json")
+CASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PCB = os.path.join(CASE_DIR, "..", "pcb", "cornison.kicad_pcb")
+OUT = os.path.join(CASE_DIR, "board.json")
 MM = pcbnew.FromMM
 
 TAB_CUT_HALF_W = 3.5   # mm, half-width of the cut rectangle across each tab
@@ -95,10 +94,17 @@ def main():
     for f in fps:
         n = str(f.GetFPID().GetLibItemName())
         if n == "M2_HOLE_v2":
-            p = f.GetPosition()
+            # The hole is the footprint's pad, NOT its origin: one
+            # footprint per half has its pad dragged ~10mm away from the
+            # origin, and a case printed from origins put that boss 10mm
+            # from the real hole. The drill size differs too (4.3mm on
+            # five holes per half, 2.2mm on the two beside the TRRS jack).
+            pads = list(f.Pads())
+            assert len(pads) == 1, f"M2_HOLE_v2 at {f.GetPosition()} has {len(pads)} pads, expected 1"
+            p = pads[0].GetPosition()
             x, y = p.x / 1e6, p.y / 1e6
             side = "left" if x < 148 else "right"
-            m2_by_side[side].append({"x": x, "y": y})
+            m2_by_side[side].append({"x": x, "y": y, "drill": pads[0].GetDrillSize().x / 1e6})
 
     # ---- 4. MCU / OLED / reset / TRRS bounding boxes per half ----
     PART_TYPES = ("ProMicro_v3", "OLED_1side", "ResetSW_1side", "MJ-4PP-9_1side")
@@ -129,18 +135,39 @@ def main():
                 }
             )
 
+    # ---- 5. underside keep-outs per half (everything that stands off the
+    #         PCB's back face -- sockets, diodes, LEDs, through-hole pins --
+    #         except the breakaway tabs and the M2 mounting holes, which
+    #         the case generator already treats on its own) ----
+    SKIP_TYPES = {"Breakaway_Tabs", "M2_HOLE_v2"}
+    keepouts_by_side = {"left": [], "right": []}
+    for f in fps:
+        n = str(f.GetFPID().GetLibItemName())
+        if n in SKIP_TYPES:
+            continue
+        bb = f.GetBoundingBox(False)
+        x0, y0 = bb.GetLeft() / 1e6, bb.GetTop() / 1e6
+        x1, y1 = bb.GetRight() / 1e6, bb.GetBottom() / 1e6
+        cx = (x0 + x1) / 2
+        side = "left" if cx < 148 else "right"
+        keepouts_by_side[side].append(
+            {"ref": f.GetReference(), "type": n, "bbox": [x0, y0, x1, y1]}
+        )
+
     result = {
         "left": {
             "outline": halves_outline["left"],
             "keys": keys_by_side["left"],
             "m2_holes": m2_by_side["left"],
             "parts": parts_by_side["left"],
+            "keepouts": keepouts_by_side["left"],
         },
         "right": {
             "outline": halves_outline["right"],
             "keys": keys_by_side["right"],
             "m2_holes": m2_by_side["right"],
             "parts": parts_by_side["right"],
+            "keepouts": keepouts_by_side["right"],
         },
     }
 
