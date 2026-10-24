@@ -9,9 +9,9 @@
 	(paper "A4")
 	(title_block
 		(title "Cornison")
-		(date "2020-09-28")
-		(rev "3.0.1")
-		(company "foostan")
+		(date "2026-10-16")
+		(rev "1.1")
+		(company "natewlew")
 	)
 	(layers
 		(0 "F.Cu" signal)
@@ -18566,7 +18566,7 @@
 	(footprint "kbd:M2_HOLE_v2"
 		(layer "F.Cu")
 		(uuid "00000000-0000-0000-0000-00005f1b00e4")
-		(at 225 99.5 180)
+		(at 227.6 97 180)
 		(descr "Mounting Hole 2.2mm, no annular, M2")
 		(tags "mounting hole 2.2mm no annular m2")
 		(property "Reference" "Ref**"
@@ -53555,7 +53555,7 @@
 		(layer "Edge.Cuts")
 		(uuid "89584431-acaf-477d-ad98-d00687340bb9")
 	)
-	(gr_text "Corne Cherry v3.0.1 PCB Designed by foostan"
+	(gr_text "Cornison v${REVISION}"
 		(at 50.2825 58.33 0)
 		(layer "F.SilkS")
 		(uuid "00000000-0000-0000-0000-00005dc84d0a")
@@ -53567,7 +53567,7 @@
 			(justify left)
 		)
 	)
-	(gr_text "Corne Cherry v3.0.1 PCB Designed by foostan"
+	(gr_text "Cornison v${REVISION}"
 		(at 211.8325 58.33 0)
 		(layer "F.SilkS")
 		(uuid "00000000-0000-0000-0000-00005f186bf6")

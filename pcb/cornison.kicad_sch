@@ -6,9 +6,9 @@
 	(paper "A3")
 	(title_block
 		(title "Cornison")
-		(date "2020-09-28")
-		(rev "3.0.1")
-		(company "foostan")
+		(date "2026-10-16")
+		(rev "1.1")
+		(company "natewlew")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x04"

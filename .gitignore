@@ -23,3 +23,9 @@ case/out/
 # gen_layout.py's scratch output -- its content gets merged into
 # firmware/qmk/cornison/keyboard.json by hand, not consumed from here
 firmware/qmk/layout.generated.json
+
+# KiCad's lock file while a project is open
+~*.lck
+
+# personal to-do list, kept locally
+TODO.md

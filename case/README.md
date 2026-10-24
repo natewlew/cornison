@@ -22,12 +22,15 @@ Heights measured from the case's true bottom (z=0):
 
 | Z | Feature |
 |---|---|
-| 0 – 2.5mm | Floor, flat underneath |
-| 2.5 – 6.5mm | Boss height — clearance for the hotswap sockets + B-side LEDs |
-| 6.5 – 8.1mm | PCB (1.6mm) |
-| 8.1 – 13.1mm | Air gap above the PCB — standard Cherry MX clearance |
-| 11.5 – 13.1mm | Switch plate (1.6mm FR4) |
-| 13.1mm | Wall top / plate top, flush |
+| 0 – 4.0mm | Floor, flat underneath; deep enough for the tenting legs' inserts |
+| 4.0 – 8.0mm | Boss height — clearance for the hotswap sockets + B-side LEDs |
+| 8.0 – 9.6mm | PCB (1.6mm) |
+| 9.6 – 14.6mm | Air gap above the PCB — standard Cherry MX clearance |
+| 13.0 – 14.6mm | Switch plate (1.6mm FR4) |
+| 14.6mm | Wall top / plate top, flush |
+
+The floor was 2.5mm until 2026-10-23, when the tenting legs' inserts
+moved into it; everything above it moved up 1.5mm with it.
 
 The plate stops short of the MCU strip. The TRRS jack (5.0mm), reset
 switch (about 5.2mm) and Pro Micro (about 5.5mm on ordinary headers) all
@@ -52,15 +55,11 @@ nothing lost clearance.
 
 ## Mounting
 
-- **PCB → case:** 8 bosses per half: one under each of the PCB's 7
-  M2 mounting holes, plus one at the spot the outer/lower hole moves to in
-  the next PCB revision (one row down, at the SW13/SW14/SW43/SW44
-  junction on the left, SW34/SW35/SW46/SW47 on the right). The case fits
-  either PCB: on today's board that extra boss has no hole above it and
-  just props the PCB up near the bottom-row corner (it clears every part
-  on the underside); on the next board it's the old spot's boss that does
-  that. Only fit inserts in the bosses that have a PCB hole above them —
-  a bare insert pressed against the board's solder mask isn't wanted. Press M2×3.2mm heat-set inserts into them (soldering
+- **PCB → case:** 7 bosses per half, one under each of the v1.1 PCB's 7
+  M2 mounting holes. (A v1.0 board still sits in the case for a test fit,
+  but two of its holes are elsewhere: the outer/lower one a row higher,
+  and on the right half the lower-centre one at the board edge. Those get
+  no screw.) Press M2×3.2mm heat-set inserts into them (soldering
   iron or heat-set tool). On the normal build nothing screws the PCB down
   by itself: the plate screws and the cover screws clamp it (below).
   Without the plate mount, screw it down from above with M2×4mm low-head
@@ -124,9 +123,9 @@ nothing lost clearance.
   on the top of the PCB is under the plate (checked against every
   top-side pad in the KiCad file), so the frame only has to clear the
   switches.
-- **The bottom is flat** apart from the 4 screw holes near the corners
-  for the tenting legs (rubber feet go over them otherwise), so a MagSafe
-  ring sticks on anywhere in the middle.
+- **The bottom is flat** apart from a rubber-foot recess at each corner
+  (10.4mm across, 0.8mm deep) and the 4 inserts for the tenting legs
+  beside them, so a MagSafe ring sticks on anywhere in the middle.
 
 ## MCU cover
 
@@ -138,27 +137,74 @@ jack and reset switch, about 25 × 65mm.
 | 0 – 6.0mm | Two posts, standing on the PCB over the two mounting holes beside the TRRS jack |
 | 5.0 – 6.0mm | Rim, resting on the case wall top along the board's top and inner edges |
 | 6.0mm | Cover underside |
-| 8.0mm | Cover top (3.0mm above the plate and wall top) — the OLED lies here |
+| 8.0mm | Cover top (3.0mm above the plate and wall top) |
 
 - **Mounting:** one M2×12mm screw per post, through cover, post and PCB
   into the same heat-set insert an ordinary PCB screw would use (2.4mm of
   thread in the 3.2mm insert). The post's 6mm foot does the washer's job
   at those two holes, so no washer there.
-- **OLED:** plugs into a low-profile socket on the PCB through a slot in
-  the cover, sized for the whole 4-pin header, and rests on the cover's
-  top.
-- **Reset:** a 2mm hole over the switch for a paperclip.
+- **OLED:** plugs into a low-profile socket on the PCB through a window
+  in the cover, 13.5 × 39.5mm: the module's whole footprint (12 × 38mm,
+  measured) plus 0.75mm, so
+  everything under the OLED stays in view. Plugged fully into a ~4mm
+  socket, the module's board sits 8–9mm above the PCB (measured), only
+  0–1mm over the cover's top, so the socket alone holds it. When the
+  cover was under it, its pins didn't seat. The window's position depends
+  on `OLED_PIN_EDGE` (1.4mm, from the library model, not measured).
+- **Reset:** a 2mm hole over the switch for a paperclip, joined to the
+  window's side.
 - **Pro Micro:** soldered directly on ordinary headers, or on low-profile
-  (Mill-Max style) sockets. Standard 8.5mm sockets put it at about 11mm
+  (Mill-Max style) sockets. Either way it has to top out at 5.5mm or less.
+  Trim the header pin stubs down to the solder: left long on the first
+  build, they stood ~7mm and tipped the cover up at the USB end. Standard 8.5mm sockets put it at about 11mm
   and do not fit — build without the cover and OLED in that case.
 - The cover stays out from under every keycap and clear of the USB and
-  TRRS wall notches.
+  TRRS wall notches. Its key side is one straight edge, then one straight
+  diagonal along the angled thumb keycap; the plate fills in under the
+  diagonal's end.
 - **Printing:** top face down, posts up. No supports.
 
 **Not yet checked against real parts.** The part heights behind
 `COVER_UNDERSIDE_ABOVE_PCB` in `case.py` are measured from the 3D models
 in `pcb/kbd`, not from the components themselves. Measure a built board
 before ordering covers from a print service.
+
+## Clear MCU cover (alternative)
+
+A two-piece alternative to the flat cover, after the original crkbd's
+acrylic OLED cover: `cover-base-{left,right}` (printed) under
+`cover-clear-{left,right}` (a flat 2mm clear sheet, ordered laser-cut).
+Same footprint and mounting holes as the flat cover, but on M2 hex
+standoffs instead of printed posts. The OLED stays under the clear top on
+its socket, and the whole Pro Micro strip shows through.
+
+| Height above PCB top | Feature |
+|---|---|
+| 0 – 15.0mm | Two M2 standoffs, on the two mounting holes beside the TRRS jack |
+| 5.0 – 15.0mm | Base wall where it sits on the case wall top |
+| 6.0 – 15.0mm | Base wall elsewhere, 2mm thick; starts above the Pro Micro it crosses (a 1mm gap over the plate edge, same as the flat cover) |
+| 13 – 14mm | OLED glass, plugged fully into its socket (measured) |
+| 15.0 – 17.0mm | Clear top, resting on the standoffs (9mm above the flat cover's top) |
+
+- **Mounting:** an M2 male-female hex standoff per hole, 15mm body with a
+  **4mm** male thread: through the PCB, 2.4mm into the insert, the hex
+  clamping the PCB. A 3mm thread barely reaches the insert and won't
+  start (tried); a 6mm one bottoms out in the blind bore (4.8mm at most).
+  The clear top screws onto the standoffs with M2×5 screws and holds the
+  base down on the case wall. Hex up to 4mm across flats; the base's
+  holes are 5.0mm.
+- **Base at the standoffs:** both holes sit within 0.1–0.7mm of the
+  footprint's edge, so the base is open to the edge there, with a 2mm
+  collar round the rest of each standoff.
+- **OLED:** plug it in before the cover goes on. It's designed for the
+  socketed height; a direct-soldered OLED sits lower and still fits.
+- **Reset:** a 2mm hole in the clear top over the switch, beside the OLED.
+- **Ordering the clear top:** `out/cover-clear-{left,right}.dxf`, 2mm
+  clear acrylic, to any laser-cutting service. The DXF is in the real
+  frame, as seen from above (like the mat template, unlike the plate
+  DXF). The `.stl` is there to test-fit a printed stand-in first.
+- **Printing the base:** the face the clear top sits on goes down. No
+  supports.
 
 ## MagSafe tenting stand
 
@@ -184,23 +230,46 @@ on the desk. That plane is `TENT_MIN_T` (5mm) from the case at its outer
 edge; at the default 18° the legs are about 7mm tall on the outer side
 and 45–49mm on the inner side (51mm at the case's inner edge).
 
+The two tall inner legs lean in by the tent angle, so on the desk they
+stand plumb rather than square to the tilted case. They meet the case at
+its edge and keep their width; going down, they move in from the edge
+(at 18°, each one's end sits 13–15mm in from straight below its top),
+so on the desk the case's tilted side wall overhangs them a little. The
+frame's face along the inner edge leans in with them, so the tent's whole
+inner side is one upright face, flush with the legs, with no ledge where
+the frame meets a leg. The short outer legs stay square to the case. `TENT_PLUMB=0 ./build.sh
+generate` makes the tall ones square to the case too, carrying the
+case's side wall on down to the desk.
+
 A beam that would leave the case's footprint is bent inward through a
 waypoint. The outline turns inward where the straight bottom edge meets
 the thumb cluster.
 
-**How it attaches.** Each leg has an M2×3.2mm heat-set insert pressed
-into the flat mounting face. An **M2×6 screw** goes in from *inside* the
-case — head on the case floor, down through the floor hole
-(`build_case()` cuts a plain M2 clearance hole at each foot position),
-into the leg's insert. So the tent goes on before the PCB, and the PCB
-has to come out to take it off again.
+**How it attaches.** From below, with the keyboard assembled. Beside
+each leg is a platform at the mounting face with a counterbored hole.
+An **M2×6 screw** goes up through it into an M2×3.2mm heat-set insert
+pressed into the case bottom, flush (the 4.0mm floor holds the whole
+insert). The head seats 3mm below the mounting face, leaving 3.0mm in
+the insert, and a 5mm column under each seat is kept clear down to the
+desk for the driver. One short screw works at every leg however tall.
 
-The insert is in the leg rather than the case because a tilt across the
-case's width means tens of millimetres of height difference between
-legs; an insert in the case would need a screw as long as each leg. This
-way one short screw works at every corner. The floor holes are small
-enough that a plain adhesive foot still sticks over them if no tent is
-fitted.
+The outer legs' screws sit 13.5mm from the leg, toward the middle of
+the tent. Toward the middle is where the inner legs lean, so their
+screws sit 13.5mm along the inner edge instead (and 6mm in from the
+leg), where the driver can reach.
+
+The frame's two sides (front to back) are strips along the case's own
+edge between their two legs, flush with it all the way, inner edge
+parallel to it: about 12mm wide on the outer side, about 18mm on the
+inner side, wide enough to take the inner legs' screw platforms. The
+inner side follows the case edge where it turns in at the thumb cluster. The openings' corners and the joins round
+the other platforms are rounded off (`TENT_FILLET_R`, 4mm). `tent_leg_layout()` in `scripts/case.py` places them for both the
+case and the tent.
+
+Before 2026-10-23 it went the other way round: inserts in the legs,
+screws down from inside the case, so the PCB had to come out to change
+the tent. Those tents don't fit a new case, and old cases have no
+inserts.
 
 **Angle.** Set with the `TENT_ANGLE_DEG` environment variable, default
 18°:
@@ -211,8 +280,9 @@ TENT_ANGLE_DEG=15 ./build.sh generate
 
 The console output prints each leg's height.
 
-**Hardware per half:** 4 × M2×3.2mm heat-set insert (the same part as the
-case bosses), 4 × M2×6mm low-head screw, 4 × 10mm round rubber foot.
+**Hardware per half:** 4 × M2×3.2mm heat-set insert in the case bottom
+(the same part as the case bosses), 4 × M2×6mm low-head screw, 4 × 10mm
+round rubber foot.
 
 **Rubber feet.** The desk end of each leg has a round recess for a
 10 × 2mm rubber foot: 10.4mm across and 0.8mm deep, so the foot stands
@@ -220,19 +290,28 @@ case bosses), 4 × M2×6mm low-head screw, 4 × 10mm round rubber foot.
 leg's centre toward the middle of the tent so there is a rim all the way
 round (`TENT_RUBBER_*` in `scripts/case.py` for a different foot).
 
-**Printing.** Flat mounting face down on the bed, legs pointing up; no
-supports needed.
+**Weight (optional).** A shallow band across the middle of the tent,
+beam to beam and square to the case, has a 3 × 3 grid of cells for stick-on
+tire (wheel balance) weight segments, 19 × 16 × 4mm. Fill as many as
+you like: 8–9 at ¼ oz (7g) each is about 60g per half. Each cell is
+19.4 × 16.4 × 4.4mm and opens on the mounting face, so bolting the tent
+on traps the weights against the case bottom; their own adhesive can
+hold them in the cell too. The band is 6.4mm deep (2mm floor), only
+2.4mm deeper than the beams, and stays well clear of the desk. Segment
+sizes vary by brand: `TENT_WEIGHT_*` in `scripts/case.py` sets the cell
+size and grid, and `TENT_WEIGHT_CELLS = (0, 0)` drops the band.
 
-**Not yet confirmed on a real part:** that the screw heads clear what is
-under the PCB (two of the four per half sit under a switch socket or the
-Pro Micro's pins; by the numbers there is about 0.5mm of room over a
-1.6mm head, so use low-head screws), and that the half sits steady on the
-desk at the default angle.
+**Printing.** Flat mounting face down on the bed, legs pointing up; no
+supports needed. Each weight cell's floor prints as a 16mm bridge.
+
+**Not yet confirmed on a real part:** inserts pressed into the case
+bottom from below, and the driver reaching the screws past the legs;
+and that the half sits steady on the desk at the default angle.
 
 ## Floor mat (optional)
 
 A butyl sound-deadening mat (car "Dynamat"-style sheet) on the case floor
-damps the thin printed floor and adds about 20g per half. It has to fit
+damps the printed floor and adds about 20g per half. It has to fit
 between the floor and the hotswap sockets on the PCB's underside: 4.0mm
 under the PCB, less ~1.8mm of socket, so use **~1.7mm sheet (Dynamat
 Xtreme, 67mil), not the common 2mm/80mil mats**. It has to be pure
@@ -242,39 +321,55 @@ a foot from your face.
 
 `case.py` writes a cutting template per half: `mat-template-{left,right}.stl`
 (a 0.6mm print) and `.dxf` (to print 1:1 on paper). It is the cavity
-pulled 0.5mm in from the wall, with 7mm holes at the bosses, 5mm holes
-at the tent screw heads, and no mat under the MCU strip, where the
-through-hole pins of the Pro Micro, TRRS jack, reset switch and OLED
-header stick out under the PCB right over the mat's foil. The generator
-checks a 1.7mm mat against the case solid.
+pulled 0.5mm in from the wall, with 10mm holes at the bosses (2mm clear
+all round each 6mm boss) and at the tent screw heads, and no mat under
+the MCU strip, where the through-hole pins of the Pro Micro, TRRS jack,
+reset switch and OLED header stick out under the PCB right over the
+mat's foil. The generator checks a 1.7mm mat against the case solid.
+Each template is labelled LEFT or RIGHT over FOIL SIDE: raised on the
+print, on its own `label` layer in the DXF (it's not a cut line).
 
 Both files are in the real-world frame, the same as the case STL: lay
-the template on the **foil side** as printed, or flip it over if
-tracing on the backing paper. Cut with a sharp knife in several light
-passes (chill the sheet first so the butyl doesn't drag), punch the
-holes with a leather punch, and test-fit with the backing still on
-before sticking it down. The foil is conductive and faces the sockets
-with ~0.5mm to spare; a layer of Kapton tape over it is cheap insurance.
+the template on the **foil side** with the label reading normally, or
+flip it over (label reads backwards) if tracing on the backing paper.
+The halves are not mirror images of each other (different thumb
+clusters), so a left traced twice can't be flipped into a right.
+
+Cutting, from the first build (2026-10-21): heavy-duty scissors handle
+the outline. For the holes, use a **10mm hollow punch** (leather/gasket
+punch) and a mallet on a scrap board. Every hole is that size, so one
+punch does them all. A craft knife works but is slow and ragged in
+butyl. Trace with a fine marker and cut on the inside of the line. Chill
+the sheet first so the butyl doesn't drag, and test-fit with the backing
+still on. When sticking it down, peel the backing back from one end and
+press down progressively, so the exposed butyl never gets near a boss:
+it's tar-like and hard to get off once it's on the plastic. The foil is
+conductive and faces the sockets with ~0.5mm to spare; a layer of Kapton
+tape over it is cheap insurance.
 
 ## Hardware BOM (per keyboard, both halves)
 
 | Item | Qty | Notes |
 |---|---|---|
-| M2×3.2mm heat-set insert | 14 (+8 for tenting legs) | 7 per half, in the case bosses that have a PCB hole above them (8 bosses per half; the spare one stays empty: on first-revision PCBs the lower of the two outer bosses, on the next revision the upper one). [McMaster 94459A767](https://www.mcmaster.com/94459A767/) is a confirmed fit. +4 per half if printing tenting legs (one insert per leg, pressed into the leg itself) |
+| M2×3.2mm heat-set insert | 14 (+8 for tenting legs) | 7 per half, one in each case boss. [McMaster 94459A767](https://www.mcmaster.com/94459A767/) is a confirmed fit. +4 per half for the tenting legs, pressed into the case bottom |
 | M2×4mm low-head screw | 0 (4 without the MCU covers) | Only for the two holes per half beside the TRRS jack when no cover is fitted; those holes are 2.2mm and need no washer. 14 total if skipping the spacer/screw-down mount entirely (use M2×4 everywhere the table below says M2×10) |
-| M2×6mm low-head screw | 8 | Case → tenting leg, 4 per half, if printing tenting legs — same length at every corner regardless of that corner's own leg height (see Tenting legs, above) |
+| M2×6mm low-head screw | 8 | Tenting leg → case, 4 per half, up from below — same length at every leg regardless of its height (see Tenting legs, above) |
 | M2×10mm low-head screw | 10 | Plate → spacer → PCB → case bosses, 5 per half |
 | M2×12mm pan-head screw | 4 | MCU cover → case bosses, 2 per half |
+| M2 male-female hex standoff, 15mm + 4mm thread | 4 | Clear MCU cover, 2 per half, instead of the M2×12 screws. The male thread must be 4mm: 3mm is too short, 6mm too long |
+| M2×5mm screw | 4 | Clear top → standoffs |
 | M2.5 washer, 2.7mm ID / 6.0mm OD | 0 (10 if skipping the plate mount) | Only needed under a bare M2×4 screw on one of the 4.3mm PCB holes, which the plate mount no longer leaves any of. Required there (fits M2 screws fine, just a looser slip fit) — the PCB's mounting hole is 4.3mm with no annular ring, bigger than any standard M2 screw head. McMaster's M2-labeled washer (5.0mm OD) only just clears it; M2.5 size gives real margin. Not needed under the M2×6, M2×10 (bears on the plate's small clearance hole) or M2×12 (bears on the cover's printed post) |
-| Rubber feet, 10 × 2mm round | 8 | 4 per half. On a tented half they go in the recesses on the leg ends; without a tent they stick to the case bottom at the same 4 points |
+| Rubber feet, 10 × 2mm round | 8 | 4 per half. On a tented half they go in the recesses on the leg ends; without a tent, in the 4 corner recesses on the case bottom |
 | MagSafe ring (Keebio kit) | 2 | 1 per half, adhesive-backed — alternative to tenting legs, see above |
 | Case | 2 | 1 per half, 3D printed (`case-{left,right}.stl`), see Ordering the case below |
 | Switch plate | 2 | 1 per half — FR4 (from the `plate-fr4-{left,right}/` KiCad projects), or POM or MJF nylon (`plate-{pom,mjf}-*`), see below |
 | MCU cover | 2 | 1 per half, 3D printed (`cover-{left,right}.stl`) |
+| Clear MCU cover (instead of the MCU cover) | 2 + 2 | Per half, a printed base (`cover-base-{left,right}.stl`) and a 2mm laser-cut clear acrylic top (`cover-clear-{left,right}.dxf`) |
 | Plate-mount spacer, standard | 8 (+ spares) | 4 per half, 3D printed (`spacer-{pom,fr4,mjf}.stl` — pick the one matching your plate material) |
 | Plate-mount spacer, narrow | 2 (+ spares) | 1 per half, for the top hole nearest the MCU strip (`spacer-narrow-{pom,fr4,mjf}.stl`) |
 | Spacer frame (instead of the 10 loose spacers) | 2 | 1 per half, 3D printed (`spacer-frame-{pom,fr4,mjf}-{left,right}.stl`) |
 | Tenting leg | 2 | 1 per half, 3D printed (`tent-{left,right}.stl`) — alternative to rubber feet |
+| Tire weight segment, 19 × 16 × 4mm | up to 18 | Optional tent weight, up to 9 per half in the cells in the middle of the tent. Stick-on wheel balance weights, cut from the strip |
 | Floor mat (optional) | 2 | 1 per half, butyl sound-deadening sheet about 1.7mm thick (Dynamat Xtreme or similar; not 2mm/80mil), cut with the `mat-template-{left,right}` template. See Floor mat (optional), above |
 
 ## Ordering the plate
@@ -323,15 +418,11 @@ cheaper, and cheap/fast to iterate if something's off.
 ## Assembly order
 
 1. **Inserts:** press an M2×3.2mm heat-set insert into each of the 7
-   bosses per half that has a PCB hole above it. Leave the spare
-   outer/lower boss empty: on first-revision PCBs that's the lower of the
-   two, on the next revision the upper one.
-2. **Tenting legs, if used:** press an insert into the flat face of each
-   leg, hold the tent against the bottom of the case, and drive an M2×6
-   screw down from inside the case through the floor into each leg. This
-   has to happen while the case is still empty. A floor mat, if used,
-   goes in after this; its holes clear the screw heads, so the tent can
-   still come off later.
+   bosses per half.
+2. **Tenting-leg inserts, if you might use the tents:** press an insert
+   into each of the 4 holes in the case bottom beside the corner
+   recesses, from below, flush with the bottom. The tent itself goes on
+   at the end.
 3. **PCB:** lower it onto the bosses, USB connector and TRRS jack lined up
    with their notches. Nothing screws it down yet.
 4. **Spacers:** set one on each of the 5 plate-mount holes, pilot down
@@ -339,20 +430,22 @@ cheaper, and cheap/fast to iterate if something's off.
    the MCU strip takes the narrow one. Or lay the spacer frame on
    instead, pilots down.
 5. **Plate:** lay it on and screw it down with 5 M2×10 low-head screws,
-   through plate, spacer and PCB into the inserts. Of the two outer/lower
-   plate holes, only the one over your PCB's hole gets a screw. Do this
+   through plate, spacer and PCB into the inserts. Do this
    before fitting any switches: the screw head at the narrow-spacer hole
    overlaps its two neighbouring switches' top housings slightly.
 6. **Switches:** press each one through the plate into its hotswap
    socket.
 7. **MCU cover:** posts down onto the two holes beside the TRRS jack,
    rim on the case wall, fastened with two M2×12 pan-head screws.
-8. **OLED:** plug it into its socket through the cover's slot; it lies
-   on top of the cover.
+8. **OLED:** plug it into its socket through the cover's window. With the clear cover instead: plug the OLED in
+   first, screw the two standoffs through the PCB into the inserts, set
+   the base over them, then the clear top with two M2×5 screws.
 9. **Keycaps.**
-10. **Feet:** rubber feet into the recesses on the leg ends, or, without
-    tents, stuck to the case bottom over the 4 corner screw holes. If
-    using the MagSafe stand, stick a ring onto each half's flat bottom.
+10. **Feet:** either hold the tent against the case bottom and drive an
+    M2×6 screw up through each platform into the insert, with rubber feet
+    in the recesses on the leg ends; or, without tents, rubber feet in
+    the 4 corner recesses on the case bottom. If using the MagSafe stand,
+    stick a ring onto each half's flat bottom.
 
 **Without the plate mount:** at step 3, screw the PCB down with M2×4
 screws, each with an M2.5 washer, at the 5 holes that have a 4.3mm drill.
@@ -377,8 +470,14 @@ See the [root README](../README.md#build-commands) for requirements.
 
 ## Known first-pass limitations
 
-- USB and TRRS wall notches are generous rectangles, not fitted to a
-  specific connector shell — check against your actual cable ends.
+- The USB and TRRS wall notches no longer run down to the floor
+  (2026-10-21). The USB notch is a rectangle whose wall comes up to 1.0mm
+  under the PCB top, past its underside. That clears the measured 3mm
+  USB-C socket centred 1–2mm up; the cable's grip stays outside the case.
+  The TRRS notch is a U round the jack's axis, 11mm wide, sized for a 10mm
+  grip (`TRRS_PLUG_D` in `case.py`) so most TRRS cables fit. Its bottom is
+  1.4mm under the PCB's underside at the middle; its sides come up past
+  the underside. Not yet checked against a range of real cables.
 - The case's convex outer corners are rounded by the wall offset (~3mm);
   the inside corners where the top edge steps between columns stay sharp.
 - Two M2 mounting points per half don't get a plate clearance hole (see
@@ -387,6 +486,8 @@ See the [root README](../README.md#build-commands) for requirements.
   parts (see MCU cover, above).
 - A direct-soldered Pro Micro (no socket) was found to need a bit more
   clearance than modeled, near the top wall away from the USB notch — not
-  yet fixed in the generator, since the design's real target is the
-  low-profile Mill-Max sockets (see TODO.md), which sit shorter and may
-  not need it. Re-measure once those are in hand.
+  yet understood. That case predates the straight-sided outline; in the
+  current model the Pro Micro's board edge (from its footprint) has
+  2.3mm to the top wall and 3.2mm to the side wall, so what hit is
+  something the footprint doesn't show. Find out on the real part before
+  changing the generator.

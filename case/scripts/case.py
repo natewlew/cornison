@@ -33,7 +33,10 @@ OUT_DIR = os.path.join(CASE_DIR, "out")
 # ----------------------------------------------------------------------
 # Parameters (all mm unless noted)
 # ----------------------------------------------------------------------
-FLOOR_T = 2.5
+FLOOR_T = 4.0                # McMaster 94459A767's 4mm "Min Material
+                              # Thickness": the tenting legs' inserts go in
+                              # from below, through the floor (2.5 before
+                              # 2026-10-23, when the inserts were in the legs)
 BOSS_H = 4.0                 # clearance under PCB (hotswap sockets + LEDs);
                               # also McMaster 94459A767's own "Min Material
                               # Thickness" spec for its 3.2mm-long insert
@@ -68,20 +71,36 @@ SWITCH_FLANGE = 15.6            # standard Cherry MX top-housing footprint,
 M2_CLEARANCE_D = 2.3
 
 USB_NOTCH_W = 12.0
-TRRS_NOTCH_W = 9.0
-NOTCH_MARGIN_Z = 0.0            # notches start right at the floor top
+# The wall below each notch stays up as far as the plug allows, closing the
+# gap under the board there. Measured on the real parts (2026-10-21): the
+# Keebio Pro Micro's USB-C socket is 3mm tall, centred 1-2mm above the PCB
+# top, its mouth nearly flush with the case's outer face -- so the cable's
+# grip stays outside and only the socket passes through the notch, and the
+# wall comes up past the PCB's underside. The TRRS cable's grip sits ~2mm
+# into the wall, on the jack's axis (2.5mm above the PCB top, from
+# PJ320A.step), so its notch is a U round the grip: the user's own cable's
+# grip is 7mm, but the notch is sized to fit most TRRS cables, which leaves
+# the U's bottom just under the PCB's underside.
+USB_SOCKET_BOTTOM = -0.5        # vs the PCB top: centre 1mm, 3mm tall
+TRRS_AXIS_ABOVE_PCB = 2.5
+TRRS_PLUG_D = 10.0
+NOTCH_CLEARANCE = 0.5
+TRRS_NOTCH_W = TRRS_PLUG_D + 2 * NOTCH_CLEARANCE
 
 # MCU cover: a printed part over the Pro Micro/TRRS/reset strip, standing
 # on posts at the two PCB mounting holes beside the TRRS jack (the same
 # two holes the stock Corne OLED cover uses). The OLED module plugs into a
-# low-profile socket through a slot in the cover and rests on top of it.
+# low-profile socket through a slot in the cover; its socket holds it, just
+# clear of a shallow pocket in the cover's top.
 #
 # Part heights above the PCB's top face, measured from foostan's own 3D
 # models in pcb/kbd (PJ320A.step, tact-switch.step, ProMicro.step with the
 # footprints' model offsets applied) -- NOT yet from real parts. The Pro
 # Micro figure is one on ordinary 2.5mm headers including its pin stubs;
 # on Mill-Max low-profile sockets it sits no higher. Standard 8.5mm
-# sockets put it at ~11mm and do not fit under this cover.
+# sockets put it at ~11mm and do not fit under this cover. Measured on the
+# real build: direct-soldered with the stubs left long, it stood ~7mm and
+# lifted the cover -- the stubs have to be trimmed to the solder.
 PART_HEIGHTS = {
     "MJ-4PP-9_1side": 5.0,
     "ResetSW_1side": 5.2,
@@ -101,15 +120,43 @@ COVER_PLATE_LAP = 1.0              # where the cover is cut back for a keycap, t
 KEYCAP_1U = 18.1
 KEYCAP_1_5U = 27.6
 OLED_SLOT_MARGIN_X = 1.7        # beyond the end pins: half a 2.54mm pitch of header
-                                 # plastic plus 0.43 clearance. The slot has to pass
+                                 # plastic plus 0.43 clearance. The OLED window has to pass
                                  # the whole header, not just the pins
 OLED_SLOT_MARGIN_Y = 1.5        # margin added beyond the pin row, each side
+OLED_MODULE_L = 38.0            # measured 2026-10-19 (33 before, which left the
+                                 # module running 5mm past the window at the back)
+OLED_MODULE_W = 12.0            # measured
+OLED_PIN_EDGE = 1.4             # pin row centre to the module's pin-side edge --
+                                 # from the library's OLED-Module-with-Pins.step,
+                                 # NOT measured; it sets where the OLED window lands
+OLED_BOARD_ABOVE_PCB = 8.0      # measured 8-9mm: PCB top to the underside of the
+                                 # module's board, plugged fully into its ~4mm
+                                 # socket. The low end, so the covers clear it
+OLED_WINDOW_CLEAR = 0.75        # flat cover's OLED window = module outline grown by
+                                 # this each side. 0.5 was tight at the pin end
 RESET_HOLE_D = 3.0              # the old plate's reset hole -- now only sizes the
                                  # cavity bulge in legacy_mcu_footprint
 COVER_RESET_HOLE_D = 2.0        # paperclip access to the reset switch. Smaller than
                                  # the old plate's 3.0 so it clears the OLED slot
                                  # without the slot having to give way
 COVER_MIN_WALL = 1.0            # JLC3DP's MJF minimum wall
+# Two-piece clear cover (build_clear_cover): printed base + flat clear top
+OLED_TOP_ABOVE_PCB = 14.0       # measured 13-14mm: PCB top to the OLED's glass,
+                                 # plugged fully into its socket. The high end; a
+                                 # direct-soldered OLED sits lower and still fits
+STANDOFF_L = 15.0               # M2 male-female hex standoff body, PCB top to the
+                                 # clear top
+STANDOFF_MALE = 4.0             # its male thread: through the PCB, then 2.4mm into
+                                 # the insert. A 3mm one barely reaches the insert
+                                 # (tried 2026-10-18: won't start); 6mm bottoms out
+STANDOFF_HEX_AF = 4.0           # across flats: M2 standoffs come in 3.5 and 4.0;
+                                 # the bigger one sizes the base's holes
+STANDOFF_HOLE_CLEAR = 0.4       # base hole = hex across corners + this
+CLEAR_UNDERSIDE_ABOVE_PCB = STANDOFF_L
+CLEAR_T = 2.0                   # clear acrylic sheet
+CLEAR_TOP_SCREW_LEN = 5         # M2x5 through the clear top into the standoff
+CLEAR_BASE_WALL_T = 2.0         # JLC3DP's 2mm minimum feature
+CLEAR_PART_CLEARANCE = 0.5      # the base wall stands this far off every part
 FAB_MIN_WALL = 2.2   # target minimum plate wall/connect width -- JLCPCB's FR4
                       # routing ask is >=2.0mm; this gives a bit of margin
 PLATE_HOLE_MIN_WALL = 1.5   # a PCB mounting hole still gets its plate hole
@@ -171,53 +218,80 @@ PLATE_REINFORCE_MARGIN = 3.0    # min plate material kept around every switch ho
 STL_TOLERANCE = 0.05       # mm, chordal deviation for STL export (0.001 default is overkill)
 STL_ANGULAR_TOLERANCE = 0.25
 
-# The outer/lower PCB mounting hole moves down one row in the next PCB
-# revision (see TODO.md). Until then the case, plate and spacer frame carry
-# both spots, so either PCB fits; whichever spot has no hole in the PCB just
-# props the PCB up. Each spot is named by the four keys whose corners meet
-# at it, so it follows the real key positions.
-EITHER_OR_HOLES = {
-    "left": [("SW7", "SW8", "SW13", "SW14"), ("SW13", "SW14", "SW43", "SW44")],
-    "right": [("SW28", "SW29", "SW34", "SW35"), ("SW34", "SW35", "SW46", "SW47")],
-}
-EITHER_OR_DRILL = 4.3              # the M2_HOLE_v2 footprint's hole
-
-FOOT_D = 8.0                       # footprint a mounting point needs clearance
-                                    # for -- a rubber foot or a tent leg's boss,
-                                    # whichever ends up over it. Only governs
-                                    # placement/wall-clearance now; the case cut
-                                    # itself is just a small screw hole (below)
+RUBBER_FOOT_D = 10.0               # the round rubber feet, on the case bottom
+RUBBER_FOOT_H = 2.0                # or on the tent's leg ends: 10mm across, 2mm tall
+RUBBER_RECESS_CLEAR = 0.4          # recess is this much wider than the foot
+RUBBER_RECESS = 0.8                # and this deep, so the foot stands 1.2mm proud
+FOOT_D = RUBBER_FOOT_D + RUBBER_RECESS_CLEAR  # the case bottom's rubber-foot
+                                    # recess, at each of the 4 corner positions
+                                    # (the tent's legs stand on the same spots)
 FOOT_WALL_CLEARANCE = 1.5         # min wall thickness kept around every foot position
 
 # Tenting legs: an optional printed part per half, bolted on at the same
 # 4 foot positions in place of rubber feet, tilting the half so its inner
 # edge (toward the gap between halves) sits higher than its outer edge --
-# a peaked-roof tent, not a magnetic one. Each leg carries its own M2
-# insert at the top (not the case), since a single screw can't span the
-# full range of leg heights a tilt produces across a ~130mm foot span --
-# the case side only needs a plain screw-clearance hole, the same length
-# screw at every corner regardless of that corner's leg height.
+# a peaked-roof tent, not a magnetic one. Each leg has a platform beside
+# it at the mounting face; an M2 screw goes up through it from below into
+# an insert in the case floor, so the tent comes off without opening the
+# case, and the same short screw works at every leg however tall.
 TENT_ANGLE_DEG = float(os.environ.get("TENT_ANGLE_DEG", "18"))
-TENT_SCREW_CLEARANCE_D = 2.3       # M2 shank clearance through the case floor,
+TENT_SCREW_CLEARANCE_D = 2.3       # M2 shank clearance through the platform,
                                     # same as M2_CLEARANCE_D
+TENT_SCREW_SEAT = 3.0              # screw head seats this far below the
+                                    # mounting face: the platform it clamps
+TENT_SCREW_COLUMN_D = 5.0          # counterbore under the seat, kept clear
+                                    # down to the desk: M2 low head (~4mm) and
+                                    # room for the driver
+TENT_SCREW_OFFSET = 13.5           # screw this far from its leg's centre: leg
+                                    # radius + column radius + 1mm
+TENT_PLUMB_SCREW_IN = 6.0          # a plumb leg's screw also moves this far in
+                                    # toward the tent's middle (its offset along
+                                    # the edge already clears the leaning leg)
+TENT_FILLET_R = 4.0                # frame outline rounded by this much: fills
+                                    # the notches where platforms and legs meet
+                                    # the beams, and softens inside corners
 TENT_MIN_T = 5.0                   # tent thickness at the case's low (outer)
                                     # edge, where the desk plane comes closest
                                     # to the case -- thicker than the frame, so
                                     # the desk plane never cuts into it
-TENT_SCREW_LEN = 6.0               # M2x6: FLOOR_T (2.5) + a few mm into the
-                                    # insert, same at every corner regardless
-                                    # of that corner's own leg height
+TENT_SCREW_LEN = 6.0               # M2x6: TENT_SCREW_SEAT through the
+                                    # platform, the rest into the case's insert
 TENT_FOOT_D = 20.0                 # leg diameter, clipped flush to the case's
                                     # own outline where it would overhang it
+TENT_TALL_LEGS = 2                 # this many of the tallest legs (the inner
+                                    # pair) get their screws along the inner
+                                    # edge rather than toward the middle
+TENT_PLUMB = os.environ.get("TENT_PLUMB", "1") == "1"  # the tall legs lean
+                                    # in by the tent angle, so they stand
+                                    # plumb on the desk (the user's pick,
+                                    # 2026-10-23). TENT_PLUMB=0: square to the
+                                    # case like the short ones, carrying the
+                                    # case's side wall on down to the desk
 TENT_FRAME_W = 10.0                # width of the beams tying the 4 legs together
 TENT_FRAME_T = 4.0                 # their thickness, hanging off the flat
                                     # mounting face; they never reach the desk
-TENT_BORE_EXTRA = 1.0              # insert bore runs this much past the insert,
-                                    # room for the screw tip
-TENT_RUBBER_D = 10.0               # the round rubber feet that go on the leg
-TENT_RUBBER_H = 2.0                # ends: 10mm across, 2mm tall
-TENT_RUBBER_CLEAR = 0.4            # recess is this much wider than the foot
-TENT_RUBBER_RECESS = 0.8           # and this deep, so the foot stands 1.2mm proud
+# Weight tray: a shallow band across the middle of the tent, beam to beam,
+# square to the case, with a grid of cells for stick-on tire (wheel balance)
+# weight segments, the user's own: 19 x 16 x 4mm. The cells open on the
+# mounting face, so bolting the tent on traps the weights against the case
+# bottom (their own adhesive can hold them in the cell too). Ribs between
+# cells keep the printed bridges to one cell's width.
+TENT_WEIGHT_CELLS = (3, 3)         # front to back, across; (0, 0): no tray
+TENT_WEIGHT_L = 16.0               # segment side front to back
+TENT_WEIGHT_W = 19.0               # segment side across it
+TENT_WEIGHT_T = 4.0                # segment height
+TENT_WEIGHT_G = 7.0                # grams per segment, for the console (1/4 oz)
+TENT_WEIGHT_CLEAR = 0.2            # each cell this much bigger all round
+TENT_WEIGHT_DEPTH_CLEAR = 0.4      # and this much deeper than a segment
+TENT_WEIGHT_RIB = 2.0              # between cells (JLC3DP's 2mm minimum)
+TENT_WEIGHT_WALL = 2.0             # tray walls and floor
+TENT_WEIGHT_DESK_CLEAR = 2.0       # tray's underside kept this far off the desk
+                                    # plane (the rubber feet add 1.2mm more)
+
+TENT_RUBBER_D = RUBBER_FOOT_D      # the same rubber feet as the case bottom,
+TENT_RUBBER_H = RUBBER_FOOT_H      # in the same size recess on each leg end
+TENT_RUBBER_CLEAR = RUBBER_RECESS_CLEAR
+TENT_RUBBER_RECESS = RUBBER_RECESS
 TENT_RUBBER_SHIFT = 2.0            # recess centre, moved this far from the
                                     # leg's centre toward the middle of the
                                     # tent: the leg is trimmed to the case
@@ -231,14 +305,24 @@ TENT_RUBBER_SHIFT = 2.0            # recess centre, moved this far from the
 MAT_T = 1.7                        # Dynamat Xtreme 67mil; 80mil (2mm) mats
                                     # leave no room under the sockets
 MAT_EDGE_CLEARANCE = 0.5           # mat edge in from the cavity wall
-MAT_BOSS_HOLE_D = BOSS_OD + 1.0    # punch size round each boss
-MAT_SCREW_HOLE_D = 5.0             # round each tent screw's head (M2 low head
-                                    # ~4mm), which sits on the floor
+MAT_PUNCH_D = 10.0                 # hollow-punch size for the holes: 2mm all
+                                    # round each 6mm boss (0.5mm, the first
+                                    # mat, left butyl smearing onto the bosses
+                                    # as it went in, 2026-10-21). The tent
+                                    # screws no longer reach the floor top, so
+                                    # the mat goes over them
+MAT_BOSS_HOLE_D = MAT_PUNCH_D
 MAT_PIN_MARGIN = 1.5               # mat kept this far off the through-hole
                                     # parts' footprints: their pins poke out
                                     # under the PCB, right over the foil
 MAT_MIN_WIDTH = 2.0                # strips narrower than this are dropped
 MAT_TEMPLATE_T = 0.6               # printed tracing template thickness
+MAT_LABEL_H = 0.6                  # side label raised this far off the template
+MAT_LABEL_SIZE = 10.0              # "LEFT"/"RIGHT" font size; "FOIL SIDE"
+MAT_LABEL_SUB_SIZE = 4.0           # under it, so the label reads backwards
+                                    # when the template's flipped for tracing
+                                    # on the backing paper
+MAT_LABEL_MARGIN = 2.0             # label kept this far inside the mat
 MAT_DENSITY = 2.2                  # kg/m^2, Dynamat Xtreme's published
                                     # 0.45 lb/ft^2 -- only for the printout
 
@@ -256,22 +340,6 @@ def load_board():
     for side in board.values():
         for k in side["keys"]:
             k["rot"] = -k["rot"]
-    # mount_holes: the PCB's own holes, plus the either/or spots (see
-    # EITHER_OR_HOLES) whether or not this PCB has a hole there. The case,
-    # plate and spacers use these; the walls still follow m2_holes only.
-    for name, side in board.items():
-        keys = {k["ref"]: k for k in side["keys"]}
-        holes = [dict(h, on_pcb=True, either_or=False) for h in side["m2_holes"]]
-        for refs in EITHER_OR_HOLES[name]:
-            x = sum(keys[r]["x"] for r in refs) / 4
-            y = sum(keys[r]["y"] for r in refs) / 4
-            match = [h for h in holes if math.hypot(h["x"] - x, h["y"] - y) < 0.5]
-            if match:
-                match[0]["either_or"] = True
-            else:
-                holes.append({"x": x, "y": y, "drill": EITHER_OR_DRILL, "on_pcb": False, "either_or": True})
-        assert sum(h["either_or"] for h in holes) == 2, f"{name}: expected 2 either/or mounting spots"
-        side["mount_holes"] = holes
     return board
 
 
@@ -295,6 +363,43 @@ def poly(pts):
     # b3d.Polygon silently produces a degenerate (zero-area) face if given
     # a list of [x, y] lists instead of (x, y) tuples -- always coerce.
     return b3d.Polygon(*[tuple(p) for p in pts])
+
+
+def polygonize(sk, max_dev=0.01):
+    """A one-face sketch as a straight-sided polygon: lines kept as they
+    are, curves split into chords no more than `max_dev` off the curve.
+    Edges are chained by their end points rather than trusting their
+    order or direction (see dxf_to_loops.py)."""
+    faces = sk.faces()
+    assert len(faces) == 1 and not faces[0].inner_wires(), "polygonize takes one face with no holes"
+    chains = []
+    for e in faces[0].outer_wire().edges():
+        if e.geom_type == b3d.GeomType.LINE:
+            n = 1
+        else:
+            r = e.radius if e.geom_type == b3d.GeomType.CIRCLE else 1.0
+            step = 2 * math.acos(max(1 - max_dev / r, -1.0)) * r     # chord length at that deviation
+            n = max(2, math.ceil(e.length / step))
+        chains.append([(v.X, v.Y) for v in (e @ (i / n) for i in range(n + 1))])
+    loop = chains.pop(0)
+    while chains:
+        for i, c in enumerate(chains):
+            if math.dist(c[0], loop[-1]) < 1e-4:
+                loop += c[1:]
+            elif math.dist(c[-1], loop[-1]) < 1e-4:
+                loop += c[-2::-1]
+            else:
+                continue
+            chains.pop(i)
+            break
+        else:
+            raise AssertionError("polygonize: outline edges don't chain into one loop")
+    assert math.dist(loop[0], loop[-1]) < 1e-4, "polygonize: outline is not closed"
+    out = poly(loop[:-1])
+    # chords cut across curves, so up to max_dev times the outline's length
+    # can go (concave curves add it back instead)
+    assert abs(out.area - sk.area) <= max_dev * faces[0].outer_wire().length, f"polygonize: area {out.area:.3f} vs {sk.area:.3f}"
+    return out
 
 
 def hull_sketch(points):
@@ -334,6 +439,34 @@ def open_sketch(sk, radius):
     return b3d.offset(
         b3d.offset(sk, amount=-radius, kind=b3d.Kind.ARC), amount=radius, kind=b3d.Kind.ARC
     )
+
+
+def close_holes(sk, radius, within):
+    """Morphological closing of a sketch's openings: each hole loses any
+    notch narrower than 2*radius and gets rounded corners; a hole that small
+    all over fills in. Only the openings inside it are touched -- the empty
+    space between it and `within`'s edge (the case outline) is left alone.
+
+    The openings are found as the empty faces of `within - sk` that don't
+    reach `within`'s edge, and each is opened on its own, as a face with no
+    holes: fusing `sk` first leaves overlapping faces unmerged, b3d.offset()
+    offsets those separately, and on a face with holes that splits into
+    pieces it hits a build123d 0.13 bug ('Face' object has no attribute
+    'unwrap')."""
+    out = sk
+    for g in (within - sk).faces():
+        if g.inner_wires():
+            continue
+        gap = b3d.Sketch() + g
+        grown = b3d.offset(gap, amount=0.2, kind=b3d.Kind.ARC)
+        if overlap(grown, within) < grown.area - 0.01:
+            continue                         # reaches the outline: not an opening
+        try:
+            fill = gap - open_sketch(gap, radius)
+        except (RuntimeError, ValueError):
+            fill = gap                       # gone entirely when eroded
+        out = out + fill
+    return out
 
 
 def rounded_outer_sketch(pts_or_sketch, grow):
@@ -591,6 +724,54 @@ def mcu_zone(side, data):
     return (x0, y0, x1, y1), post_holes
 
 
+def cover_outline(side, data):
+    """The MCU covers' outline before the case wall and its notches clip
+    it: the MCU zone less every keycap, straightened on the key side. Left
+    at that, the key side had two nubs: a tab over the wall top past the
+    straight run beside the keys, and a tooth between the angled thumb
+    keycap and the column keycap above it. So the outline is cut at the
+    straight key-side edge, and at the angled keycap's edge run on until
+    it meets that. Returns the outline and what the cut took off, which
+    the plate fills instead. Needs no case geometry, so the plate can use
+    it too."""
+    zone_bb, _ = mcu_zone(side, data)
+    caps = keycap_sketch(data["keys"], COVER_KEYCAP_CLEARANCE)
+    raw = open_sketch(rect_from_bb(zone_bb) - caps, 0.6)
+    raw = max(raw.faces(), key=lambda f: f.area)
+    cx, cy = bbox_center(part_by_type(data["parts"], "ProMicro_v3")["bbox"])
+    key_dir = -1 if side == "left" else 1  # the keys lie this way (in x) from the MCU strip
+    big = 500.0
+
+    # key-side edge: where the keycaps start, level with the Pro Micro
+    ray = b3d.Pos(cx + key_dir * big / 2, cy, 0) * b3d.Rectangle(big, 0.2)
+    hit = (ray & caps).bounding_box()
+    x_edge = hit.min.X if key_dir > 0 else hit.max.X
+    past_edge = b3d.Pos(x_edge + key_dir * big / 2, cy, 0) * b3d.Rectangle(big, 2 * big)
+
+    # angled keycap edge: the outline's longest slanted straight run, as a
+    # half-plane on the side away from the Pro Micro
+    slanted = [
+        e for e in raw.edges()
+        if e.geom_type == b3d.GeomType.LINE and min(abs(e.tangent_at(0).X), abs(e.tangent_at(0).Y)) > 0.1
+    ]
+    assert slanted, f"{side}: no angled keycap edge on the cover outline"
+    edge = max(slanted, key=lambda e: e.length)
+    assert edge.length > 10, f"{side}: the cover's longest slanted edge is only {edge.length:.1f}mm"
+    p0, d = edge.position_at(0), edge.tangent_at(0)
+    n = b3d.Vector(-d.Y, d.X)
+    if (b3d.Vector(cx, cy) - p0).dot(n) > 0:
+        n = -n
+    corners = [p0 + d * big, p0 - d * big, p0 - d * big + n * big, p0 + d * big + n * big]
+    past_angled = poly([(p.X, p.Y) for p in corners])
+
+    out = max((raw - past_edge - past_angled).faces(), key=lambda f: f.area)
+    trimmed = raw - out
+    assert trimmed.area < 40, (
+        f"{side}: straightening the cover took off {trimmed.area:.1f}mm^2 -- expected two small nubs"
+    )
+    return out, trimmed
+
+
 def plate_mount_holes(side, data, plate_sk):
     """M2 holes where the plate can be screwed down with a spacer, not just
     rest on the switches: the plate actually has a clearance hole there
@@ -599,7 +780,7 @@ def plate_mount_holes(side, data, plate_sk):
     _, post_holes = mcu_zone(side, data)
     post_xy = {(h["x"], h["y"]) for h in post_holes}
     holes = []
-    for h in data["mount_holes"]:
+    for h in data["m2_holes"]:
         if (h["x"], h["y"]) in post_xy:
             continue
         probe = b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(0.3)
@@ -652,7 +833,7 @@ def build_spacer_frame(side, plate_sk, keys, mount_plan, plate_t):
     posts = []
     for h, kind in mount_plan:
         od = SPACER_OD if kind == "standard" else SPACER_OD_NARROW
-        posts.append((h["x"], h["y"], od, not h["either_or"]))
+        posts.append((h["x"], h["y"], od))
         web = web + b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(od / 2)
     faces = web.faces()
     fused = faces[0]
@@ -660,19 +841,16 @@ def build_spacer_frame(side, plate_sk, keys, mount_plan, plate_t):
         fused = fused + f
     pieces = fused.faces()
     main = max(pieces, key=lambda f: f.area)
-    for (x, y, od, pilot) in posts:
+    for (x, y, od) in posts:
         assert overlap(main, b3d.Pos(x, y, 0) * b3d.Circle(0.5)) > 0.7, (
             f"{side}: spacer frame post at ({x:.1f},{y:.1f}) isn't joined to the rest of the frame"
         )
 
-    # No pilot at the either/or spots: on a PCB without a hole there, a
-    # pilot would land on solid board and hold the frame off it.
     frame = extrude_up(main, 0.0, height)
-    for (x, y, od, pilot) in posts:
-        if pilot:
-            frame = frame + b3d.Pos(x, y, -SPACER_PILOT_H) * b3d.Cylinder(
-                radius=SPACER_PILOT_D / 2, height=SPACER_PILOT_H, align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN)
-            )
+    for (x, y, od) in posts:
+        frame = frame + b3d.Pos(x, y, -SPACER_PILOT_H) * b3d.Cylinder(
+            radius=SPACER_PILOT_D / 2, height=SPACER_PILOT_H, align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN)
+        )
         frame = frame - b3d.Pos(x, y, -SPACER_PILOT_H - 0.1) * b3d.Cylinder(
             radius=SPACER_BORE_D / 2, height=height + SPACER_PILOT_H + 0.2,
             align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN),
@@ -688,7 +866,7 @@ def build_spacer_frame(side, plate_sk, keys, mount_plan, plate_t):
     hit = overlap(main, bodies)
     assert hit < 0.01, f"{side}: spacer frame reaches within 0.2mm of a switch body ({hit:.2f}mm^2)"
     stray = sum(f.area for f in pieces if f is not main)
-    return frame, {"height": height, "posts": len(posts), "pilots": sum(p[3] for p in posts), "area": main.area, "dropped": stray}
+    return frame, {"height": height, "posts": len(posts), "area": main.area, "dropped": stray}
 
 
 def report_plate_mount(side, keys, mount_holes, metrics):
@@ -771,8 +949,6 @@ def report_plate_mount(side, keys, mount_holes, metrics):
                      f"plate, use the smallest head you have")
         if overlap(keycaps, b3d.Pos(x, y, 0) * b3d.Circle(head_r)) > 1e-3:
             note += "; under a keycap"
-        if h["either_or"]:
-            note += "; EITHER/OR spot -- " + ("this PCB's hole" if h["on_pcb"] else "for the next PCB revision, no hole in this PCB")
         print(f"  plate-mount hole ({x:6.1f},{y:5.1f}): {note}")
         plan.append((h, kind))
     print(f"  plate-mount screw M2x{PLATE_SCREW_LEN:.0f}: {engagement:.1f}mm engagement in the "
@@ -830,27 +1006,16 @@ def build_case(side, data, plate_sk):
                 return (x, y)
         return None
 
-    # ---- bosses under the PCB M2 holes (and the either/or spot it lacks) ----
-    # A boss at a spot this PCB has no hole for presses on the board's
-    # underside, so it has to miss every part there.
-    for h in data["mount_holes"]:
-        if h["on_pcb"]:
-            continue
-        for k in data["keepouts"]:
-            kx0, ky0, kx1, ky1 = k["bbox"]
-            gap = math.hypot(max(kx0 - h["x"], 0, h["x"] - kx1), max(ky0 - h["y"], 0, h["y"] - ky1)) - BOSS_OD / 2
-            assert gap >= 0.0, (
-                f"{side}: boss at the either/or spot ({h['x']:.1f},{h['y']:.1f}) would press on {k['ref']} ({gap:.2f}mm)"
-            )
+    # ---- bosses under the PCB M2 holes ----
     boss_positions = []
-    for h in data["mount_holes"]:
+    for h in data["m2_holes"]:
         x, y = h["x"], h["y"]
         boss = b3d.Pos(x, y, FLOOR_T) * b3d.Cylinder(
             radius=BOSS_OD / 2, height=BOSS_H, align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN)
         )
         case = case + boss
         boss_positions.append((x, y))
-    for h in data["mount_holes"]:
+    for h in data["m2_holes"]:
         x, y = h["x"], h["y"]
         bore = b3d.Pos(x, y, boss_top_z - INSERT_DEPTH) * b3d.Cylinder(
             radius=INSERT_BORE_D / 2, height=INSERT_DEPTH + 0.5,
@@ -862,14 +1027,18 @@ def build_case(side, data, plate_sk):
     trrs_part = part_by_type(parts, "MJ-4PP-9_1side")
 
     usb_cx, _ = bbox_center(usb_part["bbox"])
-    notch_h = wall_top_z - FLOOR_T + 1.0
+    usb_floor_z = pcb_top_z + USB_SOCKET_BOTTOM - NOTCH_CLEARANCE
+    assert boss_top_z <= usb_floor_z < pcb_top_z, f"{side}: USB notch floor ({usb_floor_z:.2f}) doesn't close the gap under the PCB"
+    trrs_axis_z = pcb_top_z + TRRS_AXIS_ABOVE_PCB
+    trrs_floor_z = trrs_axis_z - TRRS_NOTCH_W / 2
+    assert FLOOR_T + 1.0 < trrs_floor_z < pcb_top_z, f"{side}: TRRS notch floor ({trrs_floor_z:.2f}) is out of range"
 
     usb_wall_hit = scan_wall_crossing(outer_sk, lambda t: (usb_cx, t), 5, 60)
     assert usb_wall_hit is not None, f"{side}: couldn't find the outer wall near the USB connector (x={usb_cx:.1f})"
     usb_wall_y = usb_wall_hit[1]
     y0, y1 = usb_wall_y - 3.0, usb_wall_y + 12.0  # generous past the wall band; a no-op once inside the cavity
-    usb_notch = b3d.Pos(usb_cx, (y0 + y1) / 2, FLOOR_T) * b3d.Box(
-        USB_NOTCH_W, y1 - y0, notch_h,
+    usb_notch = b3d.Pos(usb_cx, (y0 + y1) / 2, usb_floor_z) * b3d.Box(
+        USB_NOTCH_W, y1 - y0, wall_top_z - usb_floor_z + 1.0,
         align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN),
     )
     case = case - usb_notch
@@ -889,9 +1058,12 @@ def build_case(side, data, plate_sk):
     # right: mirrored.
     x0 = trrs_wall_x - 12.0 if is_left else trrs_wall_x - 3.0
     x1 = trrs_wall_x + 3.0 if is_left else trrs_wall_x + 12.0
-    trrs_notch = b3d.Pos((x0 + x1) / 2, trrs_cy, FLOOR_T) * b3d.Box(
-        x1 - x0, TRRS_NOTCH_W, notch_h,
-        align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN),
+    trrs_notch = b3d.Pos((x0 + x1) / 2, trrs_cy, trrs_axis_z) * (
+        b3d.Box(
+            x1 - x0, TRRS_NOTCH_W, wall_top_z - trrs_axis_z + 1.0,
+            align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN),
+        )
+        + b3d.Rot(0, 90, 0) * b3d.Cylinder(radius=TRRS_NOTCH_W / 2, height=x1 - x0)
     )
     case = case - trrs_notch
 
@@ -901,10 +1073,10 @@ def build_case(side, data, plate_sk):
     # instead of the probed coordinate (the TRRS notch silently cut the
     # wrong wall on the left half, and no wall at all on the right half).
     outer_bb = outer_sk.bounding_box()
-    notch_z = (FLOOR_T + wall_top_z) / 2
+    notch_z = (pcb_top_z + wall_top_z) / 2
 
-    def assert_material(x, y, present, label):
-        probe = b3d.Pos(x, y, notch_z) * b3d.Box(0.6, 0.6, 0.6)
+    def assert_material(x, y, present, label, z=notch_z):
+        probe = b3d.Pos(x, y, z) * b3d.Box(0.6, 0.6, 0.6)
         vol = (case & probe).volume
         if present:
             assert vol > 0.05, f"{side}: {label} at ({x:.1f},{y:.1f}) has no wall material -- expected solid wall here"
@@ -913,10 +1085,19 @@ def build_case(side, data, plate_sk):
 
     usb_notch_x, usb_notch_y = usb_cx, (y0 + y1) / 2
     assert_material(usb_notch_x, usb_notch_y, False, "USB notch")
+    # the wall under each notch, where the PCB's underside is
+    under_z = boss_top_z - 0.3
+    assert_material(usb_cx, usb_wall_y + WALL_T / 2, True, "wall under the USB notch", under_z)
 
     trrs_notch_x, trrs_notch_y = (x0 + x1) / 2, trrs_cy
     trrs_opposite_x = outer_bb.min.X + WALL_T / 2 if is_left else outer_bb.max.X - WALL_T / 2
     assert_material(trrs_notch_x, trrs_notch_y, False, "TRRS notch")
+    trrs_wall_mid_x = trrs_wall_x - WALL_T / 2 if is_left else trrs_wall_x + WALL_T / 2
+    assert_material(trrs_wall_mid_x, trrs_cy, True, "wall under the TRRS notch", trrs_floor_z - 0.4)
+    # the U's sides come up past the PCB's underside beyond the grip's middle
+    for dy in (-1, 1):
+        y = trrs_cy + dy * (TRRS_NOTCH_W / 2 - 0.4)
+        assert_material(trrs_wall_mid_x, y, True, "wall at the TRRS notch's side", under_z)
     assert_material(trrs_opposite_x, trrs_cy, True, "wall opposite the TRRS notch")
 
     # ---- foot/tent mounting points ----
@@ -941,18 +1122,22 @@ def build_case(side, data, plate_sk):
         max(safe_verts, key=lambda p, dx=dx, dy=dy: p[0] * dx + p[1] * dy)
         for (dx, dy) in [(-1, -1), (1, -1), (-1, 1), (1, 1)]
     ]
-    # Plain through-hole, not a blind recess: a tent leg's own insert sits
-    # at the top of the leg (see build_tent), so the case side only ever
-    # needs a screw-clearance hole here, the same for every mounting point
-    # regardless of whether a tent leg or a plain adhesive foot ends up
-    # over it (the hole is small enough that an adhesive foot still sticks
-    # down fine straddling it).
+    # A rubber-foot recess in the bottom at each corner, for a case with
+    # no tent; a tent's flat mounting face just covers them.
     for (x, y) in foot_positions:
-        foot = b3d.Pos(x, y, -0.1) * b3d.Cylinder(
-            radius=TENT_SCREW_CLEARANCE_D / 2, height=FLOOR_T + 0.2,
+        case = case - b3d.Pos(x, y, -0.1) * b3d.Cylinder(
+            radius=FOOT_D / 2, height=RUBBER_RECESS + 0.1,
             align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN),
         )
-        case = case - foot
+    # The tent's inserts, pressed in from below flush with the bottom. The
+    # hole runs through the floor: the insert is shorter than it, and the
+    # screw stops inside the insert, so nothing reaches the cavity.
+    tent_tall, tent_screws = tent_leg_layout(side, outer_sk, foot_positions)
+    for (x, y) in tent_screws:
+        case = case - b3d.Pos(x, y, -0.1) * b3d.Cylinder(
+            radius=INSERT_BORE_D / 2, height=FLOOR_T + 0.2,
+            align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN),
+        )
 
     # ---- verification checks ----
     # A real minimum-clearance check, not just "doesn't poke through": shrink
@@ -971,15 +1156,38 @@ def build_case(side, data, plate_sk):
 
     for (fx, fy) in foot_positions:
         assert_clear_of_wall(fx, fy, FOOT_D / 2, FOOT_WALL_CLEARANCE, "foot recess")
+    assert INSERT_DEPTH <= FLOOR_T, f"the tent's {INSERT_DEPTH}mm insert is longer than the {FLOOR_T}mm floor"
+    for (sx, sy) in tent_screws:
+        assert_clear_of_wall(sx, sy, INSERT_BORE_D / 2, 2.0, "tent insert")
+        for (fx, fy) in foot_positions:
+            gap = math.hypot(sx - fx, sy - fy) - FOOT_D / 2 - INSERT_BORE_D / 2
+            assert gap >= 1.5, f"{side}: tent insert at ({sx:.1f},{sy:.1f}) is {gap:.1f}mm from a foot recess"
+
+    def case_solid_at(x, y, z):
+        return overlap(case, b3d.Pos(x, y, z) * b3d.Box(0.4, 0.4, 0.4), "volume") > 0.03
+
+    for (fx, fy) in foot_positions:
+        assert not case_solid_at(fx, fy, RUBBER_RECESS / 2), f"{side}: foot recess at ({fx:.1f},{fy:.1f}) is not open"
+        assert case_solid_at(fx, fy, RUBBER_RECESS + 0.4), f"{side}: foot recess at ({fx:.1f},{fy:.1f}) is too deep"
+    for (sx, sy) in tent_screws:
+        for z in (0.3, INSERT_DEPTH / 2, FLOOR_T - 0.3):
+            assert not case_solid_at(sx, sy, z), f"{side}: tent insert hole at ({sx:.1f},{sy:.1f}) is blocked at z {z}"
+        assert case_solid_at(sx + INSERT_BORE_D / 2 + 0.5, sy, FLOOR_T / 2), f"{side}: no floor round the tent insert at ({sx:.1f},{sy:.1f})"
 
     metrics = {
         "wall_top_z": wall_top_z,
         "boss_top_z": boss_top_z,
         "pcb_top_z": pcb_top_z,
         "foot_positions": foot_positions,
+        "tent_tall": tent_tall,
+        "tent_screws": tent_screws,
         "boss_positions": boss_positions,
         "cavity_sk": cavity_sk,
         "outer_sk": outer_sk,
+        # the USB-end wall's outer face beside the USB notch, and which way
+        # (in y) it lies from the board
+        "usb_wall_y": usb_wall_y,
+        "usb_dir": 1 if usb_wall_y > usb_part["pos"][1] else -1,
         "notch_bbs": [
             (usb_cx - USB_NOTCH_W / 2, y0, usb_cx + USB_NOTCH_W / 2, y1),
             (x0, trrs_cy - TRRS_NOTCH_W / 2, x1, trrs_cy + TRRS_NOTCH_W / 2),
@@ -993,16 +1201,20 @@ def build_case(side, data, plate_sk):
 # ----------------------------------------------------------------------
 def build_floor_mat(side, data, case, metrics):
     """Outline of the sound-deadening mat on the case floor: the cavity
-    pulled in from the wall, with holes round the bosses and tent screw
-    heads, and kept off the MCU strip's through-hole pins. Returned in
+    pulled in from the wall, with holes round the bosses, and kept off the
+    MCU strip's through-hole pins. Returned in
     KiCad's frame like everything else; the caller exports it."""
     mat = b3d.offset(metrics["cavity_sk"], amount=-MAT_EDGE_CLEARANCE, kind=b3d.Kind.ARC)
+    pins = bbox_union([part_by_type(data["parts"], t)["bbox"] for t in MCU_ZONE_PARTS], margin=MAT_PIN_MARGIN)
+    # Open once before the holes: the MCU cut leaves a ~0.6mm strip along
+    # the wall, and a 10mm boss hole cuts it loose as its own face, which
+    # b3d.offset() throws on instead of eroding away.
+    mat = open_sketch(mat - rect_from_bb(pins), MAT_MIN_WIDTH / 2)
     for x, y in metrics["boss_positions"]:
         mat = mat - b3d.Pos(x, y) * b3d.Circle(MAT_BOSS_HOLE_D / 2)
-    for x, y in metrics["foot_positions"]:
-        mat = mat - b3d.Pos(x, y) * b3d.Circle(MAT_SCREW_HOLE_D / 2)
-    pins = bbox_union([part_by_type(data["parts"], t)["bbox"] for t in MCU_ZONE_PARTS], margin=MAT_PIN_MARGIN)
-    mat = mat - rect_from_bb(pins)
+    # A hole can still cut a crumb off a corner (0.4mm^2 by the MCU strip);
+    # offset() throws on those too, so drop them by area first.
+    mat = b3d.Sketch() + [f for f in mat.faces() if f.area > (2 * MAT_MIN_WIDTH) ** 2]
     mat = open_sketch(mat, MAT_MIN_WIDTH / 2)
     assert mat.area > 0, f"{side}: floor mat came out empty"
 
@@ -1011,21 +1223,50 @@ def build_floor_mat(side, data, case, metrics):
     mat_solid = extrude_up(mat, FLOOR_T, MAT_T)
     clash = overlap(mat_solid, case, "volume")
     assert clash < 0.01, f"{side}: floor mat intersects the case ({clash:.2f}mm^3)"
-    for x, y in metrics["foot_positions"]:
-        head = b3d.Pos(x, y) * b3d.Circle(PLATE_SCREW_HEAD_D / 2)
-        assert overlap(head, mat) < 0.01, f"{side}: floor mat covers the tent screw head at ({x:.1f},{y:.1f})"
     return mat, {"pieces": len(mat.faces()), "area": mat.area}
+
+
+def mat_label(side, phys_mat):
+    """'LEFT'/'RIGHT' over 'FOIL SIDE', in the real-world frame, at the spot
+    nearest the mat's middle where the whole label (plus a margin) lies
+    on the mat -- the two templates look alike, and one first build came
+    out as two lefts."""
+    label = b3d.Sketch() + [
+        b3d.Pos(0, MAT_LABEL_SUB_SIZE / 2 + 1) * b3d.Text(side.upper(), MAT_LABEL_SIZE),
+        b3d.Pos(0, -MAT_LABEL_SIZE / 2) * b3d.Text("FOIL SIDE", MAT_LABEL_SUB_SIZE),
+    ]
+    bb = label.bounding_box()
+    w, h = bb.size.X + 2 * MAT_LABEL_MARGIN, bb.size.Y + 2 * MAT_LABEL_MARGIN
+    label = b3d.Pos(-bb.center().X, -bb.center().Y) * label
+    mbb = phys_mat.bounding_box()
+    mid = mbb.center()  # a mirrored Sketch reports center() as the origin
+    spots = [(mbb.min.X + i * 2.0, mbb.min.Y + j * 2.0)
+             for i in range(int(mbb.size.X / 2) + 1) for j in range(int(mbb.size.Y / 2) + 1)]
+    spots.sort(key=lambda p: math.dist(p, (mid.X, mid.Y)))
+    for x, y in spots:
+        box = b3d.Pos(x, y) * b3d.Rectangle(w, h)
+        if overlap(box, phys_mat) > box.area - 0.01:
+            return b3d.Pos(x, y) * label
+    raise AssertionError(f"{side}: no room on the floor mat for its {w:.0f}x{h:.0f}mm label")
 
 
 def export_floor_mat(side, mat):
     """Tracing template: a thin print plus a DXF for paper. Unlike the
     plate DXF, both are mirrored into the real-world frame, so the
-    template reads right side up laid on the mat's foil (top) face."""
+    template reads right side up laid on the mat's foil (top) face. The
+    label is raised on the print and on its own layer in the DXF, so
+    nobody cuts along it."""
     phys = to_physical(mat)
-    write(extrude_up(mat, 0, MAT_TEMPLATE_T), f"mat-template-{side}", indent="  ")
+    label = mat_label(side, phys)
+    # to_physical() is a mirror, so it also takes the label back to KiCad's
+    # frame, where write() expects everything
+    template = extrude_up(mat, 0, MAT_TEMPLATE_T) + extrude_up(to_physical(label), MAT_TEMPLATE_T, MAT_LABEL_H)
+    write(template, f"mat-template-{side}", indent="  ")
     dxf_path = os.path.join(OUT_DIR, f"mat-template-{side}.dxf")
     exp = b3d.ExportDXF()
     exp.add_shape(phys)
+    exp.add_layer("label")
+    exp.add_shape(label, layer="label")
     exp.write(dxf_path)
     print(f"  wrote {dxf_path}")
 
@@ -1057,6 +1298,33 @@ def extrude_up(sk, z0, height):
     return solid
 
 
+def tent_leg_layout(side, outer_sk, feet):
+    """Which legs are the tall ones, and where each leg's screw goes. Shared
+    by build_case (the inserts) and build_tent (the platforms).
+
+    The TENT_TALL_LEGS legs farthest from the outer edge are the tall ones.
+    A screw goes TENT_SCREW_OFFSET from its leg toward the middle of the
+    four -- except beside a tall leg, whose screw goes along the inner edge
+    instead, and TENT_PLUMB_SCREW_IN in: with TENT_PLUMB a tall leg's lower
+    end leans right under the spot toward the middle and would block the
+    driver (and the user liked them there either way)."""
+    is_left = side == "left"
+    obb = outer_sk.bounding_box()
+    pivot_x = obb.min.X if is_left else obb.max.X
+    by_reach = sorted(range(len(feet)), key=lambda i: abs(feet[i][0] - pivot_x), reverse=True)
+    tall = set(by_reach[:TENT_TALL_LEGS])
+    cx = sum(x for x, y in feet) / len(feet)
+    cy = sum(y for x, y in feet) / len(feet)
+    screws = []
+    for i, (x, y) in enumerate(feet):
+        if i in tall:
+            screws.append((x + math.copysign(TENT_PLUMB_SCREW_IN, cx - x), y + math.copysign(TENT_SCREW_OFFSET, cy - y)))
+        else:
+            d = math.hypot(cx - x, cy - y)
+            screws.append((x + (cx - x) / d * TENT_SCREW_OFFSET, y + (cy - y) / d * TENT_SCREW_OFFSET))
+    return tall, screws
+
+
 def build_tent(side, data, metrics, angle_deg):
     """Printed tenting leg: bolts on at the same 4 points build_case already
     cut a screw-clearance hole for, in place of rubber feet. Tilts the half
@@ -1071,11 +1339,15 @@ def build_tent(side, data, metrics, angle_deg):
         below it is cut off, so all four legs end in that one plane and sit
         flat on the desk.
 
-    Each leg carries its own M2 insert, pressed into the flat mounting
-    face. The screw comes down from inside the case, through the floor
-    hole, into that insert -- so one short screw works at every corner
-    however tall that corner's leg is. (An insert in the case instead would
-    need a screw as long as the leg.)"""
+    With TENT_PLUMB the tall inner pair lean in toward the outer edge by
+    `angle_deg`, along the desk's normal, so they stand plumb when the half
+    sits on the desk; the short outer legs stay square to the case.
+
+    Beside each leg is a platform at the mounting face, with a counterbored
+    hole: an M2 screw goes up through it from below into an insert in the
+    case floor (tent_leg_layout places them). Under each seat a column is
+    kept clear down to the desk for the driver, so the tent comes off
+    without opening the case."""
     is_left = side == "left"
     feet = metrics["foot_positions"]
     outer_sk = metrics["outer_sk"]
@@ -1090,12 +1362,64 @@ def build_tent(side, data, metrics, angle_deg):
 
     max_t = thickness(far_x)
 
-    # ---- legs: round pads, clipped flush to the case's own outline ----
-    pads_sk = None
-    for (x, y) in feet:
-        pad = b3d.Pos(x, y, 0) * b3d.Circle(TENT_FOOT_D / 2)
-        pads_sk = pad if pads_sk is None else pads_sk + pad
-    pads_sk = pads_sk & outer_sk
+    # Each leg runs from the mounting face along its own axis: straight down
+    # (case frame) or, for a plumb leg, along the desk's downward normal,
+    # which leans toward the outer edge (the pivot). A plumb leg is a true
+    # round cylinder about that axis, so its end on the desk is a full
+    # TENT_FOOT_D circle and its top on the mounting face is an ellipse
+    # 1/cos(angle) wider across the tilt.
+    sin_a, cos_a = math.sin(math.radians(angle_deg)), math.cos(math.radians(angle_deg))
+    dtdx = tan if is_left else -tan
+    plumb_dir = (-sin_a if is_left else sin_a, 0.0, -cos_a)
+    straight_dir = (0.0, 0.0, -1.0)
+    screws = metrics["tent_screws"]
+    plumb = metrics["tent_tall"] if TENT_PLUMB else set()
+    leg_dirs = [plumb_dir if i in plumb else straight_dir for i in range(len(feet))]
+
+    def to_desk(x, y, d):
+        """Where the line from (x, y, 0) along d meets the desk plane."""
+        # z = d.z*L = -t(x + d.x*L), and thickness is linear in x
+        length = thickness(x) / (-d[2] - d[0] * dtdx)
+        return (x + d[0] * length, y + d[1] * length, d[2] * length)
+
+    def along(p, d, dist):
+        return (p[0] + d[0] * dist, p[1] + d[1] * dist, p[2] + d[2] * dist)
+
+    # ---- legs: round, clipped flush to the case's own outline ----
+    # A plumb leg is not the pad extruded along its slant: that makes a
+    # generic extrusion surface, which OCC tessellates into long slivers
+    # (up to 48mm long, near-zero area) that show up as a pattern on the
+    # leg. A real Cylinder tessellates in clean strips like the straight
+    # legs. Its tilted top is trimmed at the mounting face, and its side
+    # clipped by the case outline slid down the same slant, so the flat
+    # where it meets the case edge stays plumb too. That outline goes in
+    # as a polygon: its rounded corners slid along the slant would be the
+    # same sliver-prone surface again. (A leg that leans in can't also keep
+    # its width and stay on the case's edge: that edge leans 18° on the
+    # desk. A flared one, plumb inside and on the edge outside, was tried
+    # and turned down, 2026-10-23.)
+    legs = None
+    for (x, y), d in zip(feet, leg_dirs):
+        if d is straight_dir:
+            pad = (b3d.Pos(x, y, 0) * b3d.Circle(TENT_FOOT_D / 2)) & outer_sk
+            leg = extrude_down(pad, max_t + 1.0)
+        else:
+            r = TENT_FOOT_D / 2
+            rise = r * tan + 1.0             # top cap starts above z=0 all round
+            length = (max_t + 1.0) / cos_a + rise
+            cyl = b3d.Pos(x, y, 0) * b3d.Rot(0, angle_deg if is_left else -angle_deg, 0) * b3d.Cylinder(
+                radius=r, height=length, align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MAX)
+            )
+            cyl = b3d.Pos(*along((0.0, 0.0, 0.0), d, -rise / cos_a)) * cyl
+            region = polygonize((b3d.Pos(x, y, 0) * b3d.Circle(r / cos_a + 2.0)) & outer_sk)
+            clip = b3d.extrude(region, amount=(max_t + 1.0) / cos_a, dir=d)
+            leg = cyl & clip
+            assert len(leg.solids()) == 1, f"{side}: plumb leg at ({x:.1f},{y:.1f}) came out in pieces"
+            bb = leg.bounding_box()
+            assert abs(bb.max.Z) < 1e-6 and bb.min.Z < -thickness(x), (
+                f"{side}: plumb leg at ({x:.1f},{y:.1f}) landed at z {bb.min.Z:.3f}..{bb.max.Z:.3f}"
+            )
+        legs = leg if legs is None else legs + leg
 
     # ---- frame: a beam along each side of the quad the legs make, plus a
     # brace across the middle of its two longer sides ----
@@ -1118,8 +1442,11 @@ def build_tent(side, data, metrics, angle_deg):
         return math.hypot(e[1][0] - e[0][0], e[1][1] - e[0][1])
 
     def inside_case(p0, p1):
+        # wholly inside: a beam let 0.5% past the outline got that bit
+        # clipped off by `frame_sk & outer_sk` below, leaving a notch in
+        # its outer edge
         b = beam(p0, p1)
-        return overlap(b, outer_sk) >= 0.995 * b.area
+        return overlap(b, outer_sk) >= b.area - 0.01
 
     ring = [feet[0], feet[1], feet[3], feet[2]]
     edges = [(ring[i], ring[(i + 1) % 4]) for i in range(4)]
@@ -1151,12 +1478,131 @@ def build_tent(side, data, metrics, angle_deg):
     long_pair = (0, 2) if length(edges[0]) + length(edges[2]) > length(edges[1]) + length(edges[3]) else (1, 3)
     brace = (nodes[long_pair[0]], nodes[long_pair[1]])
     assert inside_case(*brace), f"{side}: tent brace leaves the case's footprint"
+    # The two sides (front to back) get a strip along the case's edge below
+    # instead of a beam between leg centres.
+    sides = [e for e in edges if e in segments and abs(e[1][0] - e[0][0]) <= abs(e[1][1] - e[0][1])]
     frame_sk = beam(*brace)
     for s in segments:
-        frame_sk = frame_sk + beam(*s)
+        if s not in sides:
+            frame_sk = frame_sk + beam(*s)
+    # ---- screw platforms: a stub from each leg out to its screw ----
+    platform_r = TENT_SCREW_COLUMN_D / 2 + 2.0
+    for foot, (sx, sy) in zip(feet, screws):
+        frame_sk = frame_sk + beam(foot, (sx, sy)) + b3d.Pos(sx, sy) * b3d.Circle(platform_r)
+    # ---- the two sides, front to back: flush with the case's edge ----
+    # A plain beam between leg centres is narrower than the legs and, on the
+    # inner side, runs diagonally away from the case's edge (which turns in
+    # toward the thumb cluster). Instead each side is a strip of the case's
+    # own outline, between its two legs, wide enough to reach past both
+    # legs' centres by half a beam and to take in any screw platform that
+    # sits along the side (a plumb leg's). Its inner edge runs parallel to
+    # the case's edge, and it replaces the side's beam.
+    pads2d = [(b3d.Pos(x, y) * b3d.Circle(TENT_FOOT_D / 2)) & outer_sk for x, y in feet]
+    outline_wire = outer_sk.faces()[0].outer_wire()
+
+    def to_outline(px, py):
+        return outline_wire.distance_to(b3d.Vector(px, py, 0))
+
+    for e in sides:
+        (x0, y0), (x1, y1) = e
+        el = length(e)
+        tx_, ty_ = (x1 - x0) / el, (y1 - y0) / el
+        nx, ny = -ty_, tx_
+        if nx * (cx - x0) + ny * (cy - y0) > 0:
+            nx, ny = -nx, -ny            # point outward
+        width = max(to_outline(x0, y0), to_outline(x1, y1)) + TENT_FRAME_W / 2
+        for (sx, sy) in screws:
+            on_edge = (sx - x0) * tx_ + (sy - y0) * ty_
+            inward = -((sx - x0) * nx + (sy - y0) * ny)
+            if 0 <= on_edge <= el and inward + platform_r < TENT_FOOT_D / 2:
+                width = max(width, to_outline(sx, sy) + platform_r)
+        # between the two legs (lines through their centres, square to the
+        # side), from past the strip's inner edge out past the case's edge
+        between = poly([(x0 - nx * width * 2, y0 - ny * width * 2), (x1 - nx * width * 2, y1 - ny * width * 2),
+                        (x1 + nx * 60, y1 + ny * 60), (x0 + nx * 60, y0 + ny * 60)])
+        # The band round just this side's stretch of the case edge (offsetting
+        # the whole outline would pull in the front and back edges' bands
+        # too, and jog the tent's front edge out to the case's near each leg)
+        ends = poly([(x0, y0), (x1, y1), (x1 + nx * 60, y1 + ny * 60), (x0 + nx * 60, y0 + ny * 60)])
+        stretch = [oe for oe in outline_wire.edges()
+                   if overlap(b3d.Pos(*tuple(oe @ 0.5)[:2]) * b3d.Circle(0.05), ends) > 0]
+        stretch = max(b3d.Wire.combine(stretch), key=lambda w: w.length)
+        band = b3d.Sketch() + b3d.Face(b3d.offset(stretch, amount=width, kind=b3d.Kind.ARC).wires()[0])
+        frame_sk = frame_sk + (band & outer_sk & between)
     frame_sk = frame_sk & outer_sk
 
-    tent = extrude_down(pads_sk, max_t + 1.0) + extrude_down(frame_sk, TENT_FRAME_T)
+    # ---- weight tray: a band across the middle, beam to beam ----
+    # Centred on the brace but square to the case (front to back), not
+    # along the brace: the brace leans a few degrees, and a band following
+    # it looked like it pointed toward the front. Its ends run to the front
+    # and back beams' centrelines, following the back beam's bend, so it
+    # merges into the frame without poking out past it. Its floor is flat in
+    # the case's frame and the desk plane rises toward the outer edge, so
+    # the band slides toward the tall side if its shallow corner would come
+    # within TENT_WEIGHT_DESK_CLEAR of the desk.
+    tray_pts, cells = None, []
+    n_along, n_across = TENT_WEIGHT_CELLS
+    if n_along and n_across:
+        ux, uy = 0.0, 1.0               # along: front to back
+        vx, vy = 1.0, 0.0               # across
+
+        def rect(rcx, rcy, w, l):
+            return [(rcx + sl * ux * l / 2 + sw * vx * w / 2, rcy + sl * uy * l / 2 + sw * vy * w / 2)
+                    for sl, sw in ((1, 1), (1, -1), (-1, -1), (-1, 1))]
+
+        cell_l = TENT_WEIGHT_L + 2 * TENT_WEIGHT_CLEAR
+        cell_w = TENT_WEIGHT_W + 2 * TENT_WEIGHT_CLEAR
+        pocket_d = TENT_WEIGHT_T + TENT_WEIGHT_DEPTH_CLEAR
+        grid_l = n_along * cell_l + (n_along - 1) * TENT_WEIGHT_RIB
+        grid_w = n_across * cell_w + (n_across - 1) * TENT_WEIGHT_RIB
+        tray_d = pocket_d + TENT_WEIGHT_WALL
+        tray_w = grid_w + 2 * TENT_WEIGHT_WALL
+        tx, ty = midpoint(brace)
+        need = tray_d + TENT_WEIGHT_DESK_CLEAR
+        low = min(thickness(tx + sw * tray_w / 2) for sw in (-1, 1))
+        tx += max(0.0, (need - low) / tan) * (1 if is_left else -1)
+        centrelines = poly([sg[0] for sg in segments])   # the beams' centre path round the frame
+        tray_sk = poly(rect(tx, ty, tray_w, 400.0)) & centrelines
+        assert len(tray_sk.faces()) == 1, f"{side}: weight tray came out in pieces"
+        tray_pts = [(v.X, v.Y) for v in tray_sk.vertices()]
+        for i in range(n_along):
+            for j in range(n_across):
+                a = (i - (n_along - 1) / 2) * (cell_l + TENT_WEIGHT_RIB)
+                b = (j - (n_across - 1) / 2) * (cell_w + TENT_WEIGHT_RIB)
+                cells.append(rect(tx + ux * a + vx * b, ty + uy * a + vy * b, cell_w, cell_l))
+        assert min(thickness(x) for x, _ in tray_pts) >= need - 1e-6, f"{side}: weight tray comes within {TENT_WEIGHT_DESK_CLEAR}mm of the desk"
+        assert overlap(tray_sk, outer_sk) >= tray_sk.area - 0.01, f"{side}: weight tray leaves the case's footprint"
+        for c in cells:
+            walled = b3d.offset(poly(c), amount=TENT_WEIGHT_WALL, kind=b3d.Kind.INTERSECTION)
+            assert overlap(walled, tray_sk) >= walled.area - 0.01, (
+                f"{side}: a weight cell comes within {TENT_WEIGHT_WALL}mm of the tray's end -- the beams are too close for {n_along} rows"
+            )
+
+    # ---- frame: rounded, then extruded ----
+    # Morphological closing of the frame's openings, over the beams, leg
+    # tops and weight tray together: it fills every notch narrower than
+    # 2*TENT_FILLET_R and rounds the openings' corners. The outer boundary
+    # (sides already flush, see above) is left alone, and the tray keeps its
+    # own (deeper) rectangle under it.
+    closing = frame_sk
+    for pad in pads2d:
+        closing = closing + pad
+    if tray_pts:
+        closing = closing + tray_sk
+    closed = close_holes(closing, TENT_FILLET_R, outer_sk) & outer_sk
+    assert overlap(closed, closing) >= closing.area - 0.5, f"{side}: rounding the frame lost material"
+    frame = extrude_down(closed, TENT_FRAME_T)
+    if plumb:
+        # The frame's face along the inner edge leans in with the plumb
+        # legs, flush with their outer flats: dropped straight down it stood
+        # 1.3mm proud of them at its underside, a ledge beside each leg.
+        # Clipped by the case outline slid down the legs' slant; on the outer
+        # side that slide moves the outline away from the frame, so only the
+        # inner side is cut. As a polygon, for the same reason as the legs.
+        frame = frame & b3d.extrude(polygonize(outer_sk), amount=(TENT_FRAME_T + 1.0) / cos_a, dir=plumb_dir)
+    tent = legs + frame
+    if tray_pts:
+        tent = tent + extrude_down(tray_sk, tray_d)
 
     # ---- cut off everything below the desk plane ----
     # Pos*Rot*shape: tilt the cutter's top face about the pivot line first,
@@ -1168,18 +1614,25 @@ def build_tent(side, data, metrics, angle_deg):
         1000, 1000, 500, align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MAX)
     )
     tent = tent - below_desk
+    for c in cells:
+        tent = tent - b3d.Pos(0, 0, 0.1) * extrude_down(poly(c), pocket_d + 0.1)
 
-    # ---- insert bores, into the flat mounting face ----
-    bore_depth = INSERT_DEPTH + TENT_BORE_EXTRA
-    for (x, y) in feet:
-        left_under = thickness(x) - bore_depth - TENT_RUBBER_RECESS
-        assert left_under >= 0.8, (
-            f"{side}: only {left_under:.2f}mm of leg left between the insert bore and the rubber-foot "
-            f"recess at ({x:.1f},{y:.1f}) -- raise TENT_MIN_T for an angle this shallow"
+    # ---- screw holes: through the platform, and a clear column under it ----
+    # The column may cut a beam or the platform's own underside, never a leg.
+    for (sx, sy) in screws:
+        column = b3d.Pos(sx, sy, -TENT_SCREW_SEAT) * b3d.Cylinder(
+            radius=TENT_SCREW_COLUMN_D / 2, height=max_t + 2.0,
+            align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MAX),
         )
-        tent = tent - b3d.Pos(x, y, -bore_depth) * b3d.Cylinder(
-            radius=INSERT_BORE_D / 2, height=bore_depth + 0.1,
-            align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN),
+        clash = overlap(column, legs, "volume")
+        assert clash < 0.01, f"{side}: the driver column under the tent screw at ({sx:.1f},{sy:.1f}) runs into a leg ({clash:.2f}mm^3)"
+        if tray_pts:
+            assert overlap(b3d.Pos(sx, sy) * b3d.Circle(TENT_SCREW_COLUMN_D / 2), poly(tray_pts)) < 0.01, (
+                f"{side}: the driver column at ({sx:.1f},{sy:.1f}) runs into the weight tray"
+            )
+        tent = tent - column - b3d.Pos(sx, sy, 0.1) * b3d.Cylinder(
+            radius=TENT_SCREW_CLEARANCE_D / 2, height=TENT_SCREW_SEAT + 0.2,
+            align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MAX),
         )
 
     # ---- rubber-foot recesses, into the desk face of each leg ----
@@ -1187,12 +1640,15 @@ def build_tent(side, data, metrics, angle_deg):
     # the desk plane and the recess goes in square to it.
     assert TENT_RUBBER_H - TENT_RUBBER_RECESS >= 1.0, "rubber foot would barely stand proud of its recess"
     recess_r = (TENT_RUBBER_D + TENT_RUBBER_CLEAR) / 2
+    # On a plumb leg the recess is placed on the pad and carried down the
+    # leg's axis to the desk, so it keeps the same rim as on a straight leg.
     recess_centres = []
-    for (x, y) in feet:
+    for (x, y), ld in zip(feet, leg_dirs):
         d = math.hypot(cx - x, cy - y)
         rx, ry = x + (cx - x) / d * TENT_RUBBER_SHIFT, y + (cy - y) / d * TENT_RUBBER_SHIFT
         recess_centres.append((rx, ry))
-        tent = tent - b3d.Pos(rx, ry, -thickness(rx)) * b3d.Rot(0, angle_deg if is_left else -angle_deg, 0) * b3d.Pos(
+        qx, qy, qz = to_desk(rx, ry, ld)
+        tent = tent - b3d.Pos(qx, qy, qz) * b3d.Rot(0, angle_deg if is_left else -angle_deg, 0) * b3d.Pos(
             0, 0, -5.0
         ) * b3d.Cylinder(
             radius=recess_r, height=TENT_RUBBER_RECESS + 5.0,
@@ -1216,38 +1672,103 @@ def build_tent(side, data, metrics, angle_deg):
     for (x, y) in feet:
         d = math.hypot(cx - x, cy - y)
         leg_probes.append((x + (cx - x) / d * 5.0, y + (cy - y) / d * 5.0))  # 5mm in from the bore, toward the middle
-    top_probes = leg_probes + [midpoint(s) for s in segments] + [midpoint(brace)]
+    top_probes = leg_probes + [midpoint(s) for s in segments]
+    if tray_pts:
+        # middle of each tray side, 1mm in from it, and the ribs between
+        # neighbouring cells
+        for sw in (-1, 1):
+            top_probes.append((tx + sw * (tray_w / 2 - 1.0), ty))
+        centres = [(sum(x for x, _ in c) / 4, sum(y for _, y in c) / 4) for c in cells]
+        for k, (ax, ay) in enumerate(centres):
+            for (bx, by) in centres[k + 1:]:
+                if math.hypot(bx - ax, by - ay) < max(cell_l, cell_w) + TENT_WEIGHT_RIB + 0.1:
+                    top_probes.append(((ax + bx) / 2, (ay + by) / 2))
+    else:
+        top_probes.append(midpoint(brace))
+        bx, by = midpoint(brace)
+        assert void_at(bx, by, -TENT_FRAME_T - 0.5), f"{side}: brace is thicker than TENT_FRAME_T"
     for (px, py) in top_probes:
         assert solid_at(px, py, -0.3), f"{side}: tent has no material under its mounting face at ({px:.1f},{py:.1f})"
         assert void_at(px, py, 0.3), f"{side}: tent sticks up past its mounting face at ({px:.1f},{py:.1f})"
-    bx, by = midpoint(brace)
-    assert void_at(bx, by, -TENT_FRAME_T - 0.5), f"{side}: brace is thicker than TENT_FRAME_T"
+    # each weight cell: open from the mounting face to its depth at the
+    # middle and every corner, a full floor under it, nothing under that
+    for c in cells:
+        ccx = sum(x for x, _ in c) / 4
+        ccy = sum(y for _, y in c) / 4
+        for (px, py) in [(ccx, ccy)] + [(x + (ccx - x) * 0.05, y + (ccy - y) * 0.05) for x, y in c]:
+            for z in (0.3, -0.3, -pocket_d / 2, -pocket_d + 0.3):
+                assert void_at(px, py, z), f"{side}: weight cell blocked at ({px:.1f},{py:.1f},{z:.1f})"
+            assert solid_at(px, py, -pocket_d - TENT_WEIGHT_WALL / 2), f"{side}: no tray floor under ({px:.1f},{py:.1f})"
+            assert void_at(px, py, -tray_d - 0.5), f"{side}: tray floor at ({px:.1f},{py:.1f}) is thicker than {TENT_WEIGHT_WALL}mm"
     # every leg ends exactly on the desk plane (probed on the rim beside the
-    # rubber-foot recess), and the recess is open to its depth and no deeper
-    for (x, y), (rx, ry) in zip(feet, recess_centres):
+    # rubber-foot recess), and the recess is open to its depth and no deeper.
+    # Probes are placed on the pad, carried down the leg's own axis, and
+    # step along that axis -- square to the desk on a plumb leg.
+    for (x, y), (rx, ry), ld in zip(feet, recess_centres, leg_dirs):
         d = math.hypot(cx - rx, cy - ry)
         px, py = rx + (cx - rx) / d * (recess_r + 1.2), ry + (cy - ry) / d * (recess_r + 1.2)
         assert math.hypot(px - x, py - y) < TENT_FOOT_D / 2 - 0.5, f"{side}: no rim left beside the recess at ({x:.1f},{y:.1f})"
-        t = thickness(px)
-        assert solid_at(px, py, -t + 0.6), f"{side}: leg at ({px:.1f},{py:.1f}) stops short of the desk plane"
-        assert void_at(px, py, -t - 0.6), f"{side}: leg at ({px:.1f},{py:.1f}) pokes below the desk plane"
-        t = thickness(rx)
-        assert void_at(rx, ry, -t + TENT_RUBBER_RECESS / 2), f"{side}: rubber-foot recess at ({rx:.1f},{ry:.1f}) is not open"
-        assert solid_at(rx, ry, -t + TENT_RUBBER_RECESS + 0.5), f"{side}: rubber-foot recess at ({rx:.1f},{ry:.1f}) is too deep"
-    for (x, y) in feet:
-        assert void_at(x, y, -INSERT_DEPTH / 2), f"{side}: insert bore at ({x:.1f},{y:.1f}) is not open"
-    # the screw: head on the case floor, down through it into the insert
-    reach = TENT_SCREW_LEN - FLOOR_T
-    assert reach <= bore_depth, f"M2x{TENT_SCREW_LEN:.0f} bottoms out in the tent's insert bore"
-    engagement = min(reach, INSERT_DEPTH)
-    assert engagement >= 2.5, f"M2x{TENT_SCREW_LEN:.0f} only reaches {engagement:.1f}mm into the tent's insert"
+        q = to_desk(px, py, ld)
+        assert solid_at(*along(q, ld, -0.6)), f"{side}: leg at ({q[0]:.1f},{q[1]:.1f}) stops short of the desk plane"
+        assert void_at(*along(q, ld, 0.6)), f"{side}: leg at ({q[0]:.1f},{q[1]:.1f}) pokes below the desk plane"
+        q = to_desk(rx, ry, ld)
+        assert void_at(*along(q, ld, -TENT_RUBBER_RECESS / 2)), f"{side}: rubber-foot recess at ({q[0]:.1f},{q[1]:.1f}) is not open"
+        assert solid_at(*along(q, ld, -TENT_RUBBER_RECESS - 0.5)), f"{side}: rubber-foot recess at ({q[0]:.1f},{q[1]:.1f}) is too deep"
+    # a plumb leg really is plumb: its axis is the desk's normal. Probe its
+    # centre line at a few heights, its inner face (material just inside the
+    # leaning cylinder's side, none just past it), and just beside its top
+    # centre toward the edge low down, where a straight leg would still be.
+    normal = (-dtdx, 0.0, -1.0)
+    n = math.hypot(*normal)
+    for i in plumb:
+        (x, y), ld = feet[i], leg_dirs[i]
+        assert sum(a * b / n for a, b in zip(ld, normal)) > 1 - 1e-9, f"{side}: plumb leg at ({x:.1f},{y:.1f}) is off the desk normal"
+        bottom = to_desk(x, y, ld)
+        span = math.dist((x, y, 0.0), bottom)
+        for f in (0.3, 0.6, 0.9):
+            px, py, pz = along((x, y, 0.0), ld, span * f)
+            assert solid_at(px, py, pz), f"{side}: plumb leg at ({x:.1f},{y:.1f}) has no material on its axis at z {pz:.1f}"
+        inward = -1 if is_left else 1       # toward the tent's middle
+        for f in (0.3, 0.6, 0.9):
+            px, py, pz = along((x, y, 0.0), ld, span * f)
+            face_x = px + inward * TENT_FOOT_D / 2 / cos_a   # the leaning cylinder's inner side at this z
+            assert solid_at(face_x - inward * 0.6, py, pz), f"{side}: leg at ({x:.1f},{y:.1f}) has no inner face at z {pz:.1f}"
+            assert void_at(face_x + inward * 0.6, py, pz), f"{side}: leg at ({x:.1f},{y:.1f}) bulges past its plumb inner face at z {pz:.1f}"
+        px, py, pz = along((x, y, 0.0), ld, span * 0.9)
+        assert void_at(x - inward * 1.0, y, pz), f"{side}: leg at ({x:.1f},{y:.1f}) still runs straight down"
+
+    # each platform: hole open through it, seat under it for the head, and
+    # the column below clear all the way to the desk
+    seat_r = (TENT_SCREW_CLEARANCE_D / 2 + TENT_SCREW_COLUMN_D / 2) / 2
+    for (sx, sy) in screws:
+        assert void_at(sx, sy, -TENT_SCREW_SEAT / 2), f"{side}: tent screw hole at ({sx:.1f},{sy:.1f}) is not open"
+        assert solid_at(sx + seat_r, sy, -TENT_SCREW_SEAT + 0.3), f"{side}: no platform for the screw head at ({sx:.1f},{sy:.1f})"
+        assert void_at(sx, sy, 0.3), f"{side}: platform at ({sx:.1f},{sy:.1f}) sticks up past the mounting face"
+        column = b3d.Pos(sx, sy, -TENT_SCREW_SEAT - 0.05) * b3d.Cylinder(
+            radius=TENT_SCREW_COLUMN_D / 2 - 0.05, height=max_t + 2.0,
+            align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MAX),
+        )
+        assert overlap(tent, column, "volume") < 0.001, f"{side}: driver column under ({sx:.1f},{sy:.1f}) is not clear"
+    # the screw: head on the platform's seat, up into the case's insert,
+    # stopping inside it (the insert is flush with the case bottom)
+    engagement = TENT_SCREW_LEN - TENT_SCREW_SEAT
+    assert engagement <= INSERT_DEPTH, f"M2x{TENT_SCREW_LEN:.0f} runs out the top of the case's {INSERT_DEPTH}mm insert"
+    assert engagement >= 2.5, f"M2x{TENT_SCREW_LEN:.0f} only reaches {engagement:.1f}mm into the case's insert"
 
     info = {
         "angle_deg": angle_deg,
         "span": abs(far_x - pivot_x),
         "leg_heights": [(x, y, round(thickness(x), 2)) for (x, y) in feet],
+        # (x, y, how far in its end sits from the top, how tall it stands)
+        "plumb_legs": [(feet[i][0], feet[i][1], abs(to_desk(*feet[i], leg_dirs[i])[0] - feet[i][0]),
+                        -to_desk(*feet[i], leg_dirs[i])[2] / cos_a) for i in sorted(plumb)],
         "max_thickness": max_t,
         "screw_engagement": engagement,
+        "weight": tray_pts and {
+            "cells": len(cells),
+            "cell": (cell_w, cell_l, pocket_d),
+            "tray": (tray_w, tray_sk.bounding_box().size.Y, tray_d),
+        },
     }
     return tent, info
 
@@ -1255,43 +1776,63 @@ def build_tent(side, data, metrics, angle_deg):
 # ----------------------------------------------------------------------
 # MCU cover
 # ----------------------------------------------------------------------
-def build_cover(side, data, case, metrics):
-    """Flat cover over the MCU strip. Its rim rests on the case wall top
-    along the board's top and inner edges; at the other end it stands on
-    posts over the PCB mounting holes beside the TRRS jack, and one long
-    screw per post goes through cover, post and PCB into the same
-    heat-set insert an ordinary PCB screw would use."""
-    keys = data["keys"]
-    parts = data["parts"]
-    cavity_sk = metrics["cavity_sk"]
-    outer_sk = metrics["outer_sk"]
-    pcb_top_z = metrics["pcb_top_z"]
-    wall_top_z = metrics["wall_top_z"]
-    under_z = pcb_top_z + COVER_UNDERSIDE_ABOVE_PCB
-    top_z = under_z + COVER_T
-    assert under_z > wall_top_z, f"{side}: cover underside is below the wall top"
-
-    zone_bb, post_holes = mcu_zone(side, data)
-
-    # footprint: the zone, out to the wall's outer edge -- but not over
-    # the USB/TRRS notches (a plug's overmold stands
-    # taller than the cover's underside there) and not under any keycap (a
-    # pressed keycap's skirt comes down lower than the cover's top)
-    wall_sk = outer_sk - cavity_sk
+def cover_footprint(side, data, metrics):
+    """Outline shared by both MCU covers: cover_outline() out to the wall's
+    outer edge -- but not over the USB/TRRS notches (a plug's overmold
+    stands taller than the cover's underside there). cover_outline() keeps
+    it from under every keycap (a pressed keycap's skirt comes down lower
+    than the cover's top). Returns that outline, the part of it on the
+    wall top, the post holes and the plate sketch."""
+    _, post_holes = mcu_zone(side, data)
+    wall_sk = metrics["outer_sk"] - metrics["cavity_sk"]
+    # flush with the notches' sides: they already carry the plug's
+    # clearance (an extra 0.5mm here left the covers' edges stepped back
+    # from the case's notch edges, 2026-10-22)
     for nb in metrics["notch_bbs"]:
-        wall_sk = wall_sk - rect_from_bb(bbox_union([nb], margin=0.5))
-    limit = cavity_sk + wall_sk
-    cover_sk = (rect_from_bb(zone_bb) & limit) - keycap_sketch(keys, COVER_KEYCAP_CLEARANCE)
-    # drop anything too narrow to print, keep the one real piece
-    cover_sk = open_sketch(cover_sk, 0.6)
+        wall_sk = wall_sk - rect_from_bb(nb)
+    limit = metrics["cavity_sk"] + wall_sk
+    # At the USB end, stop at the outer face of the wall beside the USB
+    # notch, all the way across. Past the Pro Micro on the key side the
+    # wall steps out to the next column, and following it up the step left
+    # a rounded tab on the cover's corner (removed 2026-10-22, the user's
+    # call) where the other corner just stops at this line.
+    y, d = metrics["usb_wall_y"], metrics["usb_dir"]
+    limit = limit & rect_from_bb((-500.0, min(y, y - d * 500.0), 500.0, max(y, y - d * 500.0)))
+    cover_sk = cover_outline(side, data)[0] & limit
+    # Drop anything too narrow to print and keep the one real piece. The
+    # opening that finds those also rounds every outside corner by 0.6mm,
+    # which flared the cover's notch edges wider than the case's sharp ones
+    # right at the outer face (2026-10-24, the user's catch at the TRRS
+    # notch). So the corners round each notch go back in from the original
+    # outline. Only there: everywhere else the opening also smooths away a
+    # 0.007mm jog in the outline that OCC can't offset past.
+    kept = max(open_sketch(cover_sk, 0.6).faces(), key=lambda f: f.area)
+    by_notches = None
+    for (nx0, ny0, nx1, ny1) in metrics["notch_bbs"]:
+        ring = rect_from_bb((nx0 - 1.0, ny0 - 1.0, nx1 + 1.0, ny1 + 1.0)) - rect_from_bb((nx0, ny0, nx1, ny1))
+        by_notches = ring if by_notches is None else by_notches + ring
+    cover_sk = b3d.Sketch() + kept + (cover_sk & by_notches & b3d.offset(b3d.Sketch() + kept, amount=0.6, kind=b3d.Kind.ARC))
     cover_sk = max(cover_sk.faces(), key=lambda f: f.area)
-
-    slab = b3d.Pos(0, 0, under_z) * b3d.extrude(cover_sk, amount=COVER_T)
-    rim_sk = cover_sk & wall_sk
-    cover = slab + b3d.Pos(0, 0, wall_top_z) * b3d.extrude(rim_sk, amount=under_z - wall_top_z)
-
-    # posts stand through the plate's level, so keep them off its edge
     plate_sk, _ = build_plate_sketch(side, data)
+    # The rim runs the full wall width along the USB end, edge to edge: at
+    # the key-side corner the cover's edge is over the plate's edge and the
+    # gap to the wall, not the wall, and the rim stopped 0.9mm short there,
+    # a step in the underside. It rests on the plate's top, level with the
+    # wall top.
+    band = rect_from_bb((-500.0, min(y, y - d * WALL_T), 500.0, max(y, y - d * WALL_T)))
+    for nb in metrics["notch_bbs"]:
+        band = band - rect_from_bb(nb)
+    # ...and off the parts under the cover where it leaves the wall
+    for t in PART_HEIGHTS:
+        band = band - rect_from_bb(part_by_type(data["parts"], t)["bbox"])
+    rim_sk = cover_sk & (wall_sk + band)
+    return cover_sk, rim_sk, post_holes, plate_sk
+
+
+def add_cover_posts(side, cover, cover_sk, post_holes, plate_sk, pcb_top_z, under_z, top_z):
+    """Posts from the PCB up to the cover's underside at each post hole,
+    with the screw hole run through the whole cover."""
+    # posts stand through the plate's level, so keep them off its edge
     plate_clear = b3d.offset(plate_sk, amount=MCU_OPENING_MARGIN, kind=b3d.Kind.ARC)
     for h in post_holes:
         post_sk = (b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(COVER_POST_OD / 2)) & cover_sk
@@ -1307,32 +1848,229 @@ def build_cover(side, data, case, metrics):
             radius=COVER_SCREW_D / 2, height=top_z - pcb_top_z + 2.0,
             align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN),
         )
+    return cover
 
-    # OLED socket slot: the module's own pin header (plastic and all) drops
-    # through it into the socket, and the module lies on the cover. The
-    # reset hole is right beside it; the old plate clipped the slot back to
-    # keep a wall between them, which left it too short for the header's
-    # fourth pin. Size both properly and check the wall instead.
-    oled_part = part_by_type(parts, "OLED_1side")
-    pad_xs = [p["pos"][0] for p in oled_part["pads"]]
-    pad_ys = [p["pos"][1] for p in oled_part["pads"]]
-    slot_x0, slot_x1 = min(pad_xs) - OLED_SLOT_MARGIN_X, max(pad_xs) + OLED_SLOT_MARGIN_X
-    slot_y0, slot_y1 = min(pad_ys) - OLED_SLOT_MARGIN_Y, max(pad_ys) + OLED_SLOT_MARGIN_Y
+
+def oled_module_bb(parts):
+    """Where the plugged-in OLED module lies: over the Pro Micro, its
+    pin-side edge OLED_PIN_EDGE past the pin row -- the placement the
+    KiCad footprint gives its 3D model."""
+    pads = part_by_type(parts, "OLED_1side")["pads"]
+    cx = sum(p["pos"][0] for p in pads) / len(pads)
+    edge_y = sum(p["pos"][1] for p in pads) / len(pads) + OLED_PIN_EDGE
+    return (cx - OLED_MODULE_W / 2, edge_y - OLED_MODULE_L, cx + OLED_MODULE_W / 2, edge_y)
+
+
+def build_clear_cover(side, data, case, metrics):
+    """Two-piece alternative to build_cover, after the original crkbd's
+    acrylic OLED cover: a printed base -- a wall round the same footprint --
+    under a flat clear top over the whole MCU strip. In place of
+    build_cover's printed posts, an M2 male-female hex standoff at each
+    post hole threads through the PCB into the insert and clamps the PCB;
+    the clear top screws onto the standoffs and holds the base down on the
+    case wall. The OLED sits under it on its socket rather than on top, so
+    the stack is much taller than build_cover's."""
+    keys = data["keys"]
+    parts = data["parts"]
+    cavity_sk = metrics["cavity_sk"]
+    pcb_top_z = metrics["pcb_top_z"]
+    wall_top_z = metrics["wall_top_z"]
+    under_z = pcb_top_z + CLEAR_UNDERSIDE_ABOVE_PCB
+    top_z = under_z + CLEAR_T
+    assert CLEAR_UNDERSIDE_ABOVE_PCB >= OLED_TOP_ABOVE_PCB + 0.5, "clear top is under 0.5mm over the OLED's glass"
+
+    cover_sk, rim_sk, post_holes, plate_sk = cover_footprint(side, data, metrics)
+
+    # base: a wall round the footprint, the full wall width where it sits on
+    # the case wall, from the wall top up to the clear top
+    inner_sk = b3d.offset(cover_sk, amount=-CLEAR_BASE_WALL_T, kind=b3d.Kind.INTERSECTION)
+    ring_sk = (cover_sk - inner_sk) + rim_sk
+    # Off the case wall, the wall crosses parts (the Pro Micro runs under its
+    # key-side and USB-side runs), so there it starts above the tallest one.
+    # That leaves the same 1mm gap over the plate's edge as build_cover's
+    # underside. Stepping it down to the plate between parts left strips
+    # under 2mm wide beside them.
+    band_z = pcb_top_z + max(PART_HEIGHTS.values()) + CLEAR_PART_CLEARANCE
+    assert wall_top_z < band_z < under_z, f"{side}: clear cover base band is out of order"
+    # Clipped to the cavity: the Pro Micro's bbox includes its USB
+    # connector's overhang past the board edge, which is the wall notch's
+    # business
+    part_boxes = {
+        t: extrude_up(rect_from_bb(part_by_type(parts, t)["bbox"]) & cavity_sk, pcb_top_z, height)
+        for t, height in PART_HEIGHTS.items()
+    }
+    # a collar round each standoff, from the band up
+    hex_r = STANDOFF_HEX_AF / math.sqrt(3)  # across corners / 2
+    hole_r = hex_r + STANDOFF_HOLE_CLEAR / 2
+    wall_sk = ring_sk
+    for h in post_holes:
+        wall_sk = wall_sk + (b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(hole_r + CLEAR_BASE_WALL_T) & cover_sk)
+    # Below the TRRS notch the collar all but fills the wall's corner, and
+    # left a closed slot ~1.4mm wide between itself and the rim. Fill every
+    # pocket but the one big opening over the MCU strip.
+    pockets = sorted((cover_sk - wall_sk).faces(), key=lambda f: f.area)
+    filled = pockets[:-1]
+    for f in filled:
+        assert f.area < 30, f"{side}: clear cover base would fill a {f.area:.0f}mm^2 pocket"
+        wall_sk = wall_sk + f
+    base = extrude_up(wall_sk, band_z, under_z - band_z) + extrude_up(rim_sk, wall_top_z, band_z - wall_top_z)
+
+    standoffs = []
+    edge_gaps = []
+    for h in post_holes:
+        at = b3d.Pos(h["x"], h["y"], 0)
+        cut = at * b3d.Circle(hole_r)
+        # Both post holes sit under 1mm from the footprint's edge (the
+        # key-side edge, the angled thumb-keycap edge): open the hole out
+        # through the edge rather than leave a sliver of wall there
+        c, p = b3d.Vertex(h["x"], h["y"], 0).closest_points(cover_sk.outer_wire())
+        gap = (p - c).length - hole_r
+        if gap < CLEAR_BASE_WALL_T:
+            d = (p - c).normalized()
+            reach = (p - c).length + 1.0
+            cut = cut + b3d.Pos(h["x"] + d.X * reach / 2, h["y"] + d.Y * reach / 2, 0) * b3d.Rot(
+                0, 0, math.degrees(math.atan2(d.Y, d.X))
+            ) * b3d.Rectangle(reach, 2 * hole_r)
+            edge_gaps.append(gap)
+        base = base - extrude_up(cut, pcb_top_z - 1.0, under_z - pcb_top_z + 2.0)
+        standoffs.append(extrude_up(at * b3d.Circle(hex_r), pcb_top_z, STANDOFF_L))
+
+    # clear top: the whole footprint, with the screw holes and a paperclip
+    # hole over the reset switch (beside the OLED module, not over it)
+    rx, ry = part_by_type(parts, "ResetSW_1side")["pos"]
+    clear_sk = cover_sk - (b3d.Pos(rx, ry, 0) * b3d.Circle(COVER_RESET_HOLE_D / 2))
+    for h in post_holes:
+        clear_sk = clear_sk - (b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(COVER_SCREW_D / 2))
+    clear = extrude_up(clear_sk, under_z, CLEAR_T)
+
+    # the standoff's male thread goes through the PCB into the insert, whose
+    # bore is blind: it can't run past the insert's bottom
+    max_male = PCB_T + INSERT_DEPTH
+    engagement = STANDOFF_MALE - PCB_T
+    assert 2.0 <= engagement and STANDOFF_MALE <= max_male, (
+        f"{side}: a {STANDOFF_MALE}mm standoff thread gets {engagement:.1f}mm into the insert "
+        f"(needs 2.0mm or more, and at most {max_male:.1f}mm of thread)"
+    )
+
+    # ---- verification ----
+    module_bb = oled_module_bb(parts)
+    reset_to_module = max(module_bb[0] - rx, 0, rx - module_bb[2]) - COVER_RESET_HOLE_D / 2
+    assert reset_to_module > 0, f"{side}: the clear top's reset hole is over the OLED module"
+    for label, solid in (("base", base), ("clear top", clear)):
+        assert solid.is_valid, f"{side}: clear cover {label} is not valid"
+        assert len(solid.solids()) == 1, f"{side}: clear cover {label} came out as {len(solid.solids())} pieces"
+        clash = overlap(solid, case, "volume")
+        assert clash < 0.01, f"{side}: clear cover {label} intersects the case ({clash:.2f}mm^3)"
+        for t, box in part_boxes.items():
+            hit = overlap(solid, box, "volume")
+            assert hit < 0.01, f"{side}: clear cover {label} collides with {t} ({hit:.2f}mm^3)"
+    # each standoff, as a cylinder over its hex corners, misses every part,
+    # the case, the plate and the base
+    for so in standoffs:
+        for label, other in [("case", case), ("base", base)] + list(part_boxes.items()):
+            hit = overlap(so, other, "volume")
+            assert hit < 0.01, f"{side}: a clear cover standoff collides with the {label} ({hit:.2f}mm^3)"
+        so_sk = so.faces().sort_by(b3d.Axis.Z)[0]
+        assert overlap(plate_sk, so_sk) < 0.01, f"{side}: a clear cover standoff runs through the plate"
+    assert overlap(cover_sk, keycap_sketch(keys, 0)) < 1e-6, f"{side}: clear cover runs under a keycap"
+    assert rim_sk.area > 20, f"{side}: clear cover base has almost no rim on the wall top ({rim_sk.area:.1f}mm^2)"
+    plate_top_z = pcb_top_z + PLATE_TOP_ABOVE_PCB
+    thickest = max(POM_PLATE_T, FR4_PLATE_T, MJF_PLATE_T)
+    plate = extrude_up(plate_sk, plate_top_z - thickest, thickest)
+    clash = overlap(base, plate, "volume")
+    assert clash < 0.01, f"{side}: clear cover base intersects the plate ({clash:.2f}mm^3)"
+    # the plugged-in OLED, from 0.5mm under its board up to its glass top,
+    # must clear the base wall (grown by 0.5mm round its sides) and the top
+    oled_box = extrude_up(
+        rect_from_bb(bbox_union([module_bb], margin=0.5)),
+        pcb_top_z + OLED_BOARD_ABOVE_PCB - 0.5, OLED_TOP_ABOVE_PCB - OLED_BOARD_ABOVE_PCB + 0.5,
+    )
+    for label, solid in (("base", base), ("clear top", clear)):
+        hit = overlap(solid, oled_box, "volume")
+        assert hit < 0.01, f"{side}: clear cover {label} is within 0.5mm of the OLED module ({hit:.2f}mm^3)"
+    seat = overlap(ring_sk, cover_sk)  # what the clear top rests on, before posts
+    info = {
+        "under_above_pcb": under_z - pcb_top_z,
+        "top_above_pcb": top_z - pcb_top_z,
+        "footprint_bb": cover_sk.bounding_box(),
+        "base_h": under_z - wall_top_z,
+        "seat_area": seat,
+        "max_male": max_male,
+        "engagement": engagement,
+        "hole_d": 2 * hole_r,
+        "edge_gaps": edge_gaps,
+        "filled_pockets": [f.area for f in filled],
+        "oled_gap": CLEAR_UNDERSIDE_ABOVE_PCB - OLED_TOP_ABOVE_PCB,
+    }
+    return base, clear, clear_sk, info
+
+
+def export_clear_top(side, clear, clear_sk):
+    """STL/STEP for a look, plus the DXF a laser-cutting shop takes. The DXF
+    is in the real-world frame, read from above, like the mat template --
+    a through-cut sheet's mirror image is the same part flipped over, but
+    this way the drawing matches the board as you see it."""
+    write(clear, f"cover-clear-{side}", indent="  ")
+    dxf_path = os.path.join(OUT_DIR, f"cover-clear-{side}.dxf")
+    exp = b3d.ExportDXF()
+    exp.add_shape(to_physical(clear_sk))
+    exp.write(dxf_path)
+    print(f"  wrote {dxf_path}")
+
+
+def build_cover(side, data, case, metrics):
+    """Flat cover over the MCU strip. Its rim rests on the case wall top
+    along the board's top and inner edges; at the other end it stands on
+    posts over the PCB mounting holes beside the TRRS jack, and one long
+    screw per post goes through cover, post and PCB into the same
+    heat-set insert an ordinary PCB screw would use."""
+    keys = data["keys"]
+    parts = data["parts"]
+    cavity_sk = metrics["cavity_sk"]
+    pcb_top_z = metrics["pcb_top_z"]
+    wall_top_z = metrics["wall_top_z"]
+    under_z = pcb_top_z + COVER_UNDERSIDE_ABOVE_PCB
+    top_z = under_z + COVER_T
+    assert under_z > wall_top_z, f"{side}: cover underside is below the wall top"
+
+    cover_sk, rim_sk, post_holes, plate_sk = cover_footprint(side, data, metrics)
+
+    slab = b3d.Pos(0, 0, under_z) * b3d.extrude(cover_sk, amount=COVER_T)
+    cover = slab + b3d.Pos(0, 0, wall_top_z) * b3d.extrude(rim_sk, amount=under_z - wall_top_z)
+    cover = add_cover_posts(side, cover, cover_sk, post_holes, plate_sk, pcb_top_z, under_z, top_z)
+
+    # OLED window: through the cover over the module's whole footprint, so
+    # everything under the OLED stays in view. Plugged fully in, the
+    # module's board sits only 0-1mm above the cover's top: a cover under it
+    # held it up and its pins stopped short of seating (the 1mm pocket that
+    # fixed that was replaced by this window, 2026-10-19). The module's own
+    # pin header (plastic and all) drops through the window into the socket.
+    module_bb = oled_module_bb(parts)
+    window_bb = bbox_union([module_bb], margin=OLED_WINDOW_CLEAR)
+    window_sk = rect_from_bb(window_bb)
+    pads = part_by_type(parts, "OLED_1side")["pads"]
+    pad_xs = [p["pos"][0] for p in pads]
+    pad_ys = [p["pos"][1] for p in pads]
+    header_sk = rect_from_bb((
+        min(pad_xs) - OLED_SLOT_MARGIN_X, min(pad_ys) - OLED_SLOT_MARGIN_Y,
+        max(pad_xs) + OLED_SLOT_MARGIN_X, max(pad_ys) + OLED_SLOT_MARGIN_Y,
+    ))
+    assert overlap(header_sk, window_sk) > header_sk.area - 0.01, f"{side}: OLED header doesn't pass the window"
+    # paperclip access to the reset switch. It sits just past the window's
+    # side: join the two rather than leave a sliver of wall between them
     rx, ry = part_by_type(parts, "ResetSW_1side")["pos"]
     reset_r = COVER_RESET_HOLE_D / 2
-    slot_to_reset = math.hypot(
-        max(slot_x0 - rx, 0, rx - slot_x1), max(slot_y0 - ry, 0, ry - slot_y1)
-    ) - reset_r
-    assert slot_to_reset >= COVER_MIN_WALL, (
-        f"{side}: only {slot_to_reset:.2f}mm of cover between the OLED slot and the reset hole"
+    window_sk = window_sk + b3d.Pos(rx, ry, 0) * b3d.Circle(reset_r)
+    to_reset = max(window_bb[0] - rx, 0, rx - window_bb[2]) - reset_r
+    if to_reset < COVER_MIN_WALL:
+        window_sk = window_sk + rect_from_bb((min(rx, window_bb[2]), ry - reset_r, max(rx, window_bb[0]), ry + reset_r))
+    assert overlap(window_sk, cover_sk) > window_sk.area - 0.01, f"{side}: OLED window runs off the cover's edge"
+    # what's left round it is the narrowest part of the cover
+    window_wall = window_sk.faces()[0].outer_wire().distance_to(cover_sk.outer_wire())
+    assert window_wall >= CLEAR_BASE_WALL_T, (
+        f"{side}: only {window_wall:.2f}mm of cover between the OLED window and the cover's edge"
     )
-    through = dict(align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN))
-    cover = cover - b3d.Pos((slot_x0 + slot_x1) / 2, (slot_y0 + slot_y1) / 2, under_z - 1.0) * b3d.Box(
-        slot_x1 - slot_x0, slot_y1 - slot_y0, COVER_T + 2.0, **through
-    )
-    cover = cover - b3d.Pos(rx, ry, under_z - 1.0) * b3d.Cylinder(
-        radius=reset_r, height=COVER_T + 2.0, **through
-    )
+    cover = cover - extrude_up(window_sk, under_z - 1.0, COVER_T + 2.0)
 
     # ---- verification ----
     assert cover.is_valid, f"{side}: cover solid is not valid"
@@ -1356,6 +2094,11 @@ def build_cover(side, data, case, metrics):
     plate = b3d.Pos(0, 0, plate_top_z - thickest) * b3d.extrude(plate_sk, amount=thickest)
     clash = overlap(cover, plate, "volume")
     assert clash < 0.01, f"{side}: cover intersects the plate ({clash:.2f}mm^3)"
+    # the plugged-in OLED's board, from 0.5mm under its measured height up,
+    # must clear the cover
+    oled_box = extrude_up(rect_from_bb(module_bb), pcb_top_z + OLED_BOARD_ABOVE_PCB - 0.5, 3.0)
+    hit = overlap(cover, oled_box, "volume")
+    assert hit < 0.01, f"{side}: cover is under 0.5mm from the OLED's board ({hit:.2f}mm^3)"
     # ...and the plate must not sit over any of them either
     for t in PART_HEIGHTS:
         over = overlap(plate_sk, rect_from_bb(part_by_type(parts, t)["bbox"]))
@@ -1368,7 +2111,8 @@ def build_cover(side, data, case, metrics):
         "screw_grip": top_z - metrics["boss_top_z"],
         "footprint_bb": cover_sk.bounding_box(),
         "rim_area": rim_sk.area,
-        "slot_to_reset": slot_to_reset,
+        "window_bb": window_bb,
+        "window_wall": window_wall,
     }
     return cover, info
 
@@ -1424,7 +2168,7 @@ def build_plate_sketch(side, data):
     # no clearance to gain, and leaving it solid is strictly safer than a
     # fragile sliver. assert_clear_of_wall-style: test the cut on a throwaway
     # copy first, only commit it if it doesn't create a thin remnant.
-    for h in data["mount_holes"]:
+    for h in data["m2_holes"]:
         hole = b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(M2_CLEARANCE_D / 2)
         test = plate_sk - hole
         removed = plate_sk.area - test.area
@@ -1471,16 +2215,19 @@ def build_plate_sketch(side, data):
     # build_cover cuts the cover back from every keycap -- from the angled
     # thumb key's most of all, since both 1.5u orientations count -- which
     # left a gap between the cover's edge and this opening's straight one.
-    # Keep the plate there instead, reaching COVER_PLATE_LAP in under the
-    # cover, but never over a part under the cover or round a cover post.
+    # Keep the plate there instead, and where cover_outline() straightened
+    # the cover's key side, reaching COVER_PLATE_LAP in under the cover,
+    # but never over a part under the cover or round a cover post.
+    cover, trimmed = cover_outline(side, data)
     keep = keycap_sketch(keys, COVER_KEYCAP_CLEARANCE + COVER_PLATE_LAP)
+    for f in trimmed.faces():
+        keep = keep + b3d.offset(f, amount=COVER_PLATE_LAP, kind=b3d.Kind.ARC)
     for t in MCU_ZONE_PARTS:
         keep = keep - rect_from_bb(bbox_union([part_by_type(parts, t)["bbox"]], margin=MCU_OPENING_MARGIN))
     # Round a post, stop at the cover's edge instead of lapping under it,
     # and build_cover trims the post to keep MCU_OPENING_MARGIN off the plate
-    cover_edge = keycap_sketch(keys, COVER_KEYCAP_CLEARANCE)
     for h in post_holes:
-        keep = keep - (b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(COVER_POST_OD / 2 + MCU_OPENING_MARGIN) - cover_edge)
+        keep = keep - (b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(COVER_POST_OD / 2 + MCU_OPENING_MARGIN) & cover)
     filled = plate_sk - (opening - keep)
     # drop any tab of the new fill under 1mm wide; the cover laps over
     # those spots anyway
@@ -1572,7 +2319,7 @@ def main():
             assert clash < 0.01, f"{side}: spacer frame intersects the case ({clash:.2f}mm^3)"
             write(frame, f"spacer-frame-{tag}-{side}", indent="  ")
         dropped = finfo["dropped"]
-        print(f"  spacer frame: {finfo['posts']} posts ({finfo['pilots']} with pilots), {finfo['height']:.1f}mm tall under a {tag} plate"
+        print(f"  spacer frame: {finfo['posts']} posts, each with a pilot, {finfo['height']:.1f}mm tall under a {tag} plate"
               + (f", dropped {dropped:.1f}mm2 of loose slivers" if dropped > 0.5 else ""))
 
         tent, tent_info = build_tent(side, data, metrics, TENT_ANGLE_DEG)
@@ -1583,8 +2330,18 @@ def main():
               f"{TENT_MIN_T:.0f}mm thick at the outer edge, {tent_info['max_thickness']:.1f}mm at the inner edge")
         print(f"  tent legs ({TENT_FOOT_D:.0f}mm dia), height at each leg's centre: "
               f"{[(round(x,1), round(y,1), h) for x, y, h in tent_info['leg_heights']]}mm")
-        print(f"  tent screws: M2x{TENT_SCREW_LEN:.0f} from inside the case, "
-              f"{tent_info['screw_engagement']:.1f}mm into each leg's {INSERT_DEPTH}mm insert")
+        for x, y, shift, tall in tent_info["plumb_legs"]:
+            print(f"  tent leg at ({x:.1f},{y:.1f}) leans {TENT_ANGLE_DEG:.0f}deg to stand plumb: "
+                  f"{tall:.1f}mm tall on the desk, its end {shift:.1f}mm in from straight below its top")
+        if tent_info["weight"]:
+            w = tent_info["weight"]
+            print(f"  tent weight tray: {w['tray'][0]:.1f} x {w['tray'][1]:.1f}mm, {w['tray'][2]:.1f}mm below the case; "
+                  f"{w['cells']} cells {w['cell'][0]:.1f} x {w['cell'][1]:.1f} x {w['cell'][2]:.1f}mm deep for "
+                  f"{TENT_WEIGHT_W:.0f} x {TENT_WEIGHT_L:.0f} x {TENT_WEIGHT_T:.0f}mm tire weights, "
+                  f"~{w['cells'] * TENT_WEIGHT_G:.0f}g full at {TENT_WEIGHT_G:.0f}g each")
+        print(f"  tent screws: M2x{TENT_SCREW_LEN:.0f} up through each leg's platform, "
+              f"{tent_info['screw_engagement']:.1f}mm into a {INSERT_DEPTH}mm insert in the case floor, at "
+              f"{[(round(x, 1), round(y, 1)) for x, y in metrics['tent_screws']]}")
 
         cover, info = build_cover(side, data, case, metrics)
         write(cover, f"cover-{side}", indent="  ")
@@ -1593,6 +2350,28 @@ def main():
               f"{len(info['post_holes'])} posts at {[(round(x,1), round(y,1)) for x, y in info['post_holes']]}")
         print(f"  cover screws: head to boss top is {info['screw_grip']:.1f}mm -- an M2x12 leaves "
               f"{12 - info['screw_grip']:.1f}mm in the {INSERT_DEPTH}mm insert")
+        wb = info["window_bb"]
+        print(f"  OLED window: {wb[2] - wb[0]:.1f} x {wb[3] - wb[1]:.1f}mm through the cover, "
+              f"{info['window_wall']:.1f}mm of cover left at its narrowest")
+
+        base, clear, clear_sk, cinfo = build_clear_cover(side, data, case, metrics)
+        write(base, f"cover-base-{side}", indent="  ")
+        export_clear_top(side, clear, clear_sk)
+        fb = cinfo["footprint_bb"]
+        print(f"  clear cover: {fb.size.X:.1f} x {fb.size.Y:.1f}mm, {CLEAR_T}mm clear top from "
+              f"{cinfo['under_above_pcb']:.1f} to {cinfo['top_above_pcb']:.1f}mm above the PCB "
+              f"({cinfo['oled_gap']:.1f}mm over the OLED's glass); base {cinfo['base_h']:.1f}mm tall, "
+              f"{cinfo['seat_area']:.0f}mm^2 of wall top under the clear top")
+        print(f"  clear cover standoffs: M2 male-female, {STANDOFF_L:.0f}mm body, {STANDOFF_MALE:.0f}mm male "
+              f"thread ({cinfo['engagement']:.1f}mm in the insert, {cinfo['max_male']:.1f}mm at most); "
+              f"base holes {cinfo['hole_d']:.1f}mm, "
+              f"for up to {STANDOFF_HEX_AF}mm hex; M2x{CLEAR_TOP_SCREW_LEN} on top")
+        if cinfo["filled_pockets"]:
+            print(f"  clear cover base: filled {len(cinfo['filled_pockets'])} closed pocket(s) in the wall, "
+                  f"{[round(a, 1) for a in cinfo['filled_pockets']]}mm^2")
+        if cinfo["edge_gaps"]:
+            print(f"  clear cover base: {len(cinfo['edge_gaps'])} standoff hole(s) opened out through the edge "
+                  f"(would have left {[round(g, 2) for g in cinfo['edge_gaps']]}mm of wall)")
 
     print("\nDone.")
 

@@ -152,13 +152,18 @@ The MCU cover sits **6.0mm above the PCB**, which leaves room for either
 of these:
 
 - **Soldered directly** on ordinary pin headers, components facing the
-  PCB. Trim the pin stubs on top.
+  PCB. Trim the pin stubs on top down to the solder, so the Pro Micro
+  tops out at 5.5mm or less above the PCB. Left long they stood about 7mm
+  on the first build, which tipped the cover up and kept the OLED from
+  seating.
 - **Low-profile sockets** (Mill-Max style) with their matching pins
-  soldered to the Pro Micro.
+  soldered to the Pro Micro. Optional: they only make the controller
+  removable.
 
-Ordinary 8.5mm sockets do **not** fit: they lift the Pro Micro to about
-11mm. A board built that way works, but has to go without the cover and
-the OLED.
+Ordinary 8.5mm sockets and machined DIP sockets do **not** fit: they lift
+the Pro Micro to about 11mm and 7–8mm, and the OLED sits right over it.
+A board built that way works, but has to go without the cover and the
+OLED.
 
 **⚠ confirm on first build.** The 6.0mm figure comes from 3D models of
 the parts, not from real ones. Before printing covers, measure from the
@@ -174,9 +179,10 @@ it while you level the module, then solder the rest.
 
 Do not plug the OLED in yet. It goes in through the cover later.
 
-**⚠ confirm on first build.** With a 3.5mm socket the OLED's pins may
-bottom out about 0.5mm before the module sits flat on the cover. Trim the
-pins slightly if so.
+The OLED doesn't rest on the cover. It sits in a window cut through the
+cover, held by its pins alone. If it won't push all the way in with the
+cover on, check that the cover sits flat: something under it, usually
+long Pro Micro pin stubs, is lifting it.
 
 ### Operation check
 
@@ -211,27 +217,24 @@ force of every switch insertion.
 
 <!-- TODO photo: assets/build_inserts.jpg -->
 
-Each case half has 8 bosses, and 7 of them line up with a hole in the PCB.
-Press an M2 heat-set insert into each of those 7 with a soldering iron or
-heat-set tip, until it is flush with the top of the boss. Keep it
-vertical. Leave the eighth boss empty: it's one of the two near the outer
-bottom corner, and it's there for the other PCB revision. On the
-first-revision PCB the empty one is the lower of the two; on the next
-revision it's the upper one. Let the inserts cool before the next step.
+Each case half has 7 bosses, one under each hole in the PCB. Press an M2
+heat-set insert into each of them with a soldering iron or heat-set tip,
+until it is flush with the top of the boss. Keep it vertical. Let the
+inserts cool before the next step.
 
 In a resin (SLA) case, glue the inserts in instead of heating them.
 
 ### Tenting legs (optional)
 
-If you're fitting the tenting legs, do it now, while the case is empty:
-the screws go in from the inside.
+The tent screws into inserts in the bottom of the case, from below, so
+it can go on or come off at any time. Fit the inserts now, with the
+other inserts:
 
-1. Press an M2 heat-set insert into the flat face of each leg (4 per
-   tent).
-2. Hold the tent's flat face against the bottom of the case, legs
-   pointing down.
-3. Drive an M2 × 6mm low-head screw down through each of the 4 holes in
-   the case floor into the leg's insert.
+1. Press an M2 heat-set insert into each of the 4 small holes in the
+   bottom of the case, beside the round corner recesses, until it's
+   flush with the bottom.
+
+The tent itself goes on at the end (see Finishing).
 
 ### Mount the PCB and plate
 
@@ -294,9 +297,13 @@ follow the plate cutouts.
    reaching the reset switch with a paperclip.
 3. Fit the keycaps. The 1.5u caps go on the innermost thumb key of each
    half.
-4. Stick the rubber feet on: into the recesses on the leg ends if you
-   fitted tenting legs, otherwise on the bottom of each half over the 4
-   screw holes near the corners.
+4. Tenting legs: hold the tent's flat face against the bottom of the
+   case, legs pointing down, and drive an M2 × 6mm low-head screw up
+   through each leg's platform into the insert. For extra weight, first
+   put stick-on tire weight segments (19 × 16 × 4mm) into the cells in
+   the middle of the tent, up to 9; the case holds them in. Rubber feet go in the
+   recesses on the leg ends. Without tents, the rubber feet go in the 4
+   round recesses at the corners of the case bottom.
 5. If you are using the MagSafe tenting kit, stick a ring onto the flat
    bottom of each half.
 

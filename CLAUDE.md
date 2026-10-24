@@ -113,33 +113,61 @@ came out wrong.
   cuts an opening over them and `build_cover()` makes a separate printed
   cover: underside 6.0mm above the PCB, on posts at the two mounting
   holes beside the TRRS jack (M2×12 screws into the same inserts), OLED
-  lying on top through a slot. Those part heights are from the 3D models
-  in `pcb/kbd`, not yet from real parts. `legacy_mcu_footprint()` is what
-  the plate covered back when it went over that strip. `board_envelope()`
+  plugged in through a window. Those part heights are from the 3D models
+  in `pcb/kbd`, not yet from real parts. The OLED does **not** rest on the
+  cover: plugged fully into its ~4mm socket, its board sits 8–9mm above the
+  PCB (measured 2026-10-15), just above the cover top (8.0mm). A cover
+  under the module held it up and its pins wouldn't seat; a 1mm pocket
+  fixed that, and since 2026-10-19 the cover has a window through it over
+  the module's whole footprint instead, so everything under the OLED shows. A direct-soldered Pro Micro with its stubs
+  left long measured ~7mm, which tipped the cover up at the USB end; the
+  stubs have to be trimmed to the solder. `legacy_mcu_footprint()` is what
+  the plate covered back when it went over that strip. Since 2026-10-18
+  there's also a two-piece clear cover (`build_clear_cover()`): a printed
+  base wall plus a 2mm laser-cut clear top over the same footprint, with
+  the OLED under it. The OLED glass is 13–14mm above the PCB on its socket
+  (measured). The clear top sits on two M2 male-female hex standoffs
+  (15mm body), which replace the printed posts, so its underside is 15mm
+  up. The male thread has to be 4mm: it passes the 1.6mm PCB before it
+  reaches the insert, and the insert bore is blind (4.8mm max). The 3mm
+  ones in hand wouldn't start in the insert. Both covers share
+  `cover_footprint()`. Neither is built yet. Also 2026-10-18:
+  `cover_outline()` straightens both covers' key side. A tab over the wall
+  top and a tooth under the angled thumb keycap are cut off, and the plate
+  fills where the tooth was, lapping 1mm under the new edge. A plate from
+  before this leaves a small hole there under a new cover. `board_envelope()`
   still includes it, so the walls round the MCU strip never come in
   closer than they were then.
 - **`dxf_to_loops.py` reconstructs closed loops via a point-adjacency
   graph**, not by trusting the DXF's own edge ordering — build123d's own
   `Wire.order_edges()` has a real bug on this geometry (it silently
   drops a long straight run).
-- **Mounting holes for two PCB revisions.** The next PCB moves the
-  outer/lower hole down one row. That change is now made in
-  `pcb/cornison.kicad_pcb` (2026-10-14), so `board.json`'s `m2_holes` shows
-  the new spot. The boards actually in hand are still the first revision,
-  with the hole at the old spot. `load_board()` builds
-  `data["mount_holes"]`: the PCB's own holes plus both spots in
-  `EITHER_OR_HOLES`, named by the four keys meeting there. Bosses, plate
-  holes and spacer posts use `mount_holes`; the case walls still follow
-  `m2_holes` only. A boss with no PCB hole above it is checked against
-  `board.json`'s `keepouts`, since it presses on the board's underside.
-  This replaced the support ribs (2026-10-12 to 2026-10-14) that braced
-  the bottom-row corner.
-- **Tenting-leg inserts live in the leg, not the case.** A tilt across the
-  case's width means tens of mm of height difference between legs — far
-  too much for one screw to span if the insert were in the case. Each leg
-  has its own M2 insert in the flat mounting face; the screw comes down
-  from inside the case through a plain floor hole, the same M2×6 at every
-  corner. `build_tent()` builds in the case's frame hanging below z=0:
+- **The case and plate follow the v1.1 PCB only.** From 2026-10-14 to
+  2026-10-24 they carried both PCB revisions' outer/lower mounting spot
+  (`EITHER_OR_HOLES`, 8 bosses and 6 plate holes per half), since the
+  boards in hand were v1.0. On 2026-10-24 the user retired v1.0 (v1.1 gets
+  ordered; the v1.0 boards are kept for test fits), so that went:
+  bosses, plate holes and spacer posts all follow `board.json`'s
+  `m2_holes`, 7 bosses and 5 plate holes per half, every spacer-frame
+  post with a pilot. A v1.0 board in a new case sits on the bosses but
+  misses two screws (outer/lower, and the right half's lower-centre). If
+  a hole spot ever needs to carry two revisions again, a boss with no PCB
+  hole above it presses on the board's underside: check it against
+  `board.json`'s `keepouts`.
+- **Tenting-leg inserts live in the case floor, the screws come up from
+  below.** Since 2026-10-23 (the user's request: changing the tent used to
+  mean taking the keyboard apart, when the inserts were in the legs and
+  the screws came down from inside the case). A screw can't run the
+  length of a leg, so each leg has a platform beside it at the mounting
+  face; an M2×6 goes up through it into an insert pressed into the case
+  bottom. That needed `FLOOR_T` 2.5 → 4.0 (the insert is 3.2mm, its spec
+  wants 4mm of material); the whole case is 1.5mm taller. An interior boss
+  instead was ruled out: almost nothing under the PCB is clear of parts
+  near the legs. `tent_leg_layout()` places the screws for both parts: toward
+  the tent's middle, except beside a plumb leg, which leans under that
+  spot, so those go along the inner edge. A column under each seat is kept
+  clear to the desk for the driver. The case's 4 corner spots are rubber
+  foot recesses again. `build_tent()` builds in the case's frame hanging below z=0:
   z=0 is the flat mounting face, and everything below one tilted desk
   plane is cut off so all four legs sit flat.
 - **`b3d.extrude()` follows the sketch's own face normal**, and a polygon
@@ -148,10 +176,35 @@ came out wrong.
   flat; the checks at the time only probed the legs. `extrude_down()`
   passes the direction explicitly and asserts where the solid landed, and
   `build_tent()` now probes the mounting face on every beam.
+- **Plumb tent legs lean along the desk normal** (`TENT_PLUMB`, on by
+  default; `TENT_PLUMB=0` makes them square to the case). A leg that
+  leans in can't also keep its width and stay on the case's edge, which
+  leans 18° on the desk. On 2026-10-23 the user tried a flared leg (plumb
+  inside, on the edge outside: rejected, the width grew), then legs
+  square to the case, and settled on plumb legs of constant width that
+  move in from the edge going down. Each is a real `Cylinder` about the
+  desk normal, clipped by a polygonized case outline slid down the slant.
+  The frame is clipped by the same slid outline, so its inner-edge face
+  leans with the legs: dropped straight, its 4mm stood 1.3mm proud of
+  each leg at its underside (a ledge the user spotted). The slide moves
+  the outline away from the frame on the outer side, so only the inner
+  side is cut. The first version extruded the pad obliquely
+  instead. OCC tessellates that generic extrusion surface (and an arc slid
+  the same way) into long near-zero-area slivers, which showed as a
+  pattern on the legs. Keep the tent's faces to planes and cylinders. Anything
+  placed on a leg's end (rubber-foot recess, probes) is placed on the
+  pad at z=0 and carried down that axis with `to_desk()`. A sign error
+  there put the probes ~4mm past the leg's end on the first try.
 - **`b3d.offset()` on a multi-face sketch offsets each face separately**
   and leaves them overlapping rather than merged — the (since removed)
   OLED bezel's pocket and reset column never joined, and the area check
-  double-counted. Fuse the faces after offsetting.
+  double-counted. Fuse the faces after offsetting. `Face.fuse().clean()`
+  doesn't reliably merge them either (the tent frame plus its weight tray
+  stayed two faces). And in build123d 0.13, `offset()` on a face with holes
+  that splits into pieces crashes (`'Face' object has no attribute
+  'unwrap'`). `close_holes()` (rounding the tent frame's openings) gets
+  round all three by offsetting only hole-free faces: the empty faces of
+  `outline - sketch`, one at a time.
 - **The tent frame is straight beams, clipped to the case outline.** An
   offset ring through the leg centres self-intersected (the union came
   back invalid while still reporting one solid). And the case outline is
@@ -241,6 +294,18 @@ came out wrong.
 
 ## Order status (as of 2026-10-12 — verify before relying on this)
 
+- PCB versions (2026-10-16): the boards in hand are **v1.0** (their
+  silkscreen still reads foostan's "Corne Cherry v3.0.1"). The next PCB,
+  with the moved mounting hole, is **v1.1**. The version lives in the title
+  block (`rev`, in both `.kicad_pcb` and `.kicad_sch`), and the silkscreen
+  label ("Cornison v${REVISION}", one line per half, since 2026-10-18)
+  reads it from there. Bump `rev` for the next revision; don't edit the
+  text. v1.1 also moves the right half's lower-centre mounting hole
+  (2026-10-24, the user's catch): at (225.0, 99.5) since foostan's file,
+  its 4.3mm hole ran 1.6mm off the board's bottom edge; now (227.6, 97.0).
+  Only 3.6mm apart, so unlike the outer/lower hole the case and plate
+  can't carry both spots: they follow v1.1, and a v1.0 board in a new case
+  loses that one plate screw.
 - PCBs arrived from JLCPCB and look good. Both halves flashed and bench
   tested individually with the default keymap (bare board, no
   case/plate/switches — tested by shorting each hotswap socket's pads
@@ -296,13 +361,22 @@ came out wrong.
   the USB notch (not at the plug opening itself) — measured against the
   real geometry: the wall there sits flush against the Pro Micro
   footprint's edge with 0 clearance in the model already, independent of
-  mounting method. Not yet fixed in the generator: the real target mount
-  is the low-profile Mill-Max sockets (shorter than direct-soldered
-  headers), which may not need the same trim — re-measure once those are
-  in hand rather than widen the opening against today's substitute part.
+  mounting method. Not yet fixed in the generator.
+- **Pro Micro mount standard (2026-10-19):** the Pro Micro must top out
+  at 5.5mm or less above the PCB — direct-soldered with the stubs trimmed
+  to the solder, or on Mill-Max low-profile sockets. Both are supported
+  equally; Mill-Max is optional (removable controller), not the target.
+  Taller mounts (machined DIP ~7–8mm, standard 8.5mm sockets ~11mm) are
+  out of scope: the OLED module overlaps the Pro Micro in plan and sits
+  8–9mm up on its socket, so they collide with it whatever the cover.
+  The single-piece printed cover (`build_cover()`) is the default cover;
+  the clear two-piece one is an optional upgrade for the same builds.
+  First cover test: the printed one on the direct-soldered prototype with
+  trimmed stubs.
 - 2026-10-14: case, plate and spacer frame carry both the current and
   the next-revision outer/lower mounting spot (8 bosses, 6 plate holes per
-  half); the support ribs are gone. Cases printed 2026-10-12/13 have ribs
+  half); the support ribs are gone. (Undone 2026-10-24 when v1.0 was
+  retired: back to 7 bosses and 5 plate holes, for v1.1.) Cases printed 2026-10-12/13 have ribs
   and no second boss; plates printed before have only 5 holes. FR4
   projects regenerated, DRC 0 violations, Gerber zips still stale.
 - Plate-mount spacers added (2026-10-12); a fifth plate-mount hole per
@@ -342,8 +416,45 @@ came out wrong.
 - OLED bezel (printed part over the OLED, on top of the cover) added and
   then removed 2026-10-14: the user didn't like it. It was never committed.
   If it comes back, these are the OLED measurements it used (Unicorne kit
-  module): 33 × 12mm module, screen starting 6mm from the pin edge and
+  module): 38 × 12mm module (re-measured 2026-10-19; 33mm before was
+  wrong), screen starting 6mm from the pin edge and
   27mm long, solder ~3mm, module board ~10mm above the PCB.
+- USB/TRRS notch floors raised 2026-10-21 (user's request): they used to
+  run down to the floor top, leaving the wall open under the PCB (bottom
+  at 6.5mm). USB: wall up to 7.1mm, from measured parts (USB-C socket 3mm
+  tall, centred 1–2mm above the PCB, mouth nearly flush with the outer
+  face, so the cable grip stays outside). TRRS: the grip sits ~2mm into
+  the wall, so the notch is a U round the jack axis sized for a 10mm grip
+  ("most TRRS cables", the user's call; their own cable's grip is 7mm),
+  11mm wide, bottom 5.1mm. The 10mm is a guess, not a survey. Cases
+  printed before this have the full-depth notches.
+- A hood on the USB-end wall to hold the cover's free end down was built
+  and then removed, 2026-10-21. The user wants every part printable at
+  JLC3DP eventually, and a hood flush with the cover top can't meet their
+  2mm minimum: lip, tongue and clearance share the cover's 3mm edge. Kept
+  in mind if it comes back: a flat slide-in needs the plate cut back round
+  the cover posts (it wraps them at 2.7-3.3mm), and the JLC-sized version
+  is a 2mm lip standing on top of the cover. The user's thumb keycaps are
+  1u.
+- 2026-10-22: both covers' USB end is cut straight at the outer face of
+  the wall beside the USB notch (`cover_footprint()`). On the key side the
+  wall steps out to the next column, and the cover used to follow it up
+  the step as a ~3.6mm rounded tab; the user wanted that corner to match
+  the other one. Covers are 2.9mm shorter (63.7mm). The plate is
+  unchanged (it uses `cover_outline()`, not the footprint). Same day: the
+  rim (the 1mm on the cover's underside that rests on the wall top) now
+  runs the wall's full width along the USB end, edge to edge. At the
+  key-side corner the cover's edge is over the plate edge and its gap to
+  the wall, and the rim stopped 0.9mm short there; it now rests on the
+  plate top (level with the wall top) instead. Also: the covers' edges
+  at the USB and TRRS notches are flush with the case's notch sides now;
+  they used to stand 0.5mm back from them (an extra plug margin the
+  notches already carry). 2026-10-24: the corners at the notch mouths
+  are sharp now too. The cleanup that drops unprintable slivers
+  (`open_sketch`, 0.6mm) had rounded them, flaring the cover's notches
+  wider than the case's right at the outer face (the user spotted it at
+  the TRRS notch); `cover_footprint()` puts them back from the original
+  outline, but only round the notches.
 - First working prototype assembled 2026-10-13 (printed case, plate,
   spacers and tents).
 - MagSafe ring dimensions corrected (2026-10-12) from Apple's generic
@@ -362,7 +473,19 @@ came out wrong.
   square-cut leg ends) — don't print those. Any case printed before
   2026-10-12 has a blind 1mm foot recess, not the through-hole the tent
   needs. Not yet physically confirmed: screw-head clearance under the
-  PCB, and desk stability at 18° (see TODO.md).
+  PCB, and desk stability at 18° (see TODO.md). 2026-10-23 (user's
+  request): the two inner legs lean 18° toward the outer edge so they
+  look plumb on the desk; their feet land 13–15mm further in. Tents
+  printed before this have all four legs square to the case. Same day,
+  the mounting was reversed (inserts in a 4mm case floor, screws up from
+  below through a platform beside each leg) and the corner spots became
+  rubber-foot recesses again; earlier cases and tents don't mix with new
+  ones. Also added that day: a weight tray in the middle of the tent (the
+  user wanted weight without a taller case). A deep box for steel flat
+  bar came first; the user found it didn't blend in, so it's a shallow
+  band beam to beam, square to the case (it followed the brace's few-degree lean at first and looked like it pointed forward), 6.4mm deep, with a 3 × 3 grid of
+  cells for the user's own tire weight segments (19 × 16 × 4mm; they want
+  about 8). Not printed yet.
 - The already-printed JLC3DP case is the mirror-image bug described above
   (3.9mm M2 insert bores too, from before that was corrected) — needs a
   reprint from the current `case/out/case-*.stl`.
