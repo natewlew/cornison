@@ -382,7 +382,10 @@ came out wrong.
   KiCad before any order. The fifth hole's 1.62mm wall is under JLCPCB's
   2.0mm ask and may be queried. Plate exports are now named
   `cornison_fr4_plate_{left,right}_v<VERSION>` (they were
-  `Corne_Cherry_Plus_FR4_Plate_*_v1`).
+  `Corne_Cherry_Plus_FR4_Plate_*_v1`). The user exported
+  `cornison_fr4_plate_{left,right}_v1.1.zip` on 2026-10-25; their Edge.Cuts
+  Gerbers were checked identical to the current plate projects. The `_v1`
+  zips beside them are the old, pre-fix export.
 - PCB v1.1 fab outputs exported 2026-10-25 by the user:
   `pcb/production/cornison_v1.1{.zip,_bom,_designators,_positions}`, from
   the board in commit 4c72978 (per-key LEDs, DRC cleanup); positions file
@@ -447,8 +450,8 @@ came out wrong.
   plate won't drop into an old case).
 - FR4 projects regenerated 2026-10-14 after both changes above: DRC 0
   violations; read back in pcbnew as 1 outline + 30 holes per half, area
-  within 0.7mm^2 of the generator's plate. Gerber zips in `production/`
-  are still the 2026-10-02 export — re-export before ordering.
+  within 0.7mm^2 of the generator's plate. (Gerber zips re-exported
+  2026-10-25, see above.)
 - OLED bezel (printed part over the OLED, on top of the cover) added and
   then removed 2026-10-14: the user didn't like it. It was never committed.
   If it comes back, these are the OLED measurements it used (Unicorne kit

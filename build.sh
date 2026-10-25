@@ -79,11 +79,17 @@ do_fr4() {
 do_drc() {
     need kicad-cli
     step "drc: FR4 plate projects"
-    local side report
+    local side report tmp
     for side in left right; do
         report="$(mktemp -t "plate-fr4-$side-drc")"
+        # kicad-cli rewrites the .kicad_pro next to the board it checks (it
+        # fills in every default setting), so check a copy: the tracked
+        # project stays exactly as make_fr4_plate.py wrote it.
+        tmp="$(mktemp -d -t "plate-fr4-$side")"
+        cp "$ROOT/case/plate-fr4-$side/plate-fr4-$side.kicad_pcb" \
+           "$ROOT/case/plate-fr4-$side/plate-fr4-$side.kicad_pro" "$tmp/"
         kicad-cli pcb drc --exit-code-violations -o "$report" \
-            "$ROOT/case/plate-fr4-$side/plate-fr4-$side.kicad_pcb" || {
+            "$tmp/plate-fr4-$side.kicad_pcb" || {
             cat "$report" >&2
             echo "build.sh: DRC failed for the $side plate" >&2
             exit 1
