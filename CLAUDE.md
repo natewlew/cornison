@@ -319,11 +319,17 @@ came out wrong.
 
 - PCB versions (2026-10-16): the boards in hand are **v1.0** (their
   silkscreen still reads foostan's "Corne Cherry v3.0.1"). The next PCB,
-  with the moved mounting hole, is **v1.1**. The version lives in the title
-  block (`rev`, in both `.kicad_pcb` and `.kicad_sch`), and the silkscreen
-  label ("Cornison v${REVISION}", one line per half, since 2026-10-18)
-  reads it from there. Bump `rev` for the next revision; don't edit the
-  text. v1.1 also moves the right half's lower-centre mounting hole
+  with the moved mounting hole, is **v1.1**. Since 2026-10-25 the version
+  lives in one place, `VERSION` at the repo root: bump it there and run
+  `./build.sh version` (`pcb/sync_version.py`), which copies it into the
+  title blocks (`rev`, in `.kicad_pcb` and `.kicad_sch`), the FR4 plates'
+  title blocks and every fabrication-toolkit `ARCHIVE_NAME`;
+  `make_fr4_plate.py` reads it too. KiCad can't read an outside file, so a
+  revision changed in KiCad's Page Settings drifts:
+  `./build.sh version --check` catches that. The silkscreen label
+  ("Cornison v${REVISION}", one line per half, since 2026-10-18) reads the
+  PCB title block, so don't edit the text. The plates carry the PCB's
+  number (a plate for that revision). v1.1 also moves the right half's lower-centre mounting hole
   (2026-10-24, the user's catch): at (225.0, 99.5) since foostan's file,
   its 4.3mm hole ran 1.6mm off the board's bottom edge; now (227.6, 97.0).
   Only 3.6mm apart, so unlike the outer/lower hole the case and plate
@@ -374,7 +380,14 @@ came out wrong.
   matching the generator. The Gerber zips in each `production/` folder
   are still the 2026-10-02 export of the old design — re-export from
   KiCad before any order. The fifth hole's 1.62mm wall is under JLCPCB's
-  2.0mm ask and may be queried.
+  2.0mm ask and may be queried. Plate exports are now named
+  `cornison_fr4_plate_{left,right}_v<VERSION>` (they were
+  `Corne_Cherry_Plus_FR4_Plate_*_v1`).
+- PCB v1.1 fab outputs exported 2026-10-25 by the user:
+  `pcb/production/cornison_v1.1{.zip,_bom,_designators,_positions}`, from
+  the board in commit 4c72978 (per-key LEDs, DRC cleanup); positions file
+  checked to include LED55-60. The `corne-cherry-plus_v1.*` files beside
+  them are the v1.0 order record.
 - Any case printed before 2026-10-12 has one boss per half ~10mm off its
   PCB hole (the outer-edge one nearer the thumb row) — skip that screw on
   it; fixed in the generator, needs a reprint.

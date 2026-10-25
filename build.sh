@@ -25,8 +25,14 @@ Case, plates and MCU cover (in pipeline order):
   case        All of the above in order: extract, generate, fr4, drc
 
 Other:
-  layout      Regenerate the QMK LAYOUT from the PCB into
-              firmware/qmk/layout.generated.json
+  layout      Regenerate the QMK LAYOUT and RGB matrix from the PCB into
+              firmware/qmk/cornison/keyboard.json (and
+              firmware/qmk/layout.generated.json)
+  version     Copy the board version from VERSION into the PCB and
+              schematic title blocks, the FR4 plates and the
+              fabrication-toolkit export names. Bump VERSION, then run this
+  version --check
+              Exit 1 if any of those files disagrees with VERSION
   help        Show this message
 
 Needs: KiCad (for extract, layout, drc) and uv (for generate and
@@ -85,6 +91,11 @@ do_drc() {
     done
 }
 
+do_version() {
+    step "version: VERSION -> title blocks, plates, export names"
+    python3 "$ROOT/pcb/sync_version.py" "$@"
+}
+
 do_layout() {
     need_kicad_python
     step "layout: PCB -> firmware/qmk/layout.generated.json"
@@ -98,6 +109,7 @@ case "${1:-help}" in
     drc)       do_drc ;;
     case)      do_extract; do_generate; do_fr4; do_drc ;;
     layout)    do_layout ;;
+    version)   shift; do_version "$@" ;;
     help|-h|--help) usage ;;
     *)
         echo "build.sh: unknown command '$1'" >&2
