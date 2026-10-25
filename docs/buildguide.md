@@ -44,7 +44,7 @@ case that replaces Corne's sandwich plates.
 | OLED module (0.91", 128×32, SSD1306) | 2 | |
 | Low-profile 4-pin socket for OLED | 2 | About 3.5mm tall, so the OLED plugs in through the cover |
 | Low-profile sockets and pins for the Pro Micro | 4 × 12-pin | Mill-Max style. Only if you want the controller removable |
-| SK6812MINI-E LED | 42 | Per-key backlight, 21 per half |
+| SK6812MINI-E LED | 48 | Per-key backlight, 24 per half (one under every key) |
 | WS2812B LED | 12 | Underglow, 6 per half |
 | MagSafe ring | 2 | Keebio Magnetic MagSafe Tenting Stand Kit R2, 1 ring per half |
 | Tenting legs | 2 | 3D printed (`tent-{left,right}`), 18° by default. Each needs 4 more M2 heat-set inserts and 4 M2 × 6mm low-head screws |
@@ -53,16 +53,18 @@ case that replaces Corne's sandwich plates.
 
 Notes on the LEDs:
 
-- The six keys added over a standard Corne (the three outer bottom-row
-  keys on each half) have **no per-key LED footprint**. That is why there
-  are 42 LEDs for 48 keys.
+- Every key has a per-key LED footprint. The PCB's first revision left the
+  six keys added over a standard Corne (the three outer bottom-row keys on
+  each half) without one; v1.1 adds them, as LED55-57 (left) and LED58-60
+  (right), at the end of each half's chain.
 - The LEDs are wired in one chain per half, starting with the six
   underglow LEDs. The per-key LEDs come after them, so **per-key lighting
   needs all six underglow LEDs fitted** on that half.
 - The underglow LEDs face down into the case floor. They will only be
   visible through a translucent case.
-- The firmware in this repo does not enable RGB yet. LEDs will stay dark
-  until it does.
+- The firmware describes the LED chain (30 LEDs per half) but leaves RGB
+  off. LEDs stay dark until a keymap sets `RGB_MATRIX_ENABLE = yes`. With it
+  on, the firmware takes about 2.4KB more of the Pro Micro's flash.
 
 ## Firmware preparation
 

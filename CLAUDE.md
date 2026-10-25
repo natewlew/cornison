@@ -154,6 +154,29 @@ came out wrong.
   a hole spot ever needs to carry two revisions again, a boss with no PCB
   hole above it presses on the board's underside: check it against
   `board.json`'s `keepouts`.
+- **Every switch has a per-key LED since 2026-10-24** (user's call, for
+  anyone who builds or buys the PCB). v1.1 adds LED55-57 (left, under
+  SW43-45) and LED58-60 (right, under SW46-48) at switch +4.75mm like the
+  rest, continuing each chain after LED19 / LED46 (30 LEDs per half: 6
+  underglow, then 24 per-key). Done by script, not in the KiCad GUI. In
+  the schematic they fill cols 0-2 of the thumb-row line of each LED grid,
+  wired onto the existing VCC/GND rails like their neighbours. The same day
+  SW43-48/D43-48, which had sat below the A3 frame (y=330) joined only by
+  row/col global labels, moved into the empty row-3 slots of the key matrix,
+  wired into the column and row3 wires (netlist connectivity checked
+  identical before/after). The PCB's old `Net-(LED19-Pad2)`/`Net-(LED46-Pad2)`
+  nets were renamed to the schematic's `Net-(LED19-DOUT)`/`Net-(LED46-DOUT)`.
+  The traces came from a throwaway grid router plus hand-placed power
+  rails (VCC/VDD a B.Cu bus under each new row, GND/GNDA a straight F.Cu
+  rail above it), checked for clearance and for not crossing another net's
+  pad on the opposite side; the user reviews it visually, so tidy routing
+  matters, not just DRC. Each LED footprint carries its own Edge.Cuts window
+  (the LEDs shine up through the board), so tracks must stay 0.1mm off it:
+  two `row3_r` runs on the right half crossed the LED59/LED60 windows and
+  were rerouted. The user should still eyeball it in KiCad before ordering.
+  `gen_layout.py` now also writes `rgb_matrix`/`ws2812` (D3) into
+  `keyboard.json` from the real chain; `features.rgb_matrix` is left off, so
+  a keymap enables it.
 - **Tenting-leg inserts live in the case floor, the screws come up from
   below.** Since 2026-10-23 (the user's request: changing the tent used to
   mean taking the keyboard apart, when the inserts were in the legs and
