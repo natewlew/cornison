@@ -353,9 +353,22 @@ came out wrong.
   - Both halves confirmed working together over TRRS, not just
     individually.
   - The `natewlew` keymap (ported from `keyboards/keebio/nyquist/keymaps/natewlew`
-    in the `qmk_firmware` fork, lives in `qmk_userspace/keyboards/cornison/keymaps/natewlew/`,
-    not in this repo) is flashed to both halves and working on real
-    hardware as of 2026-10-12, split connection included.
+    in the `qmk_firmware` fork) is flashed to both halves and working on
+    real hardware as of 2026-10-12, split connection included. Since
+    2026-10-25 it lives in this repo, `firmware/qmk/cornison/keymaps/natewlew/`,
+    self-contained: `natewlew.c/.h` started as a copy of `users/natewlew` from
+    `qmk_userspace` and have moved on (2026-10-25: OS detection with
+    `OS_DETECTION_KEYBOARD_RESET` for the user's monitor KVM, a shortcut
+    table, alt-tab ended on leaving the layer, Colemak/Dvorak dropped); the
+    user may port it to the Nyquist later. Its `rules.mk` sets `USER_NAME`
+    so QMK doesn't also pull in that userspace copy (both define
+    `process_record_user`). It was moved out of
+    `qmk_userspace/keyboards/cornison/`, where it had never been committed;
+    a userspace keymap of the same name would shadow this one. Its readme
+    shows `keymap.svg`, drawn by `firmware/qmk/draw_keymap.py`
+    (`./build.sh keymap-svg`; plain python3) from keymap.c and
+    keyboard.json's positions, keys coloured by function: redraw it
+    whenever keymap.c changes, and add new custom keycodes to its `LABELS`.
   - Full firmware bring-up is done: matrix, bootloader, handedness, and
     split link all confirmed on real hardware.
 - `firmware/qmk/cornison` builds against a `git worktree` of
@@ -373,6 +386,11 @@ came out wrong.
   and reset switch, which are taller than the gap under the plate, and
   their OLED slot is too short for the header's fourth pin. Don't reorder
   until a home test print of the regenerated plate confirms the fix.
+  Plates printed at home from the current files on 2026-10-25; PCB test
+  fit still to do. The boards in hand are v1.0, so on that fit the plate's
+  outer/lower hole (both halves) and the right half's lower-centre hole
+  won't line up with a PCB hole: expect 4 of 5 plate screws on the left
+  and 3 of 5 on the right. That's the v1.0 board, not the plate.
 - `case/plate-fr4-{left,right}/` were regenerated 2026-10-13 from the
   current plate (MCU opening, 5 mounting holes per half) and pass
   `./build.sh drc` with 0 violations. Checked in pcbnew: 24 switch holes

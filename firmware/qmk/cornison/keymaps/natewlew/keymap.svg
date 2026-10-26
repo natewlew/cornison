@@ -1,0 +1,304 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1823" width="900" height="1823">
+<style>
+.bg { fill: #ffffff; }
+.title { font: 600 15px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
+.legend { font: 13px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
+.key rect { fill: #ffffff; stroke: #c9ccd1; stroke-width: 1; }
+.key text { font: 12px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328;
+            text-anchor: middle; dominant-baseline: central; }
+.key text.small { font-size: 9px; fill: #57606a; }
+.key.big text { font-size: 15px; }
+.key.trans rect { fill: none; stroke: #d0d7de; stroke-dasharray: 3 3; }
+.key.mod rect      { fill: #e4d7fb; stroke: #8250df; }
+.key.layer rect    { fill: #ffdcb8; stroke: #d1700a; }
+.key.nav rect      { fill: #cfe2ff; stroke: #0969da; }
+.key.shortcut rect { fill: #cdeccf; stroke: #1a7f37; }
+.key.num rect      { fill: #fff0a8; stroke: #bf8700; }
+.key.fn rect       { fill: #ead7c3; stroke: #8b5a2b; }
+.key.system rect   { fill: #ffd0cc; stroke: #cf222e; }
+.key.held rect     { stroke: #1f2328; stroke-width: 3; }
+.key.mod text, .key.layer text, .key.nav text, .key.shortcut text,
+.key.num text, .key.fn text, .key.system text { fill: #1f2328; }
+@media (prefers-color-scheme: dark) {
+  .bg { fill: #0d1117; }
+  .title, .legend { fill: #e6edf3; }
+  .key rect { fill: #2d333b; stroke: #545d68; }
+  .key text { fill: #e6edf3; }
+  .key text.small { fill: #9da7b3; }
+  .key.trans rect { fill: none; stroke: #444c56; }
+  .key.held rect { stroke: #ffffff; }
+  .key.mod rect      { fill: #e4d7fb; }
+  .key.layer rect    { fill: #ffdcb8; }
+  .key.nav rect      { fill: #cfe2ff; }
+  .key.shortcut rect { fill: #cdeccf; }
+  .key.num rect      { fill: #fff0a8; }
+  .key.fn rect       { fill: #ead7c3; }
+  .key.system rect   { fill: #ffd0cc; }
+  .key.mod text, .key.layer text, .key.nav text, .key.shortcut text,
+  .key.num text, .key.fn text, .key.system text { fill: #1f2328; }
+  .key.mod text.small, .key.layer text.small { fill: #57606a; }
+}
+</style>
+<rect class="bg" width="900" height="1823" rx="10"/>
+<text class="title" x="16" y="34.0">Qwerty<tspan class="legend"></tspan></text>
+<g class="key " transform="translate(59.5 99.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Tab</text></g>
+<g class="key big" transform="translate(117.3 99.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Q</text></g>
+<g class="key big" transform="translate(175.2 85.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">W</text></g>
+<g class="key big" transform="translate(233.0 77.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">E</text></g>
+<g class="key big" transform="translate(290.9 85.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">R</text></g>
+<g class="key big" transform="translate(348.7 92.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">T</text></g>
+<g class="key big" transform="translate(551.2 92.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Y</text></g>
+<g class="key big" transform="translate(609.0 85.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">U</text></g>
+<g class="key big" transform="translate(666.9 77.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">I</text></g>
+<g class="key big" transform="translate(724.8 85.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">O</text></g>
+<g class="key big" transform="translate(782.6 99.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">P</text></g>
+<g class="key " transform="translate(840.5 99.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Bksp</text></g>
+<g class="key mod" transform="translate(59.5 157.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Cmd /</text><text y="7.0">Ctrl</text></g>
+<g class="key big" transform="translate(117.3 157.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">A</text></g>
+<g class="key big" transform="translate(175.2 143.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">S</text></g>
+<g class="key big" transform="translate(233.0 135.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">D</text></g>
+<g class="key big" transform="translate(290.9 143.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F</text></g>
+<g class="key big" transform="translate(348.7 150.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">G</text></g>
+<g class="key big" transform="translate(551.2 150.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">H</text></g>
+<g class="key big" transform="translate(609.0 143.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">J</text></g>
+<g class="key big" transform="translate(666.9 135.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">K</text></g>
+<g class="key big" transform="translate(724.8 143.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">L</text></g>
+<g class="key big" transform="translate(782.6 157.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">;</text></g>
+<g class="key " transform="translate(840.5 157.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Enter</text></g>
+<g class="key mod" transform="translate(59.5 215.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Shift</text></g>
+<g class="key big" transform="translate(117.3 215.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Z</text></g>
+<g class="key big" transform="translate(175.2 200.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">X</text></g>
+<g class="key big" transform="translate(233.0 193.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">C</text></g>
+<g class="key big" transform="translate(290.9 200.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">V</text></g>
+<g class="key big" transform="translate(348.7 208.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">B</text></g>
+<g class="key big" transform="translate(551.2 208.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">N</text></g>
+<g class="key big" transform="translate(609.0 200.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">M</text></g>
+<g class="key big" transform="translate(666.9 193.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">,</text></g>
+<g class="key big" transform="translate(724.8 200.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">.</text></g>
+<g class="key big" transform="translate(782.6 215.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">/</text></g>
+<g class="key mod" transform="translate(840.5 215.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Shift</text></g>
+<g class="key mod" transform="translate(59.5 273.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Ctrl</text></g>
+<g class="key mod" transform="translate(117.3 273.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Alt</text></g>
+<g class="key mod" transform="translate(175.2 258.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Cmd</text></g>
+<g class="key layer" transform="translate(262.0 260.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Adjust</text></g>
+<g class="key layer" transform="translate(325.9 269.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6" transform="rotate(15.0)"/><text y="0.0">Lower</text></g>
+<g class="key layer" transform="translate(393.6 280.4)"><rect x="-40.5" y="-26.0" width="81.0" height="52" rx="6" transform="rotate(-60.0)"/><text y="-5.0">Space</text><text class="small" y="17.0">hold</text></g>
+<g class="key " transform="translate(506.3 280.4)"><rect x="-40.5" y="-26.0" width="81.0" height="52" rx="6" transform="rotate(60.0)"/><text y="0.0">Space</text></g>
+<g class="key layer" transform="translate(574.1 269.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6" transform="rotate(-15.0)"/><text y="0.0">Raise</text></g>
+<g class="key nav big" transform="translate(666.9 251.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">←</text></g>
+<g class="key nav big" transform="translate(724.8 258.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">↓</text></g>
+<g class="key nav big" transform="translate(782.6 273.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">↑</text></g>
+<g class="key nav big" transform="translate(840.5 273.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">→</text></g>
+<text class="title" x="16" y="371.278">Lower<tspan class="legend"> · hold Lower</tspan></text>
+<g class="key big" transform="translate(59.5 436.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">~</text></g>
+<g class="key big" transform="translate(117.3 436.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">!</text></g>
+<g class="key big" transform="translate(175.2 422.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">@</text></g>
+<g class="key big" transform="translate(233.0 415.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">#</text></g>
+<g class="key big" transform="translate(290.9 422.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">$</text></g>
+<g class="key big" transform="translate(348.7 429.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">%</text></g>
+<g class="key big" transform="translate(551.2 429.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">^</text></g>
+<g class="key big" transform="translate(609.0 422.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">&amp;</text></g>
+<g class="key big" transform="translate(666.9 415.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">*</text></g>
+<g class="key big" transform="translate(724.8 422.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">(</text></g>
+<g class="key big" transform="translate(782.6 436.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">)</text></g>
+<g class="key " transform="translate(840.5 436.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Del</text></g>
+<g class="key " transform="translate(59.5 494.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Esc</text></g>
+<g class="key nav" transform="translate(117.3 494.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Home</text></g>
+<g class="key nav" transform="translate(175.2 480.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">PgDn</text></g>
+<g class="key nav" transform="translate(233.0 473.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">PgUp</text></g>
+<g class="key nav" transform="translate(290.9 480.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">End</text></g>
+<g class="key trans" transform="translate(348.7 487.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(551.2 487.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key big" transform="translate(609.0 480.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">_</text></g>
+<g class="key big" transform="translate(666.9 473.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">+</text></g>
+<g class="key big" transform="translate(724.8 480.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">{</text></g>
+<g class="key big" transform="translate(782.6 494.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">}</text></g>
+<g class="key big" transform="translate(840.5 494.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">|</text></g>
+<g class="key trans" transform="translate(59.5 552.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(117.3 552.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(175.2 538.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(233.0 530.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(290.9 538.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(348.7 545.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(551.2 545.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key big" transform="translate(609.0 538.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">&#x27;</text></g>
+<g class="key big" transform="translate(666.9 530.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">&quot;</text></g>
+<g class="key big" transform="translate(724.8 538.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">.</text></g>
+<g class="key trans" transform="translate(782.6 552.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(840.5 552.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(59.5 610.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(117.3 610.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(175.2 596.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(262.0 597.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key layer held" transform="translate(325.9 606.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6" transform="rotate(15.0)"/><text y="-5.0">Lower</text><text class="small" y="17.0">held</text></g>
+<g class="key trans" transform="translate(393.6 617.7)"><rect x="-40.5" y="-26.0" width="81.0" height="52" rx="6" transform="rotate(-60.0)"/></g>
+<g class="key trans" transform="translate(506.3 617.7)"><rect x="-40.5" y="-26.0" width="81.0" height="52" rx="6" transform="rotate(60.0)"/></g>
+<g class="key trans" transform="translate(574.1 606.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6" transform="rotate(-15.0)"/></g>
+<g class="key trans" transform="translate(666.9 588.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(724.8 596.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(782.6 610.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(840.5 610.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<text class="title" x="16" y="708.556">Lower Space<tspan class="legend"> · hold Space</tspan></text>
+<g class="key trans" transform="translate(59.5 774.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(117.3 774.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key shortcut" transform="translate(175.2 759.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Prev</text><text y="7.0">app</text></g>
+<g class="key shortcut" transform="translate(233.0 752.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Next</text><text y="7.0">app</text></g>
+<g class="key shortcut" transform="translate(290.9 759.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Prev</text><text y="7.0">window</text></g>
+<g class="key shortcut" transform="translate(348.7 767.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Next</text><text y="7.0">window</text></g>
+<g class="key shortcut" transform="translate(551.2 767.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Prev</text><text y="7.0">tab</text></g>
+<g class="key shortcut" transform="translate(609.0 759.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Next</text><text y="7.0">tab</text></g>
+<g class="key trans" transform="translate(666.9 752.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(724.8 759.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(782.6 774.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(840.5 774.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(59.5 832.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key shortcut" transform="translate(117.3 832.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Select</text><text y="7.0">all</text></g>
+<g class="key shortcut" transform="translate(175.2 817.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Save</text></g>
+<g class="key shortcut" transform="translate(233.0 810.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Cmd/</text><text y="7.0">Ctrl D</text></g>
+<g class="key shortcut" transform="translate(290.9 817.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Find</text></g>
+<g class="key shortcut" transform="translate(348.7 824.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Screen</text><text y="7.0">shot</text></g>
+<g class="key trans" transform="translate(551.2 824.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key shortcut" transform="translate(609.0 817.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">New</text><text y="7.0">tab</text></g>
+<g class="key shortcut" transform="translate(666.9 810.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Close</text><text y="7.0">tab</text></g>
+<g class="key shortcut" transform="translate(724.8 817.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Reopen</text><text y="7.0">tab</text></g>
+<g class="key trans" transform="translate(782.6 832.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(840.5 832.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key shortcut" transform="translate(59.5 889.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Redo</text></g>
+<g class="key shortcut" transform="translate(117.3 889.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Undo</text></g>
+<g class="key shortcut" transform="translate(175.2 875.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Cut</text></g>
+<g class="key shortcut" transform="translate(233.0 868.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Copy</text></g>
+<g class="key shortcut" transform="translate(290.9 875.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Paste</text></g>
+<g class="key shortcut" transform="translate(348.7 882.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Paste</text><text y="7.0">plain</text></g>
+<g class="key trans" transform="translate(551.2 882.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(609.0 875.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(666.9 868.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(724.8 875.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(782.6 889.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(840.5 889.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(59.5 947.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(117.3 947.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(175.2 933.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(262.0 935.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(325.9 943.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6" transform="rotate(15.0)"/></g>
+<g class="key layer held" transform="translate(393.6 954.9)"><rect x="-40.5" y="-26.0" width="81.0" height="52" rx="6" transform="rotate(-60.0)"/><text y="-5.0">Space</text><text class="small" y="17.0">held</text></g>
+<g class="key trans" transform="translate(506.3 954.9)"><rect x="-40.5" y="-26.0" width="81.0" height="52" rx="6" transform="rotate(60.0)"/></g>
+<g class="key trans" transform="translate(574.1 943.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6" transform="rotate(-15.0)"/></g>
+<g class="key trans" transform="translate(666.9 926.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(724.8 933.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(782.6 947.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(840.5 947.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<text class="title" x="16" y="1045.834">Raise<tspan class="legend"> · hold Raise</tspan></text>
+<g class="key big" transform="translate(59.5 1111.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">`</text></g>
+<g class="key num big" transform="translate(117.3 1111.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">1</text></g>
+<g class="key num big" transform="translate(175.2 1097.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">2</text></g>
+<g class="key num big" transform="translate(233.0 1089.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">3</text></g>
+<g class="key num big" transform="translate(290.9 1097.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">4</text></g>
+<g class="key num big" transform="translate(348.7 1104.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">5</text></g>
+<g class="key num big" transform="translate(551.2 1104.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">6</text></g>
+<g class="key num big" transform="translate(609.0 1097.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">7</text></g>
+<g class="key num big" transform="translate(666.9 1089.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">8</text></g>
+<g class="key num big" transform="translate(724.8 1097.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">9</text></g>
+<g class="key num big" transform="translate(782.6 1111.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">0</text></g>
+<g class="key " transform="translate(840.5 1111.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Del</text></g>
+<g class="key mod" transform="translate(59.5 1169.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Caps</text><text y="7.0">word</text></g>
+<g class="key nav big" transform="translate(117.3 1169.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">←</text></g>
+<g class="key nav big" transform="translate(175.2 1154.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">↓</text></g>
+<g class="key nav big" transform="translate(233.0 1147.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">↑</text></g>
+<g class="key nav big" transform="translate(290.9 1154.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">→</text></g>
+<g class="key trans" transform="translate(348.7 1162.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(551.2 1162.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key big" transform="translate(609.0 1154.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">-</text></g>
+<g class="key big" transform="translate(666.9 1147.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">=</text></g>
+<g class="key big" transform="translate(724.8 1154.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">[</text></g>
+<g class="key big" transform="translate(782.6 1169.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">]</text></g>
+<g class="key big" transform="translate(840.5 1169.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">\</text></g>
+<g class="key trans" transform="translate(59.5 1227.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(117.3 1227.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(175.2 1212.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key shortcut" transform="translate(233.0 1205.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Ctrl C</text></g>
+<g class="key trans" transform="translate(290.9 1212.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(348.7 1219.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(551.2 1219.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(609.0 1212.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(666.9 1205.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(724.8 1212.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(782.6 1227.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(840.5 1227.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(59.5 1285.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(117.3 1285.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(175.2 1270.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(262.0 1272.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(325.9 1280.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6" transform="rotate(15.0)"/></g>
+<g class="key trans" transform="translate(393.6 1292.2)"><rect x="-40.5" y="-26.0" width="81.0" height="52" rx="6" transform="rotate(-60.0)"/></g>
+<g class="key trans" transform="translate(506.3 1292.2)"><rect x="-40.5" y="-26.0" width="81.0" height="52" rx="6" transform="rotate(60.0)"/></g>
+<g class="key layer held" transform="translate(574.1 1280.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6" transform="rotate(-15.0)"/><text y="-5.0">Raise</text><text class="small" y="17.0">held</text></g>
+<g class="key fn" transform="translate(666.9 1263.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Next</text><text y="7.0">track</text></g>
+<g class="key fn" transform="translate(724.8 1270.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Vol −</text></g>
+<g class="key fn" transform="translate(782.6 1285.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Vol +</text></g>
+<g class="key fn" transform="translate(840.5 1285.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Play/</text><text y="7.0">pause</text></g>
+<text class="title" x="16" y="1383.112">Adjust<tspan class="legend"> · hold Adjust</tspan></text>
+<g class="key fn" transform="translate(59.5 1448.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F1</text></g>
+<g class="key fn" transform="translate(117.3 1448.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F2</text></g>
+<g class="key fn" transform="translate(175.2 1434.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F3</text></g>
+<g class="key fn" transform="translate(233.0 1427.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F4</text></g>
+<g class="key fn" transform="translate(290.9 1434.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F5</text></g>
+<g class="key fn" transform="translate(348.7 1441.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F6</text></g>
+<g class="key fn" transform="translate(551.2 1441.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F7</text></g>
+<g class="key fn" transform="translate(609.0 1434.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F8</text></g>
+<g class="key fn" transform="translate(666.9 1427.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F9</text></g>
+<g class="key fn" transform="translate(724.8 1434.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F10</text></g>
+<g class="key fn" transform="translate(782.6 1448.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F11</text></g>
+<g class="key fn" transform="translate(840.5 1448.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">F12</text></g>
+<g class="key trans" transform="translate(59.5 1506.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(117.3 1506.6)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(175.2 1492.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(233.0 1484.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(290.9 1492.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key system" transform="translate(348.7 1499.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">Mac</text><text y="7.0">mode</text></g>
+<g class="key system" transform="translate(551.2 1499.3)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">PC</text><text y="7.0">mode</text></g>
+<g class="key fn" transform="translate(609.0 1492.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">LEDs</text><text y="7.0">on/off</text></g>
+<g class="key fn" transform="translate(666.9 1484.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">LED</text><text y="7.0">mode</text></g>
+<g class="key fn" transform="translate(724.8 1492.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">LEDs</text><text y="7.0">dim</text></g>
+<g class="key fn" transform="translate(782.6 1506.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-7.0">LEDs</text><text y="7.0">bright</text></g>
+<g class="key trans" transform="translate(840.5 1506.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key system" transform="translate(59.5 1564.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Boot</text></g>
+<g class="key system" transform="translate(117.3 1564.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="0.0">Reboot</text></g>
+<g class="key trans" transform="translate(175.2 1550.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(233.0 1542.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(290.9 1550.0)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(348.7 1557.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(551.2 1557.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(609.0 1549.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(666.9 1542.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(724.8 1549.9)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(782.6 1564.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(840.5 1564.4)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(59.5 1622.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(117.3 1622.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(175.2 1607.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key layer held" transform="translate(262.0 1609.7)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/><text y="-5.0">Adjust</text><text class="small" y="17.0">held</text></g>
+<g class="key trans" transform="translate(325.9 1618.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6" transform="rotate(15.0)"/></g>
+<g class="key trans" transform="translate(393.6 1629.5)"><rect x="-40.5" y="-26.0" width="81.0" height="52" rx="6" transform="rotate(-60.0)"/></g>
+<g class="key trans" transform="translate(506.3 1629.5)"><rect x="-40.5" y="-26.0" width="81.0" height="52" rx="6" transform="rotate(60.0)"/></g>
+<g class="key trans" transform="translate(574.1 1618.1)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6" transform="rotate(-15.0)"/></g>
+<g class="key trans" transform="translate(666.9 1600.5)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(724.8 1607.8)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(782.6 1622.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key trans" transform="translate(840.5 1622.2)"><rect x="-26.0" y="-26.0" width="52.0" height="52" rx="6"/></g>
+<g class="key mod" transform="translate(27.0 1713.39)"><rect x="-10" y="-10" width="20" height="20" rx="4"/></g>
+<text class="legend" x="46.0" y="1717.39">Modifiers</text>
+<g class="key layer" transform="translate(460.985 1713.39)"><rect x="-10" y="-10" width="20" height="20" rx="4"/></g>
+<text class="legend" x="479.985" y="1717.39">Layer keys</text>
+<g class="key nav" transform="translate(27.0 1739.39)"><rect x="-10" y="-10" width="20" height="20" rx="4"/></g>
+<text class="legend" x="46.0" y="1743.39">Navigation</text>
+<g class="key shortcut" transform="translate(460.985 1739.39)"><rect x="-10" y="-10" width="20" height="20" rx="4"/></g>
+<text class="legend" x="479.985" y="1743.39">Shortcuts (most send Cmd on a Mac, Ctrl on a PC)</text>
+<g class="key num" transform="translate(27.0 1765.39)"><rect x="-10" y="-10" width="20" height="20" rx="4"/></g>
+<text class="legend" x="46.0" y="1769.39">Numbers</text>
+<g class="key fn" transform="translate(460.985 1765.39)"><rect x="-10" y="-10" width="20" height="20" rx="4"/></g>
+<text class="legend" x="479.985" y="1769.39">F-keys, media and lighting</text>
+<g class="key system" transform="translate(27.0 1791.39)"><rect x="-10" y="-10" width="20" height="20" rx="4"/></g>
+<text class="legend" x="46.0" y="1795.39">System</text>
+<g class="key layer held" transform="translate(460.985 1791.39)"><rect x="-10" y="-10" width="20" height="20" rx="4"/></g>
+<text class="legend" x="479.985" y="1795.39">Held to reach this layer</text>
+</svg>

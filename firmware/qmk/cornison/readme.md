@@ -26,12 +26,13 @@ and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide)
 for more information. Brand new to QMK? Start with our [Complete Newbs
 Guide](https://docs.qmk.fm/#/newbs).
 
-Only `keymaps/default/` lives in this repo, as a generic fallback. The
-real daily-driver keymap (`natewlew`, ported from
-`keyboards/keebio/nyquist/keymaps/natewlew` in my `qmk_firmware` fork)
-lives externally in my `qmk_userspace` overlay, alongside my other
-boards' keymaps - see
-`keyboards/cornison/keymaps/natewlew/` there.
+Two keymaps:
+
+* `keymaps/default/` - a plain starting point.
+* `keymaps/natewlew/` - my daily driver (5 layers, Mac/Linux-aware
+  shortcuts), ported from my Nyquist keymap. Self-contained: it carries
+  its own copy of my shared userspace code. See its
+  [readme](keymaps/natewlew/readme.md).
 
 ## Bootloader
 

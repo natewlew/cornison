@@ -28,6 +28,10 @@ Other:
   layout      Regenerate the QMK LAYOUT and RGB matrix from the PCB into
               firmware/qmk/cornison/keyboard.json (and
               firmware/qmk/layout.generated.json)
+  keymap-svg [KEYMAP]
+              Draw a keymap's layers, colour-coded, into
+              firmware/qmk/cornison/keymaps/KEYMAP/keymap.svg
+              (default: natewlew). Re-run after changing the keymap
   version     Copy the board version from VERSION into the PCB and
               schematic title blocks, the FR4 plates and the
               fabrication-toolkit export names. Bump VERSION, then run this
@@ -97,6 +101,11 @@ do_drc() {
     done
 }
 
+do_keymap_svg() {
+    step "keymap-svg: keymap.c -> keymaps/${1:-natewlew}/keymap.svg"
+    python3 "$ROOT/firmware/qmk/draw_keymap.py" "${1:-natewlew}"
+}
+
 do_version() {
     step "version: VERSION -> title blocks, plates, export names"
     python3 "$ROOT/pcb/sync_version.py" "$@"
@@ -116,6 +125,7 @@ case "${1:-help}" in
     case)      do_extract; do_generate; do_fr4; do_drc ;;
     layout)    do_layout ;;
     version)   shift; do_version "$@" ;;
+    keymap-svg) shift; do_keymap_svg "$@" ;;
     help|-h|--help) usage ;;
     *)
         echo "build.sh: unknown command '$1'" >&2
