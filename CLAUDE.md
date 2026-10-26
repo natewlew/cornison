@@ -103,10 +103,21 @@ came out wrong.
   straight lines (pinky side, MCU side, bottom up to the thumb cluster, a
   hull round the thumb keys, a flat top per column) instead of tracing the
   PCB outline plus each switch's rounded reinforcement patch. Tracing left
-  scallops between rows. The envelope contains the PCB outline, every
-  reinforcement patch (bar the corners trimmed at the top-edge steps) and
-  `legacy_mcu_footprint()`, so nothing lost clearance. `build_case()` asserts the PCB and plate both fit inside the
-  cavity.
+  scallops between rows. The envelope contains the PCB outline and every
+  switch's and plate-mount hole's reinforcement patch (bar the corners
+  trimmed at the top-edge steps), so nothing lost clearance. `build_case()`
+  asserts the PCB and plate both fit inside the cavity. Since 2026-10-26
+  (the user's call) it no longer holds the old plate's MCU-strip footprint
+  (`legacy_mcu_footprint()`, removed: a reset hole and patches from when
+  the plate covered that strip) or the patches round the two cover-post
+  holes (in the plate's MCU opening, so no plate to reinforce). Those held
+  the MCU-side wall 1.5mm out: 2.0mm off the PCB there, 0.5 everywhere
+  else, and the cover's OLED window off-centre. The wall came in to 0.5mm;
+  the case is 1.5mm narrower per half. The plate lost only slivers
+  (1.1/1.5mm^2 below the lower cover post); a plate printed before that
+  overlaps the new wall by 0.2/0.4mm^2 there -- sand the corner. The cover
+  posts now stop at the PCB's edge (the lower one's hole is 2.6mm in), or
+  they'd touch the wall.
 - **The plate does not cover the MCU strip.** The TRRS jack (5.0mm),
   reset switch (~5.2mm) and Pro Micro (~5.5mm on ordinary headers) all
   stand taller than the 3.4mm under the plate, so `build_plate_sketch()`
@@ -121,8 +132,7 @@ came out wrong.
   fixed that, and since 2026-10-19 the cover has a window through it over
   the module's whole footprint instead, so everything under the OLED shows. A direct-soldered Pro Micro with its stubs
   left long measured ~7mm, which tipped the cover up at the USB end; the
-  stubs have to be trimmed to the solder. `legacy_mcu_footprint()` is what
-  the plate covered back when it went over that strip. Since 2026-10-18
+  stubs have to be trimmed to the solder. Since 2026-10-18
   there's also a two-piece clear cover (`build_clear_cover()`): a printed
   base wall plus a 2mm laser-cut clear top over the same footprint, with
   the OLED under it. The OLED glass is 13–14mm above the PCB on its socket
@@ -135,9 +145,38 @@ came out wrong.
   `cover_outline()` straightens both covers' key side. A tab over the wall
   top and a tooth under the angled thumb keycap are cut off, and the plate
   fills where the tooth was, lapping 1mm under the new edge. A plate from
-  before this leaves a small hole there under a new cover. `board_envelope()`
-  still includes it, so the walls round the MCU strip never come in
-  closer than they were then.
+  before this leaves a small hole there under a new cover. 2026-10-25/26:
+  an optional **inset cover** (`cover-inset-{left,right}`,
+  `cover_footprint_inset()` / `inset_bevel()`), the user's idea: the same
+  cover stopped at the plate's outline, so its top is a straight-edged
+  panel inside the wall, OLED window centred (3.4mm each side once the
+  wall came in). Its underside is 1mm above the wall top, so a 45 degree
+  bevel from its top edge runs down onto the wall top on the wall side;
+  with the wall 0.5mm off the PCB the bevel lands exactly on the case's
+  outer face. A flat lip came first and was dropped: printed top-down it
+  stuck out 2mm with nothing under it (supports). The bevel prints
+  without. Its reset hole is 1.5mm from the edge at the top face, but
+  `reset_access(bevel=True)` judges the wall at mid-thickness, where the
+  bevel makes it 2.5mm, and `build_cover()` checks the bevel is really
+  there beside it. A slot open to the edge came first (2026-10-26): it cut
+  the frame round the window right through on the inner side, leaving a
+  40mm strip hanging from the USB end; the user flagged it as weak. Not printed yet; the user will print both and
+  keep one. Also 2026-10-26 (the user's question, once the wall came in):
+  the flat covers no longer cut back over the USB notch -- the grip stays
+  outside, only the socket (3.5mm up at most) is in there, so the cover
+  spans it and the notch becomes a port. At the TRRS notch they cut back
+  only where the cable's grip reaches (`grip_cut()`): the user measured its
+  front ~2mm out from the PCB's edge (`TRRS_GRIP_FROM_PCB_EDGE`), so it's
+  1mm into the wall now, and the cut is 1.5mm deep instead of the whole
+  wall. Every cover is checked against a 10mm grip (`trrs_grip_solid()`).
+  The inset cover's bevel stays cut at both notches (it comes down to the
+  wall top at the outer face). Also 2026-10-26 (the user's catch): along
+  the angled thumb-keycap edge both covers hovered 1mm over the plate, and
+  you could see under them between the posts; a 2mm skirt
+  (`COVER_PLATE_REST_IN` past the plate's 1mm lap) now rests on the plate
+  there, level with the rim. A part-bbox cut-out unclipped to the cavity
+  once sliced the bevel along the USB end (the Pro Micro's bbox includes
+  its connector's overhang).
 - **`dxf_to_loops.py` reconstructs closed loops via a point-adjacency
   graph**, not by trusting the DXF's own edge ordering — build123d's own
   `Wire.order_edges()` has a real bug on this geometry (it silently
@@ -402,8 +441,10 @@ came out wrong.
   `cornison_fr4_plate_{left,right}_v<VERSION>` (they were
   `Corne_Cherry_Plus_FR4_Plate_*_v1`). The user exported
   `cornison_fr4_plate_{left,right}_v1.1.zip` on 2026-10-25; their Edge.Cuts
-  Gerbers were checked identical to the current plate projects. The `_v1`
-  zips beside them are the old, pre-fix export.
+  Gerbers were checked identical to the plate projects then. Stale since
+  2026-10-26 (the MCU-side wall came in and the plate lost a ~1.5mm^2
+  sliver): re-export before ordering. The `_v1` zips beside them are the
+  old, pre-fix export.
 - PCB v1.1 fab outputs exported 2026-10-25 by the user:
   `pcb/production/cornison_v1.1{.zip,_bom,_designators,_positions}`, from
   the board in commit 4c72978 (per-key LEDs, DRC cleanup); positions file

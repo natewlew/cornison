@@ -135,7 +135,7 @@ jack and reset switch, about 25 × 65mm.
 | Height above PCB top | Feature |
 |---|---|
 | 0 – 6.0mm | Two posts, standing on the PCB over the two mounting holes beside the TRRS jack |
-| 5.0 – 6.0mm | Rim, resting on the case wall top along the board's top and inner edges |
+| 5.0 – 6.0mm | Rim, resting on the case wall top along the board's top and inner edges, and a 2mm skirt resting on the plate along the angled edge |
 | 6.0mm | Cover underside |
 | 8.0mm | Cover top (3.0mm above the plate and wall top) |
 
@@ -158,16 +158,39 @@ jack and reset switch, about 25 × 65mm.
   Trim the header pin stubs down to the solder: left long on the first
   build, they stood ~7mm and tipped the cover up at the USB end. Standard 8.5mm sockets put it at about 11mm
   and do not fit — build without the cover and OLED in that case.
-- The cover stays out from under every keycap and clear of the USB and
-  TRRS wall notches. Its key side is one straight edge, then one straight
-  diagonal along the angled thumb keycap; the plate fills in under the
-  diagonal's end.
+- The cover stays out from under every keycap. Its key side is one
+  straight edge, then one straight diagonal along the angled thumb keycap;
+  the plate fills in under the diagonal's end.
+- **USB:** the cover runs straight across the wall's USB notch, which
+  becomes a closed port under it: only the socket and the plug's metal
+  shell go in there (the cable's grip stays outside), at most 3.5mm up.
+- **TRRS:** the cable's grip reaches 1mm into the wall (it starts ~2mm out
+  from the PCB's edge, measured), so the cover's inner edge steps back
+  1.5mm over the notch, flush with its sides. Checked against a 10mm grip.
 - **Printing:** top face down, posts up. No supports.
 
 **Not yet checked against real parts.** The part heights behind
 `COVER_UNDERSIDE_ABOVE_PCB` in `case.py` are measured from the 3D models
 in `pcb/kbd`, not from the components themselves. Measure a built board
 before ordering covers from a print service.
+
+### Inset cover (optional)
+
+`cover-inset-{left,right}` is the same cover, stopped at the plate's
+outline instead of running out over the wall. Its top is a flat panel
+with straight outer edges and the OLED window centred over the Pro Micro.
+A 45° bevel runs from its top edge down onto the wall top along the
+board's top and inner edges, landing on the case's outer face, so from
+the side the wall carries on up into the cover. The bevel is what it rests
+on at the USB end; the posts, screws and window are the same as the flat
+cover's. The reset hole sits 1.5mm from the cover's inner edge at the
+top face, but the bevel right outside that edge thickens it going down
+(2.5mm half-way through), so the frame round the window stays a closed
+ring.
+
+- **Printing:** top face down, like the flat cover. The bevel grows out
+  at 45° from the bed: no supports.
+- Use one or the other per half, not both.
 
 ## Clear MCU cover (alternative)
 
@@ -363,7 +386,7 @@ tape over it is cheap insurance.
 | MagSafe ring (Keebio kit) | 2 | 1 per half, adhesive-backed — alternative to tenting legs, see above |
 | Case | 2 | 1 per half, 3D printed (`case-{left,right}.stl`), see Ordering the case below |
 | Switch plate | 2 | 1 per half — FR4 (from the `plate-fr4-{left,right}/` KiCad projects), or POM or MJF nylon (`plate-{pom,mjf}-*`), see below |
-| MCU cover | 2 | 1 per half, 3D printed (`cover-{left,right}.stl`) |
+| MCU cover | 2 | 1 per half, 3D printed (`cover-{left,right}.stl`, or the inset version `cover-inset-{left,right}.stl`) |
 | Clear MCU cover (instead of the MCU cover) | 2 + 2 | Per half, a printed base (`cover-base-{left,right}.stl`) and a 2mm laser-cut clear acrylic top (`cover-clear-{left,right}.dxf`) |
 | Plate-mount spacer, standard | 8 (+ spares) | 4 per half, 3D printed (`spacer-{pom,fr4,mjf}.stl` — pick the one matching your plate material) |
 | Plate-mount spacer, narrow | 2 (+ spares) | 1 per half, for the top hole nearest the MCU strip (`spacer-narrow-{pom,fr4,mjf}.stl`) |
