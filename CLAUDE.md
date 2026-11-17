@@ -374,6 +374,23 @@ came out wrong.
 
 ## Order status (as of 2026-10-12 — verify before relying on this)
 
+- **2026-11-11: v1.1 PCBs and FR4 plates arrived** (JLCPCB, ordered from
+  the 2026-10-28 exports, which included the D43/D45 reroute and the
+  plate's 2026-10-26 sliver). Silkscreen reads Cornison v1.1. The PCB fits
+  the current case and the user found everything lines up (bosses, plate
+  holes). The v1.1 build waits on LCSC parts. Notes below that call the
+  boards in hand v1.0, or the fab outputs stale, predate this.
+- **2026-11-16: v1.1 right half assembled and working** on its own over
+  USB: every key on the `natewlew` keymap (`-bl avrdude-split-right`),
+  and the OLED. Not yet tested: left half, TRRS split link on v1.1,
+  RGB. Two new Pro Micros were bench-tested first, unsoldered: they ship
+  with an Arduino Leonardo sketch (2341:8036), so the first flash needs
+  no reset at all: `stty -f /dev/cu.usbmodemXXXX 1200` drops it into
+  Caterina, then run avrdude on the port when it comes back. Once QMK is
+  on, the reset button needs a quick double-tap; a single press or a slow
+  pair only reboots it. Bootmagic (hold the top outer key while plugging
+  in) also works.
+
 - PCB versions (2026-10-16): the boards in hand are **v1.0** (their
   silkscreen still reads foostan's "Corne Cherry v3.0.1"). The next PCB,
   with the moved mounting hole, is **v1.1**. Since 2026-10-25 the version
