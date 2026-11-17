@@ -213,6 +213,13 @@ came out wrong.
   (the LEDs shine up through the board), so tracks must stay 0.1mm off it:
   two `row3_r` runs on the right half crossed the LED59/LED60 windows and
   were rerouted. The user should still eyeball it in KiCad before ordering.
+  2026-10-28 (the user's catch): on the left half two of those runs went
+  between a bottom-row diode's pads on B.Cu, under its body: the LED19→LED55
+  data line across D43 (col0) and the VCC join from LED57 to the trunk
+  across D45 (col2, the new bus's only link to VCC). Both now cross on F.Cu
+  clear of the diode's silk box; DRC unchanged. No track crosses between a
+  diode's pads anywhere now. (D46's data line, right half, runs along that
+  diode's silk edge beside the board edge, not between its pads; left as is.)
   `gen_layout.py` now also writes `rgb_matrix`/`ws2812` (D3) into
   `keyboard.json` from the real chain; `features.rgb_matrix` is left off, so
   a keymap enables it.
@@ -449,7 +456,9 @@ came out wrong.
   `pcb/production/cornison_v1.1{.zip,_bom,_designators,_positions}`, from
   the board in commit 4c72978 (per-key LEDs, DRC cleanup); positions file
   checked to include LED55-60. The `corne-cherry-plus_v1.*` files beside
-  them are the v1.0 order record.
+  them are the v1.0 order record. Re-exported 2026-10-28 (checked
+  identical to the board then), then stale the same day after the D43/D45
+  reroute: re-export before ordering.
 - Any case printed before 2026-10-12 has one boss per half ~10mm off its
   PCB hole (the outer-edge one nearer the thumb row) — skip that screw on
   it; fixed in the generator, needs a reprint.
