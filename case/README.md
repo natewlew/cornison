@@ -370,6 +370,48 @@ it's tar-like and hard to get off once it's on the plastic. The foil is
 conductive and faces the sockets with ~0.5mm to spare; a layer of Kapton
 tape over it is cheap insurance.
 
+## Foam (optional)
+
+Two foam pieces per half. Each has a cut-only DXF in `out/` (no label, in
+the real-world frame seen from above) for an online cutting service. Or
+cut them by hand from a template:
+
+- **Case foam:** goes on the case floor *instead of* the butyl mat. Its
+  outline is exactly the mat's, so cut it with the **mat template**
+  (`mat-template-{left,right}`; ignore "FOIL SIDE") and the same 10mm
+  punch. The cut-only file is `foam-case-{left,right}.dxf`. Use **2mm**
+  foam: the gap is 4.0mm, less the 1.8mm hotswap sockets, so 2mm leaves
+  0.2mm under them. It's a flat sheet under every part, with no socket
+  cutouts (at 19mm pitch they'd leave a lace of ~3mm strips). It also
+  covers the underglow LEDs.
+- **Plate foam:** goes between the PCB and the plate, with the **loose
+  spacers** standing through its holes (not with the spacer frame, which
+  fills the same gap). It's the plate's outline, with a 14.5mm opening
+  round each switch body and a **6mm** hole (hollow punch) round each
+  spacer. Near a switch the spacer hole merges into that switch's
+  opening. The tracing template is `foam-plate-template-{left,right}`
+  (STL to print at 0.6mm, or DXF to print 1:1 on paper), labelled
+  LEFT or RIGHT in bold (reading backwards means the template is upside
+  down); the cut-only file is `foam-plate-{left,right}.dxf`.
+  The gap is 3.5mm under a POM plate, 3.4mm under FR4 and 3.0mm under
+  MJF. The generator checks it at 3.0mm, so it fits under every plate;
+  3–3.5mm PE or Poron compresses to fit. The webs between openings are
+  ~4.5mm, less round the thumb keys. Anything under 2mm is dropped. Some
+  services' minimum feature size (Ponoko's EVA: 6mm) is larger than that,
+  so check before ordering.
+
+Cutting by hand: trace with a fine marker on the foam's top face (label
+reading normally) and cut on the inside of the line. A fresh blade and a
+steel rule work for the switch openings: several light passes, not one
+heavy one. Punch the spacer holes.
+
+Assembly with plate foam: lay the foam on the PCB, drop the spacers
+through its holes into the PCB holes, then the plate and its screws, then
+the switches through plate and foam. Adhesive-backed foam goes adhesive
+side down. Don't laser-cut PVC foam (it gives off chlorine), and have
+Poron (polyurethane) knife- or die-cut rather than lasered. Neither is
+built yet.
+
 ## Hardware BOM (per keyboard, both halves)
 
 | Item | Qty | Notes |
@@ -394,6 +436,8 @@ tape over it is cheap insurance.
 | Tenting leg | 2 | 1 per half, 3D printed (`tent-{left,right}.stl`) — alternative to rubber feet |
 | Tire weight segment, 19 × 16 × 4mm | up to 18 | Optional tent weight, up to 9 per half in the cells in the middle of the tent. Stick-on wheel balance weights, cut from the strip |
 | Floor mat (optional) | 2 | 1 per half, butyl sound-deadening sheet about 1.7mm thick (Dynamat Xtreme or similar; not 2mm/80mil), cut with the `mat-template-{left,right}` template. See Floor mat (optional), above |
+| Case foam (optional, instead of the floor mat) | 2 | 1 per half, 2mm foam cut with the `mat-template-{left,right}` template and 10mm punch (or `foam-case-{left,right}.dxf`). See Foam (optional), above |
+| Plate foam (optional, with the loose spacers) | 2 | 1 per half, 3–3.5mm PE/Poron (3mm under an MJF plate) cut with the `foam-plate-template-{left,right}` template and a 6mm punch (or `foam-plate-{left,right}.dxf`). See Foam (optional), above |
 
 ## Ordering the plate
 

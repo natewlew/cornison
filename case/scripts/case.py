@@ -329,6 +329,24 @@ MAT_LABEL_MARGIN = 2.0             # label kept this far inside the mat
 MAT_DENSITY = 2.2                  # kg/m^2, Dynamat Xtreme's published
                                     # 0.45 lb/ft^2 -- only for the printout
 
+# Foam, as an alternative to the butyl mat and/or with the loose spacers
+# (not the spacer frame, which fills the same gap). Only cutting files are
+# generated: DXFs with cut lines and nothing else, for a laser/knife
+# cutting service or to print 1:1 and cut by hand.
+UNDERSIDE_PART_H = 1.8             # hotswap socket, the tallest part under the PCB
+FOAM_CASE_T = 2.0                  # case foam: a flat sheet on the floor, under
+                                    # every part (4.0mm gap less the sockets'
+                                    # 1.8). No socket cutouts: at 19mm pitch
+                                    # they'd leave a lace of 3mm strips
+FOAM_CASE_BOSS_HOLE_D = MAT_PUNCH_D    # the mat's 10mm, so its template and
+                                        # punch cut the case foam too
+FOAM_PLATE_OPENING = KEY_HOLE + 0.5 # plate foam: switch bodies are 14mm below
+                                    # the plate (their clips snap out in the
+                                    # plate's own thickness, above the foam)
+FOAM_PLATE_PUNCH_D = 6.0           # spacer holes: a common hollow-punch size,
+                                    # 0.2mm round the 5.6mm spacer
+FOAM_MIN_WIDTH = 2.0               # strips narrower than this are dropped
+
 Z_TOL = 1e-6
 
 
@@ -442,6 +460,59 @@ def open_sketch(sk, radius):
     return b3d.offset(
         b3d.offset(sk, amount=-radius, kind=b3d.Kind.ARC), amount=radius, kind=b3d.Kind.ARC
     )
+
+
+def shrink(face, amount):
+    """A hole-free face eroded by `amount`, or None if nothing's left.
+    b3d.offset() does it unless the face splits into pieces, where it
+    throws ('Unexpected result type'); then it's done with booleans only:
+    the polygonized face minus an `amount`-wide band along every edge."""
+    try:
+        out = b3d.offset(face, amount=-amount, kind=b3d.Kind.ARC)
+        return out if out.area > 1e-6 else None
+    except (RuntimeError, ValueError):
+        pass
+    pg = polygonize(b3d.Sketch() + face)
+    band = []
+    for e in pg.faces()[0].outer_wire().edges():
+        a, b = e @ 0, e @ 1
+        mid = (a + b) / 2
+        ang = math.degrees(math.atan2(b.Y - a.Y, b.X - a.X))
+        band.append(b3d.Pos(mid.X, mid.Y) * b3d.Rot(0, 0, ang) * b3d.Rectangle((b - a).length, 2 * amount))
+        band.append(b3d.Pos(a.X, a.Y) * b3d.Circle(amount))
+    out = pg - (b3d.Sketch() + band)
+    return out if out.faces() and out.area > 1e-6 else None
+
+
+def offset_holed(sk, amount):
+    """b3d.offset() for faces with holes, which it can get wrong: on the
+    plate foam (27 openings) open_sketch() filled two switch openings in.
+    Here only hole-free faces are offset: each face's outer outline by
+    `amount`, each of its holes by -amount, one at a time (shrunk by
+    shrink(), since a hole can split). A hole that shrinks to nothing just
+    goes."""
+    out = []
+    for f in sk.faces():
+        try:
+            grown = b3d.Sketch() + b3d.offset(b3d.Face(f.outer_wire()), amount=amount, kind=b3d.Kind.ARC)
+        except (RuntimeError, ValueError):
+            continue                         # the whole face eroded away
+        for w in f.inner_wires():
+            hole = b3d.Face(w)
+            if amount > 0:
+                hole = shrink(hole, amount)
+                if hole is None:
+                    continue                 # shrank to nothing
+            else:
+                hole = b3d.offset(hole, amount=-amount, kind=b3d.Kind.ARC)
+            grown = grown - hole
+        out.extend(grown.faces())
+    return b3d.Sketch() + out
+
+
+def open_holed(sk, radius):
+    """open_sketch() (morphological opening) through offset_holed()."""
+    return offset_holed(offset_holed(sk, -radius), radius)
 
 
 def close_holes(sk, radius, within):
@@ -1189,11 +1260,12 @@ def build_case(side, data, plate_sk):
 # ----------------------------------------------------------------------
 # Floor mat template
 # ----------------------------------------------------------------------
-def build_floor_mat(side, data, case, metrics):
+def build_floor_mat(side, data, case, metrics, hole_d=MAT_BOSS_HOLE_D, thickness=MAT_T):
     """Outline of the sound-deadening mat on the case floor: the cavity
     pulled in from the wall, with holes round the bosses, and kept off the
     MCU strip's through-hole pins. Returned in
-    KiCad's frame like everything else; the caller exports it."""
+    KiCad's frame like everything else; the caller exports it. The case
+    foam is the same shape with smaller boss holes."""
     mat = b3d.offset(metrics["cavity_sk"], amount=-MAT_EDGE_CLEARANCE, kind=b3d.Kind.ARC)
     pins = bbox_union([part_by_type(data["parts"], t)["bbox"] for t in MCU_ZONE_PARTS], margin=MAT_PIN_MARGIN)
     # Open once before the holes: the MCU cut leaves a ~0.6mm strip along
@@ -1201,7 +1273,7 @@ def build_floor_mat(side, data, case, metrics):
     # b3d.offset() throws on instead of eroding away.
     mat = open_sketch(mat - rect_from_bb(pins), MAT_MIN_WIDTH / 2)
     for x, y in metrics["boss_positions"]:
-        mat = mat - b3d.Pos(x, y) * b3d.Circle(MAT_BOSS_HOLE_D / 2)
+        mat = mat - b3d.Pos(x, y) * b3d.Circle(hole_d / 2)
     # A hole can still cut a crumb off a corner (0.4mm^2 by the MCU strip);
     # offset() throws on those too, so drop them by area first.
     mat = b3d.Sketch() + [f for f in mat.faces() if f.area > (2 * MAT_MIN_WIDTH) ** 2]
@@ -1210,55 +1282,117 @@ def build_floor_mat(side, data, case, metrics):
 
     # Ground truth is the case solid itself: a mat of the real thickness,
     # lying on the floor, must not touch the walls or bosses.
-    mat_solid = extrude_up(mat, FLOOR_T, MAT_T)
+    mat_solid = extrude_up(mat, FLOOR_T, thickness)
     clash = overlap(mat_solid, case, "volume")
     assert clash < 0.01, f"{side}: floor mat intersects the case ({clash:.2f}mm^3)"
     return mat, {"pieces": len(mat.faces()), "area": mat.area}
 
 
-def mat_label(side, phys_mat):
-    """'LEFT'/'RIGHT' over 'FOIL SIDE', in the real-world frame, at the spot
-    nearest the mat's middle where the whole label (plus a margin) lies
-    on the mat -- the two templates look alike, and one first build came
-    out as two lefts."""
-    label = b3d.Sketch() + [
-        b3d.Pos(0, MAT_LABEL_SUB_SIZE / 2 + 1) * b3d.Text(side.upper(), MAT_LABEL_SIZE),
-        b3d.Pos(0, -MAT_LABEL_SIZE / 2) * b3d.Text("FOIL SIDE", MAT_LABEL_SUB_SIZE),
-    ]
-    bb = label.bounding_box()
-    w, h = bb.size.X + 2 * MAT_LABEL_MARGIN, bb.size.Y + 2 * MAT_LABEL_MARGIN
-    label = b3d.Pos(-bb.center().X, -bb.center().Y) * label
+def mat_label(side, phys_mat, sub="FOIL SIDE", sizes=((MAT_LABEL_SIZE, MAT_LABEL_SUB_SIZE),),
+              margin=MAT_LABEL_MARGIN, bold=False):
+    """'LEFT'/'RIGHT' over `sub` (or alone, if it's None), in the real-world
+    frame, at the spot nearest the mat's middle where the whole label (plus
+    a margin) lies on the mat -- the two templates look alike, and one
+    first build came out as two lefts. Tries each (size, sub size) in turn,
+    largest first. Small text wants `bold`: a 4mm regular label has
+    0.3-0.45mm strokes, under a 0.4mm nozzle's line, and Bambu Studio
+    flagged the fragments it kept as floating cantilevers."""
+    style = b3d.FontStyle.BOLD if bold else b3d.FontStyle.REGULAR
     mbb = phys_mat.bounding_box()
     mid = mbb.center()  # a mirrored Sketch reports center() as the origin
-    spots = [(mbb.min.X + i * 2.0, mbb.min.Y + j * 2.0)
-             for i in range(int(mbb.size.X / 2) + 1) for j in range(int(mbb.size.Y / 2) + 1)]
+    spots = [(mbb.min.X + i * 1.0, mbb.min.Y + j * 1.0)
+             for i in range(int(mbb.size.X) + 1) for j in range(int(mbb.size.Y) + 1)]
     spots.sort(key=lambda p: math.dist(p, (mid.X, mid.Y)))
-    for x, y in spots:
-        box = b3d.Pos(x, y) * b3d.Rectangle(w, h)
-        if overlap(box, phys_mat) > box.area - 0.01:
-            return b3d.Pos(x, y) * label
-    raise AssertionError(f"{side}: no room on the floor mat for its {w:.0f}x{h:.0f}mm label")
+    for size, sub_size in sizes:
+        if sub is None:
+            label = b3d.Sketch() + b3d.Text(side.upper(), size, font_style=style)
+        else:
+            label = b3d.Sketch() + [
+                b3d.Pos(0, sub_size / 2 + 1) * b3d.Text(side.upper(), size, font_style=style),
+                b3d.Pos(0, -size / 2) * b3d.Text(sub, sub_size, font_style=style),
+            ]
+        bb = label.bounding_box()
+        w, h = bb.size.X + 2 * margin, bb.size.Y + 2 * margin
+        label = b3d.Pos(-bb.center().X, -bb.center().Y) * label
+        for x, y in spots:
+            box = b3d.Pos(x, y) * b3d.Rectangle(w, h)
+            if overlap(box, phys_mat) > box.area - 0.01:
+                return b3d.Pos(x, y) * label
+    raise AssertionError(f"{side}: no room on the template for its label")
 
 
-def export_floor_mat(side, mat):
+def export_floor_mat(side, mat, name="mat-template", **label_args):
     """Tracing template: a thin print plus a DXF for paper. Unlike the
     plate DXF, both are mirrored into the real-world frame, so the
     template reads right side up laid on the mat's foil (top) face. The
     label is raised on the print and on its own layer in the DXF, so
-    nobody cuts along it."""
+    nobody cuts along it. The plate foam's template is made the same way."""
     phys = to_physical(mat)
-    label = mat_label(side, phys)
+    label = mat_label(side, phys, **label_args)
     # to_physical() is a mirror, so it also takes the label back to KiCad's
     # frame, where write() expects everything
     template = extrude_up(mat, 0, MAT_TEMPLATE_T) + extrude_up(to_physical(label), MAT_TEMPLATE_T, MAT_LABEL_H)
-    write(template, f"mat-template-{side}", indent="  ")
-    dxf_path = os.path.join(OUT_DIR, f"mat-template-{side}.dxf")
+    write(template, f"{name}-{side}", indent="  ")
+    dxf_path = os.path.join(OUT_DIR, f"{name}-{side}.dxf")
     exp = b3d.ExportDXF()
     exp.add_shape(phys)
     exp.add_layer("label")
     exp.add_shape(label, layer="label")
     exp.write(dxf_path)
     print(f"  wrote {dxf_path}")
+
+
+# ----------------------------------------------------------------------
+# Foam
+# ----------------------------------------------------------------------
+def build_plate_foam(side, plate_sk, keys, mount_plan, case, metrics, thickness):
+    """Plate foam: the spacer frame's job done in foam, between the PCB and
+    the plate, with the loose spacers standing through it. The plate's
+    outline, a FOAM_PLATE_OPENING square round every switch, and a hole round
+    every spacer. Checked as a solid of the given thickness on the PCB's top
+    face against the case, the switch bodies and the spacers."""
+    # Each opening is cut on its own: a union of the squares and the 6mm
+    # spacer circles once came back missing two whole squares (OCC), and
+    # the foam covered those switches.
+    full = plate_footprint(plate_sk)
+    bodies = None
+    for k in keys:
+        place = b3d.Pos(k["x"], k["y"], 0) * b3d.Rot(0, 0, k["rot"])
+        full = full - place * b3d.Rectangle(FOAM_PLATE_OPENING, FOAM_PLATE_OPENING)
+        body = place * b3d.Rectangle(KEY_HOLE, KEY_HOLE)
+        bodies = body if bodies is None else bodies + body
+    spacers = None
+    for h, kind in mount_plan:
+        od = SPACER_OD if kind == "standard" else SPACER_OD_NARROW
+        c = b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(od / 2)
+        spacers = c if spacers is None else spacers + c
+        assert FOAM_PLATE_PUNCH_D > od, f"{side}: {FOAM_PLATE_PUNCH_D}mm foam hole won't pass a {od}mm spacer"
+        full = full - b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(FOAM_PLATE_PUNCH_D / 2)
+    assert abs(bodies.area - len(keys) * KEY_HOLE ** 2) < 0.1, f"{side}: switch bodies overlap or went missing"
+    foam = open_holed(full, FOAM_MIN_WIDTH / 2)
+    # keep the one big piece: a crumb cut off between openings is no use
+    foam = b3d.Sketch() + [max(foam.faces(), key=lambda f: f.area)]
+
+    hit = overlap(foam, bodies)
+    assert hit < 0.01, f"{side}: plate foam reaches a switch body ({hit:.3f}mm^2)"
+    assert overlap(foam, spacers) < 0.01, f"{side}: plate foam reaches a spacer"
+    solid = extrude_up(foam, metrics["pcb_top_z"], thickness)
+    clash = overlap(solid, case, "volume")
+    assert clash < 0.01, f"{side}: plate foam intersects the case ({clash:.2f}mm^3)"
+    return foam, {"area": foam.area, "dropped": full.area - foam.area}
+
+
+def export_foam(name, sk):
+    """Cut lines only, in the real-world frame seen from above (the plate's
+    top / the case's open side), so a cutting service has nothing to
+    engrave. A flat foam piece flipped over is its own mirror image, so the
+    frame only matters for adhesive-backed foam: adhesive goes on the
+    underside."""
+    path = os.path.join(OUT_DIR, f"{name}.dxf")
+    exp = b3d.ExportDXF()
+    exp.add_shape(to_physical(sk))
+    exp.write(path)
+    print(f"  wrote {path}")
 
 
 # ----------------------------------------------------------------------
@@ -2495,6 +2629,15 @@ def main():
         export_floor_mat(side, mat)
         print(f"  floor mat: {mat_info['pieces']} piece(s), {mat_info['area'] / 100:.0f}cm^2, "
               f"~{mat_info['area'] * 1e-6 * MAT_DENSITY * 1000:.0f}g at {MAT_T}mm butyl")
+        assert FOAM_CASE_T + UNDERSIDE_PART_H <= BOSS_H - 0.1, (
+            f"{FOAM_CASE_T}mm case foam leaves under 0.1mm below the {UNDERSIDE_PART_H}mm sockets"
+        )
+        cfoam, cfoam_info = build_floor_mat(side, data, case, metrics,
+                                            hole_d=FOAM_CASE_BOSS_HOLE_D, thickness=FOAM_CASE_T)
+        export_foam(f"foam-case-{side}", cfoam)
+        print(f"  case foam (instead of the mat): {cfoam_info['pieces']} piece(s), {cfoam_info['area'] / 100:.0f}cm^2, "
+              f"{FOAM_CASE_T}mm, {BOSS_H - UNDERSIDE_PART_H - FOAM_CASE_T:.1f}mm under the sockets, "
+              f"{FOAM_CASE_BOSS_HOLE_D:.0f}mm boss holes, the mat template's outline")
         print(f"  plate opening over the MCU strip, bbox: {[round(v,1) for v in mcu_bb]}")
 
         mount_holes = plate_mount_holes(side, data, plate_sk)
@@ -2507,6 +2650,19 @@ def main():
             clash = overlap(frame, b3d.Pos(0, 0, -metrics["pcb_top_z"]) * case, "volume")
             assert clash < 0.01, f"{side}: spacer frame intersects the case ({clash:.2f}mm^3)"
             write(frame, f"spacer-frame-{tag}-{side}", indent="  ")
+        # plate foam: sized for the thinnest gap (MJF's 3.0mm), it fits
+        # under every plate; thicker foam compresses
+        pfoam, pfoam_info = build_plate_foam(side, plate_sk, data["keys"], mount_plan, case, metrics,
+                                             PLATE_TOP_ABOVE_PCB - max(t for _, t in plates))
+        export_foam(f"foam-plate-{side}", pfoam)
+        # one bold word, as big as fits on the foam's webs: plain foam can be
+        # flipped, and a label reading backwards shows the template is
+        export_floor_mat(side, pfoam, name="foam-plate-template", sub=None,
+                         sizes=tuple((h, None) for h in (8.0, 7.0, 6.0, 5.0)), margin=0.5, bold=True)
+        gaps = ", ".join(f"{PLATE_TOP_ABOVE_PCB - t:.1f}mm under {g}" for g, t in plates)
+        print(f"  plate foam (with the loose spacers): {pfoam_info['area'] / 100:.0f}cm^2, "
+              f"{FOAM_PLATE_OPENING}mm switch openings; gap {gaps}"
+              + (f"; dropped {pfoam_info['dropped']:.1f}mm2 of strips under {FOAM_MIN_WIDTH}mm" if pfoam_info["dropped"] > 0.5 else ""))
         dropped = finfo["dropped"]
         print(f"  spacer frame: {finfo['posts']} posts, each with a pilot, {finfo['height']:.1f}mm tall under a {tag} plate"
               + (f", dropped {dropped:.1f}mm2 of loose slivers" if dropped > 0.5 else ""))

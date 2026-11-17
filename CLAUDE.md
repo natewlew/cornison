@@ -40,7 +40,12 @@ extra keys in a Levinson-style arrangement — the name mixes Corne + Levinson.
      `board.json` and writes the case tray + switch plates (STEP/STL/DXF)
      plus a printed MCU cover (`cover-{left,right}`) and a cutting
      template for a butyl floor mat (`mat-template-{left,right}`, STL +
-     DXF, both in the physical frame unlike the plate DXF), to
+     DXF, both in the physical frame unlike the plate DXF), foam
+     (added 2026-11-11, not cut yet): case foam, 2mm in place of the
+     mat, cut with the mat template; plate foam, between PCB and plate
+     with the loose spacers, with its own tracing template
+     (`foam-plate-template-*`); plus cut-only `foam-{case,plate}-*.dxf`
+     for a cutting service, to
      `out/`. The same files serve a home printer and a print service:
      there's no separate prototype mode any more (it only skipped the
      MagSafe recess, which is gone). Each run first deletes the old
@@ -273,7 +278,13 @@ came out wrong.
   that splits into pieces crashes (`'Face' object has no attribute
   'unwrap'`). `close_holes()` (rounding the tent frame's openings) gets
   round all three by offsetting only hole-free faces: the empty faces of
-  `outline - sketch`, one at a time.
+  `outline - sketch`, one at a time. On the plate foam (2026-11-11), `open_sketch()` on a face
+  with 27 holes came back with two switch openings filled in (no error;
+  the switch-body check caught it). `open_holed()`/`offset_holed()`
+  offset each face's outer outline and each hole separately, and
+  `shrink()` falls back to booleans (minus a band along every edge) when
+  a shrinking hole splits, where `offset()` throws 'Unexpected result
+  type'.
 - **The tent frame is straight beams, clipped to the case outline.** An
   offset ring through the leg centres self-intersected (the union came
   back invalid while still reporting one solid). And the case outline is
