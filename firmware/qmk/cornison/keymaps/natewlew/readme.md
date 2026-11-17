@@ -3,7 +3,9 @@
 My daily-driver keymap: 5 layers (Qwerty, Lower, Lower+Space, Raise,
 Adjust) with OS-aware shortcuts that send Cmd on a Mac and Ctrl on a PC.
 
-![The natewlew keymap, layer by layer, keys coloured by function](keymap.svg)
+<a href="keymap.svg"><img src="keymap.svg" width="320" alt="The natewlew keymap, layer by layer, keys coloured by function"></a>
+
+*Click the picture for the full-size keymap.*
 
 Blank dashed keys fall through to the layer below. The outlined key on
 each layer is the one you hold to get there.
