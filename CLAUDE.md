@@ -496,7 +496,20 @@ came out wrong.
   the USB notch (not at the plug opening itself) — measured against the
   real geometry: the wall there sits flush against the Pro Micro
   footprint's edge with 0 clearance in the model already, independent of
-  mounting method. Not yet fixed in the generator.
+  mounting method. Fixed 2026-11-17 (`PRO_MICRO_CLEARANCE`): the v1.1
+  right half needed the same, both sides of the USB notch. The Pro
+  Micro's own board sticks out 2mm past the PCB's edge (measured), where
+  the footprint's F.Fab has it 1.3mm inside, so it ran 1.5mm into the
+  wall across its 18mm width beside the 12mm notch. From the PCB's top
+  up, the notch is now the Pro Micro's width + 0.5mm a side (19mm); below
+  it stays 12mm. On the key side the wall steps out to the next column
+  0.1-0.2mm past the Pro Micro's edge; cutting to the clearance there left
+  a sliver of the step's face and a lip of its rounded corner (the user's
+  catch), so a side that finds the cavity within `PRO_MICRO_SNAP` (2mm)
+  ends flush with it, and the cut runs out past the step: the step ends
+  in one straight face. The covers are unchanged: they span the wider
+  notch, their rim resting on the Pro Micro's board where the wall is
+  gone, as on the user's hand-trimmed cases (2026-11-18).
 - **Pro Micro mount standard (2026-10-19):** the Pro Micro must top out
   at 5.5mm or less above the PCB — direct-soldered with the stubs trimmed
   to the solder, or on Mill-Max low-profile sockets. Both are supported

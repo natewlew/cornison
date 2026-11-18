@@ -82,6 +82,17 @@ USB_NOTCH_W = 12.0
 # grip is 7mm, but the notch is sized to fit most TRRS cables, which leaves
 # the U's bottom just under the PCB's underside.
 USB_SOCKET_BOTTOM = -0.5        # vs the PCB top: centre 1mm, 3mm tall
+# The Pro Micro's own board sticks out past the PCB's edge at the USB end:
+# 2mm on the v1.1 right half (measured 2026-11-16), where the ProMicro_v3
+# footprint's F.Fab puts it 1.3mm inside. With the wall 0.5mm off the PCB
+# that's 1.5mm into the wall across its full width, and the 12mm USB notch
+# left the wall on both sides of it: the user trimmed both, and the wall
+# near the Pro Micro on the v1.0 build. So from the PCB's top up the notch
+# is as wide as the Pro Micro (its footprint bbox) plus this each side;
+# below, it stays USB_NOTCH_W and the wall closes the gap under the PCB.
+# Starting at the PCB top covers any mount height (it sits ~2.4mm up).
+PRO_MICRO_CLEARANCE = 0.5
+PRO_MICRO_SNAP = 2.0             # a cavity face this near the Pro Micro's edge: end the notch there
 TRRS_AXIS_ABOVE_PCB = 2.5
 TRRS_PLUG_D = 10.0
 TRRS_GRIP_FROM_PCB_EDGE = 2.0   # the plugged-in TRRS cable's grip starts this far out
@@ -1096,6 +1107,28 @@ def build_case(side, data, plate_sk):
         align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN),
     )
     case = case - usb_notch
+    pm_bb = usb_part["bbox"]
+    # On the key side the wall steps out to the next column just past the
+    # Pro Micro: the step's inner face is 0.1-0.2mm beyond its edge, inside
+    # the clearance. Cutting to the clearance there left a 0.4mm sliver of
+    # that face and, out at y0, a lip of the step's rounded outer corner (the
+    # user's catch, 2026-11-17). So a side that finds the cavity within
+    # PRO_MICRO_SNAP of the Pro Micro's edge ends flush with it instead, and
+    # the cut runs out past the step's outer face (6mm past the USB wall's):
+    # the step ends in one straight face, in line with the cavity's.
+    pm_probe_y = usb_wall_y + WALL_T - 0.3   # just inside the wall's inner face
+    pm_edges = []
+    for edge, out in ((pm_bb[0], -1), (pm_bb[2], 1)):
+        hit = scan_wall_crossing(cavity_sk, lambda t: (edge + out * t, pm_probe_y), 0, PRO_MICRO_SNAP, step=0.02)
+        pm_edges.append(hit[0] if hit else edge + out * PRO_MICRO_CLEARANCE)
+    pm_x0, pm_x1 = pm_edges
+    assert pm_x1 - pm_x0 > USB_NOTCH_W, f"{side}: Pro Micro notch narrower than the USB notch"
+    pm_y0 = usb_wall_y - 6.0
+    pm_notch = b3d.Pos((pm_x0 + pm_x1) / 2, (pm_y0 + y1) / 2, pcb_top_z) * b3d.Box(
+        pm_x1 - pm_x0, y1 - pm_y0, wall_top_z - pcb_top_z + 1.0,
+        align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN),
+    )
+    case = case - pm_notch
 
     trrs_bb = trrs_part["bbox"]
     _, trrs_cy = bbox_center(trrs_bb)
@@ -1145,6 +1178,11 @@ def build_case(side, data, plate_sk):
     # the wall under each notch, where the PCB's underside is
     under_z = boss_top_z - 0.3
     assert_material(usb_cx, usb_wall_y + WALL_T / 2, True, "wall under the USB notch", under_z)
+    # beside the USB notch, where the Pro Micro's board reaches into the
+    # wall: open above the PCB top, solid below it
+    for x in (pm_x0 + 0.4, pm_x1 - 0.4):
+        assert_material(x, usb_wall_y + WALL_T / 2, False, "Pro Micro notch")
+        assert_material(x, usb_wall_y + WALL_T / 2, True, "wall under the Pro Micro notch", under_z)
 
     trrs_notch_x, trrs_notch_y = (x0 + x1) / 2, trrs_cy
     trrs_opposite_x = outer_bb.min.X + WALL_T / 2 if is_left else outer_bb.max.X - WALL_T / 2
@@ -1246,6 +1284,9 @@ def build_case(side, data, plate_sk):
         "usb_wall_y": usb_wall_y,
         "usb_dir": 1 if usb_wall_y > usb_part["pos"][1] else -1,
         "notch_bbs": [
+            # Not the Pro Micro's wider notch above the PCB: the covers span
+            # it as before, their rim resting on the Pro Micro's board where
+            # the wall is gone (on the user's trimmed cases, 2026-11-18).
             (usb_cx - USB_NOTCH_W / 2, y0, usb_cx + USB_NOTCH_W / 2, y1),
             (x0, trrs_cy - TRRS_NOTCH_W / 2, x1, trrs_cy + TRRS_NOTCH_W / 2),
         ],
