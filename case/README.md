@@ -103,9 +103,8 @@ nothing lost clearance.
     FR4 order may get it queried;
   - the narrow spacer clears the switch bodies by 0.27mm;
   - a 4.0mm screw head overlaps the footprint of two switches' top
-    housings by 0.27mm on paper. The stock Corne has a screw in the same
-    spot, so it is expected to fit, but check it on a real plate and use
-    the smallest-headed screw you have there.
+    housings by 0.27mm on paper. It fits on the real v1.1 build with the
+    FR4 plate (2026-11-21); use the smallest-headed screw you have there.
 
   `report_plate_mount()` prints each hole's spacer, its clearance, and
   whether the head lands under a keycap.

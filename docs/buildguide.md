@@ -1,14 +1,9 @@
 # Cornison Build Guide
 
-> **Draft — written before the first board was built.** Everything here
-> comes from the PCB file, the case generator and the firmware, not from a
-> finished build. Steps marked **⚠ confirm on first build** are the ones
-> most likely to need correcting. Photos are still to be added.
-
 The structure follows foostan's
 [Corne Cherry v3 build guide](https://github.com/foostan/crkbd/blob/main/docs/corne-cherry/v3/buildguide_en.md),
 which is worth having open alongside this one: the soldering steps are the
-same, and its photos apply until this guide has its own. The differences
+same, and its photos cover the steps this guide has no photo for yet. The differences
 are the six extra keys, the non-reversible PCB, and the 3D-printed tray
 case that replaces Corne's sandwich plates.
 
@@ -176,10 +171,9 @@ the Pro Micro to about 11mm and 7–8mm, and the OLED sits right over it.
 A board built that way works, but has to go without the cover and the
 OLED.
 
-**⚠ confirm on first build.** The 6.0mm figure comes from 3D models of
-the parts, not from real ones. Before printing covers, measure from the
-top surface of the PCB to the highest point of the mounted Pro Micro, the
-TRRS jack and the reset switch. All three need to come in under 6.0mm.
+Before printing covers, measure from the top surface of the PCB to the
+highest point of the mounted Pro Micro, the TRRS jack and the reset
+switch. All three need to come in under 6.0mm.
 
 ### OLED module (optional)
 
@@ -207,10 +201,6 @@ Check each half now, while everything is still easy to reach.
 4. Repeat for the other half.
 5. Connect the TRRS cable with USB in one half only and test both halves
    together.
-
-**⚠ confirm on first build:** if nothing at all registers on a half, the
-likely cause is `diode_direction` in `keyboard.json`, which has not yet
-been checked against a real board. It is a one-line firmware change.
 
 Never plug or unplug the TRRS cable while USB is connected. It can short
 power to ground and damage the controllers.
@@ -281,10 +271,9 @@ Screw the plate down before fitting any switches. The screw head at the
 narrow-spacer hole slightly overlaps the two neighbouring switches' top
 housings, so it can't go in once they're fitted.
 
-**⚠ confirm on first build:** the narrow spacer clears its neighbouring
-switch bodies by only 0.27mm, and that screw head's overlap with the
-switch housings is on paper only. Use the smallest-headed screw you have
-there.
+The narrow spacer clears its neighbouring switch bodies by only 0.27mm,
+and that screw's head comes close to their housings. Use the
+smallest-headed screw you have there.
 
 **Building without the plate mount?** Screw the PCB down at step 1
 instead, with 5 M2 × 4mm screws, **each with an M2.5 washer under the

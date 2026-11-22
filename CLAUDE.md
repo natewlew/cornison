@@ -371,8 +371,8 @@ came out wrong.
   the user's request after the first working prototype, against the
   generator's own 2.2mm wall rule: plate wall there is 1.62mm (under
   JLCPCB's 2.0mm FR4 ask), and a 4.0mm screw head overlaps two switch
-  top-housing footprints by 0.27mm on paper — not yet checked on a real
-  plate. M2×10 gives full 3.2mm insert engagement.
+  top-housing footprints by 0.27mm on paper. Fine on the real v1.1 build
+  with the FR4 plate (the user, 2026-11-21). M2×10 gives full 3.2mm insert engagement.
 - **MagSafe ring:** Keebio Magnetic MagSafe Tenting Stand Kit R2 — **50mm
   OD, 0.5mm thick, measured directly off the real ring.** `case.py` used
   to assume Apple's own published MagSafe spec (54.10mm OD, 2mm thick),
@@ -542,8 +542,8 @@ came out wrong.
   half added 2026-10-13 (the top one nearest the MCU strip, narrow
   spacer). Plates printed before 2026-10-13 lack that hole — reprint, or
   drill 2.3mm at the PCB hole's position. The case is unchanged by both.
-  Not yet physically confirmed: screw-head fit at the fifth hole, and
-  keycap-skirt clearance over the 4 (of 5) screw heads per half that land
+  Screw-head fit at the fifth hole confirmed on the v1.1 build
+  (2026-11-21). Not yet physically confirmed: keycap-skirt clearance over the 4 (of 5) screw heads per half that land
   under a keycap (see TODO.md).
 - Spacer frame added 2026-10-14 (`spacer-frame-{pom,fr4,mjf}-{left,right}`):
   the 10 loose spacers as one plate-shaped piece per half, between PCB and
