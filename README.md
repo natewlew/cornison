@@ -1,7 +1,7 @@
 # Cornison
 
 A split mechanical keyboard based on [foostan](https://github.com/foostan)'s
-[Corne Cherry v3](https://github.com/foostan/crkbd), with a few extra keys
+[Corne Cherry v3](https://github.com/foostan/crkbd/tree/v3-final), with a few extra keys
 added in a [Keebio Levinson](https://github.com/Keebio/Levinson)-style
 layout (an ortholinear grid-plus-thumb-keys arrangement in the same family
 as [Let's Split](https://github.com/qmk/qmk_firmware/tree/master/keyboards/lets_split)) —
@@ -188,6 +188,6 @@ has all of these files in one place.
 
 ## Credits
 
-Based on [foostan/crkbd](https://github.com/foostan/crkbd) (MIT licensed).
+Based on [foostan/crkbd](https://github.com/foostan/crkbd/tree/v3-final) (MIT licensed).
 Uses the [foostan/kbd](https://github.com/foostan/kbd) footprint/symbol
 library. See [LICENSE](LICENSE).

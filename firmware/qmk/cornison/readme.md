@@ -1,7 +1,7 @@
 # Cornison
 
 A split keyboard derived from [foostan's Corne Cherry
-v3](https://github.com/foostan/crkbd), with extra keys added in a
+v3](https://github.com/foostan/crkbd/tree/v3-final), with extra keys added in a
 Levinson-style arrangement: 3 thumb keys plus dedicated Ctrl/Alt/Cmd on
 the left, 2 thumb keys plus 4 arrow keys on the right. 24 keys per half,
 48 total. See the [hardware repo](https://github.com/natewlew/cornison)

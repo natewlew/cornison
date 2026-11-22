@@ -1,7 +1,7 @@
 # Cornison Build Guide
 
 The structure follows foostan's
-[Corne Cherry v3 build guide](https://github.com/foostan/crkbd/blob/main/docs/corne-cherry/v3/buildguide_en.md),
+[Corne Cherry v3 build guide](https://github.com/foostan/crkbd/blob/v3-final/corne-cherry/doc/v3/buildguide_en.md),
 which is worth having open alongside this one: the soldering steps are the
 same, and its photos cover the steps this guide has no photo for yet. The differences
 are the six extra keys, the non-reversible PCB, and the 3D-printed tray
