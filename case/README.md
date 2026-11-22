@@ -87,9 +87,10 @@ nothing lost clearance.
   otherwise use. The other two per half are the cover posts beside the
   TRRS jack, inside the MCU opening where there is no plate.
 
-  The plate has holes at both outer/lower spots (6 per half). Screw and
-  spacer go only in the one your PCB has a hole under; the other plate
-  hole stays empty.
+  The plate has 5 holes per half, one over each of these PCB holes. On a
+  v1.0 board (test fits only), the outer/lower hole on both halves and the
+  right half's lower-centre one have no PCB hole under them: leave those
+  plate holes empty.
 
   Four of the five take the standard spacer (`spacer-{pom,fr4,mjf}`,
   5.6mm across — pick the one matching your plate material). The fifth,
@@ -115,8 +116,7 @@ nothing lost clearance.
   the plate have room), standing between the PCB and the plate. Its five
   posts are the same size as the loose spacers would be at each hole, with
   the same pilot into the PCB hole, so the same M2×10 screws go through.
-  It has posts at both outer/lower spots, without pilots there, so it
-  sits flat on either PCB.
+  Every post has a pilot, so it follows the v1.1 board's holes.
   It's hidden under the plate. Inner ribs are about 3.45mm; the strips
   round the outer edge are thinner, 1.2–2mm, because the switches sit
   close to the board edge. Print it top face down, pilots up. Nothing else
@@ -129,20 +129,28 @@ nothing lost clearance.
 
 ## MCU cover
 
-`cover-{left,right}` is a flat 2mm printed cover over the Pro Micro, TRRS
-jack and reset switch, about 25 × 65mm.
+![inset cover with the OLED](../docs/images/finished/cornison-v1.1%20right%20top%20finished.jpg)
+
+`cover-inset-{left,right}` is a 2mm printed cover over the Pro Micro, TRRS
+jack and reset switch, about 20 × 60mm. It stops at the plate's outline,
+inside the case wall, so its top is a flat panel with straight outer
+edges and the OLED window centred over the Pro Micro. A 45° bevel runs
+from its top edge down onto the wall top along the board's top and inner
+edges, landing on the case's outer face, so from the side the wall
+carries on up into the cover.
 
 | Height above PCB top | Feature |
 |---|---|
 | 0 – 6.0mm | Two posts, standing on the PCB over the two mounting holes beside the TRRS jack |
-| 5.0 – 6.0mm | Rim, resting on the case wall top along the board's top and inner edges, and a 2mm skirt resting on the plate along the angled edge |
+| 5.0 – 8.0mm | Bevel, resting on the case wall top along the board's top and inner edges; a 2mm skirt resting on the plate along the angled edge |
 | 6.0mm | Cover underside |
 | 8.0mm | Cover top (3.0mm above the plate and wall top) |
 
 - **Mounting:** one M2×12mm screw per post, through cover, post and PCB
   into the same heat-set insert an ordinary PCB screw would use (2.4mm of
   thread in the 3.2mm insert). The post's 6mm foot does the washer's job
-  at those two holes, so no washer there.
+  at those two holes, so no washer there. At the USB end the cover rests
+  on the bevel.
 - **OLED:** plugs into a low-profile socket on the PCB through a window
   in the cover, 13.5 × 39.5mm: the module's whole footprint (12 × 38mm,
   measured) plus 0.75mm, so
@@ -152,7 +160,10 @@ jack and reset switch, about 25 × 65mm.
   cover was under it, its pins didn't seat. The window's position depends
   on `OLED_PIN_EDGE` (1.4mm, from the library model, not measured).
 - **Reset:** a 2mm hole over the switch for a paperclip, joined to the
-  window's side.
+  window's side. It sits 1.5mm from the cover's inner edge at the top
+  face, but the bevel right outside that edge thickens it going down
+  (2.5mm half-way through), so the frame round the window stays a closed
+  ring.
 - **Pro Micro:** soldered directly on ordinary headers, or on low-profile
   (Mill-Max style) sockets. Either way it has to top out at 5.5mm or less.
   Trim the header pin stubs down to the solder: left long on the first
@@ -161,73 +172,20 @@ jack and reset switch, about 25 × 65mm.
 - The cover stays out from under every keycap. Its key side is one
   straight edge, then one straight diagonal along the angled thumb keycap;
   the plate fills in under the diagonal's end.
-- **USB:** the cover runs straight across the wall's USB notch, which
-  becomes a closed port under it: only the socket and the plug's metal
-  shell go in there (the cable's grip stays outside), at most 3.5mm up.
-- **TRRS:** the cable's grip reaches 1mm into the wall (it starts ~2mm out
-  from the PCB's edge, measured), so the cover's inner edge steps back
-  1.5mm over the notch, flush with its sides. Checked against a 10mm grip.
-- **Printing:** top face down, posts up. No supports.
+- **USB and TRRS:** the bevel stops at both wall notches, so the plugs
+  pass under the cover's edge. Checked against a 10mm TRRS cable grip.
+- **Printing:** top face down, posts up. The bevel grows out at 45° from
+  the bed: no supports.
 
 **Not yet checked against real parts.** The part heights behind
 `COVER_UNDERSIDE_ABOVE_PCB` in `case.py` are measured from the 3D models
 in `pcb/kbd`, not from the components themselves. Measure a built board
 before ordering covers from a print service.
 
-### Inset cover (optional)
-
-`cover-inset-{left,right}` is the same cover, stopped at the plate's
-outline instead of running out over the wall. Its top is a flat panel
-with straight outer edges and the OLED window centred over the Pro Micro.
-A 45° bevel runs from its top edge down onto the wall top along the
-board's top and inner edges, landing on the case's outer face, so from
-the side the wall carries on up into the cover. The bevel is what it rests
-on at the USB end; the posts, screws and window are the same as the flat
-cover's. The reset hole sits 1.5mm from the cover's inner edge at the
-top face, but the bevel right outside that edge thickens it going down
-(2.5mm half-way through), so the frame round the window stays a closed
-ring.
-
-- **Printing:** top face down, like the flat cover. The bevel grows out
-  at 45° from the bed: no supports.
-- Use one or the other per half, not both.
-
-## Clear MCU cover (alternative)
-
-A two-piece alternative to the flat cover, after the original crkbd's
-acrylic OLED cover: `cover-base-{left,right}` (printed) under
-`cover-clear-{left,right}` (a flat 2mm clear sheet, ordered laser-cut).
-Same footprint and mounting holes as the flat cover, but on M2 hex
-standoffs instead of printed posts. The OLED stays under the clear top on
-its socket, and the whole Pro Micro strip shows through.
-
-| Height above PCB top | Feature |
-|---|---|
-| 0 – 15.0mm | Two M2 standoffs, on the two mounting holes beside the TRRS jack |
-| 5.0 – 15.0mm | Base wall where it sits on the case wall top |
-| 6.0 – 15.0mm | Base wall elsewhere, 2mm thick; starts above the Pro Micro it crosses (a 1mm gap over the plate edge, same as the flat cover) |
-| 13 – 14mm | OLED glass, plugged fully into its socket (measured) |
-| 15.0 – 17.0mm | Clear top, resting on the standoffs (9mm above the flat cover's top) |
-
-- **Mounting:** an M2 male-female hex standoff per hole, 15mm body with a
-  **4mm** male thread: through the PCB, 2.4mm into the insert, the hex
-  clamping the PCB. A 3mm thread barely reaches the insert and won't
-  start (tried); a 6mm one bottoms out in the blind bore (4.8mm at most).
-  The clear top screws onto the standoffs with M2×5 screws and holds the
-  base down on the case wall. Hex up to 4mm across flats; the base's
-  holes are 5.0mm.
-- **Base at the standoffs:** both holes sit within 0.1–0.7mm of the
-  footprint's edge, so the base is open to the edge there, with a 2mm
-  collar round the rest of each standoff.
-- **OLED:** plug it in before the cover goes on. It's designed for the
-  socketed height; a direct-soldered OLED sits lower and still fits.
-- **Reset:** a 2mm hole in the clear top over the switch, beside the OLED.
-- **Ordering the clear top:** `out/cover-clear-{left,right}.dxf`, 2mm
-  clear acrylic, to any laser-cutting service. The DXF is in the real
-  frame, as seen from above (like the mat template, unlike the plate
-  DXF). The `.stl` is there to test-fit a printed stand-in first.
-- **Printing the base:** the face the clear top sits on goes down. No
-  supports.
+Two other covers were removed on 2026-11-21: a flat cover that ran out
+over the wall top (`cover-{left,right}`), and a two-piece clear cover
+(`cover-base-*` under a laser-cut acrylic `cover-clear-*`, on M2
+standoffs). Both are in git history before that date.
 
 ## MagSafe tenting stand
 
@@ -238,6 +196,8 @@ bottom. No recess is needed, so the case has none. Earlier versions cut a
 home printer.
 
 ## Tenting legs
+
+![tent and case bottom](../docs/images/case/cornison-v1.1%20right%20case%20tent%20bottom.jpg)
 
 An alternative to the MagSafe stand: one printed part per half
 (`tent-{left,right}.stl`) that bolts on at the same 4 points the rubber
@@ -372,6 +332,8 @@ tape over it is cheap insurance.
 
 ## Foam (optional)
 
+![case foam](../docs/images/case/cornison-v1.1%20left%20case%20with%20case%20foam.jpg)
+
 Two foam pieces per half. Each has a cut-only DXF in `out/` (no label, in
 the real-world frame seen from above) for an online cutting service. Or
 cut them by hand from a template:
@@ -389,10 +351,12 @@ cut them by hand from a template:
   fills the same gap). It's the plate's outline, with a 14.5mm opening
   round each switch body and a **6mm** hole (hollow punch) round each
   spacer. Near a switch the spacer hole merges into that switch's
-  opening. The tracing template is `foam-plate-template-{left,right}`
-  (STL to print at 0.6mm, or DXF to print 1:1 on paper), labelled
-  LEFT or RIGHT in bold (reading backwards means the template is upside
-  down); the cut-only file is `foam-plate-{left,right}.dxf`.
+  opening. The punch template is `foam-plate-template-{left,right}`
+  (STL to print at 0.6mm, or DXF to print 1:1 on paper): the outline,
+  solid, with the five spacer circles, labelled LEFT or RIGHT in bold
+  (reading backwards means the template is upside down). The switch
+  openings are cut from a 1:1 paper print (below). The cut-only file is
+  `foam-plate-{left,right}.dxf`.
   The gap is 3.5mm under a POM plate, 3.4mm under FR4 and 3.0mm under
   MJF. The generator checks it at 3.0mm, so it fits under every plate;
   3–3.5mm PE or Poron compresses to fit. The webs between openings are
@@ -400,10 +364,36 @@ cut them by hand from a template:
   services' minimum feature size (Ponoko's EVA: 6mm) is larger than that,
   so check before ordering.
 
-Cutting by hand: trace with a fine marker on the foam's top face (label
-reading normally) and cut on the inside of the line. A fresh blade and a
-steel rule work for the switch openings: several light passes, not one
-heavy one. Punch the spacer holes.
+Cutting by hand: mark on the foam's top face (label reading normally).
+The case foam uses the mat template; cut on the inside of the line and
+punch the boss holes. For the plate foam, punch the five spacer holes
+with the punch template, then print `foam-plate-{left,right}.dxf` 1:1 on
+paper, which has every cut line, and cut along it with a fresh blade and
+a steel rule: several light passes, not one heavy one.
+
+**Plate-foam cutting jig: work in progress, don't rely on it yet.**
+`foam-plate-jig-{bottom,top}-{left,right}` is still generated, but on the
+first test print the foam kept pulling out from between the two
+templates while cutting. The idea, for 3mm foam: the foam is clamped
+between two printed copies of its shape, so the knife follows a template
+edge at both faces and the thin webs between openings can't drag or
+stretch.
+
+1. Punch the five 6mm spacer holes first, with the punch template: the
+   foam's outline, solid, with a circle at each spacer. Lay it on the
+   foam, mark the circles, punch.
+2. Lay the foam on the bottom template, its holes over the pins. It only
+   fits one way up, and only on its own half's template: if it won't sit
+   flat, it's flipped.
+3. Press the top template onto the pin tips. The pins hold it 2.7mm
+   above the bottom one, a light grip on 3mm foam that doesn't crush it.
+4. On a cutting mat, cut round the outside and every switch opening,
+   along the top template's edges. Each cut goes 6.7mm deep (template,
+   foam, template), so use a #11 blade or a snap-off knife.
+
+The tips are a press fit (3.0mm tip in a 3.1mm hole). If they're too
+tight or loose on your printer, change `FOAM_JIG_TIP_FIT`. For other foam,
+set `FOAM_JIG_FOAM_T`.
 
 Assembly with plate foam: lay the foam on the PCB, drop the spacers
 through its holes into the PCB holes, then the plate and its screws, then
@@ -421,15 +411,12 @@ built yet.
 | M2×6mm low-head screw | 8 | Tenting leg → case, 4 per half, up from below — same length at every leg regardless of its height (see Tenting legs, above) |
 | M2×10mm low-head screw | 10 | Plate → spacer → PCB → case bosses, 5 per half |
 | M2×12mm pan-head screw | 4 | MCU cover → case bosses, 2 per half |
-| M2 male-female hex standoff, 15mm + 4mm thread | 4 | Clear MCU cover, 2 per half, instead of the M2×12 screws. The male thread must be 4mm: 3mm is too short, 6mm too long |
-| M2×5mm screw | 4 | Clear top → standoffs |
 | M2.5 washer, 2.7mm ID / 6.0mm OD | 0 (10 if skipping the plate mount) | Only needed under a bare M2×4 screw on one of the 4.3mm PCB holes, which the plate mount no longer leaves any of. Required there (fits M2 screws fine, just a looser slip fit) — the PCB's mounting hole is 4.3mm with no annular ring, bigger than any standard M2 screw head. McMaster's M2-labeled washer (5.0mm OD) only just clears it; M2.5 size gives real margin. Not needed under the M2×6, M2×10 (bears on the plate's small clearance hole) or M2×12 (bears on the cover's printed post) |
 | Rubber feet, 10 × 2mm round | 8 | 4 per half. On a tented half they go in the recesses on the leg ends; without a tent, in the 4 corner recesses on the case bottom |
 | MagSafe ring (Keebio kit) | 2 | 1 per half, adhesive-backed — alternative to tenting legs, see above |
 | Case | 2 | 1 per half, 3D printed (`case-{left,right}.stl`), see Ordering the case below |
 | Switch plate | 2 | 1 per half — FR4 (from the `plate-fr4-{left,right}/` KiCad projects), or POM or MJF nylon (`plate-{pom,mjf}-*`), see below |
-| MCU cover | 2 | 1 per half, 3D printed (`cover-{left,right}.stl`, or the inset version `cover-inset-{left,right}.stl`) |
-| Clear MCU cover (instead of the MCU cover) | 2 + 2 | Per half, a printed base (`cover-base-{left,right}.stl`) and a 2mm laser-cut clear acrylic top (`cover-clear-{left,right}.dxf`) |
+| MCU cover | 2 | 1 per half, 3D printed (`cover-inset-{left,right}.stl`) |
 | Plate-mount spacer, standard | 8 (+ spares) | 4 per half, 3D printed (`spacer-{pom,fr4,mjf}.stl` — pick the one matching your plate material) |
 | Plate-mount spacer, narrow | 2 (+ spares) | 1 per half, for the top hole nearest the MCU strip (`spacer-narrow-{pom,fr4,mjf}.stl`) |
 | Spacer frame (instead of the 10 loose spacers) | 2 | 1 per half, 3D printed (`spacer-frame-{pom,fr4,mjf}-{left,right}.stl`) |
@@ -503,10 +490,8 @@ cheaper, and cheap/fast to iterate if something's off.
 6. **Switches:** press each one through the plate into its hotswap
    socket.
 7. **MCU cover:** posts down onto the two holes beside the TRRS jack,
-   rim on the case wall, fastened with two M2×12 pan-head screws.
-8. **OLED:** plug it into its socket through the cover's window. With the clear cover instead: plug the OLED in
-   first, screw the two standoffs through the PCB into the inserts, set
-   the base over them, then the clear top with two M2×5 screws.
+   bevel on the case wall, fastened with two M2×12 pan-head screws.
+8. **OLED:** plug it into its socket through the cover's window.
 9. **Keycaps.**
 10. **Feet:** either hold the tent against the case bottom and drive an
     M2×6 screw up through each platform into the insert, with rubber feet

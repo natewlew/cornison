@@ -5,14 +5,14 @@ Reads board.json (produced by extract_board.py) and writes STEP/STL/DXF
 into case/out/ for both halves:
   - case-{left,right}             the printed tray (screw the PCB to bosses)
   - plate-{pom,fr4ref,mjf}-{left,right}  switch-plate geometry (DXF + STEP + STL)
-  - cover-{left,right}            printed cover over the Pro Micro/TRRS/reset
+  - cover-inset-{left,right}      printed cover over the Pro Micro/TRRS/reset
   - spacer-*, spacer-frame-*, tent-*  plate-mount spacers and tenting legs
 
 The plate stops short of the MCU strip: the TRRS jack, reset switch and
 Pro Micro all stand taller than the 3.4mm under the plate. A separate
 printed cover sits over that strip instead, screwed down through the two
 PCB mounting holes beside the TRRS jack, and the OLED module plugs into
-its socket through a slot in the cover and rests on top of it.
+its socket through a window in the cover.
 
 Run from the repo root with:
   ./build.sh generate
@@ -153,29 +153,13 @@ OLED_PIN_EDGE = 1.4             # pin row centre to the module's pin-side edge -
 OLED_BOARD_ABOVE_PCB = 8.0      # measured 8-9mm: PCB top to the underside of the
                                  # module's board, plugged fully into its ~4mm
                                  # socket. The low end, so the covers clear it
-OLED_WINDOW_CLEAR = 0.75        # flat cover's OLED window = module outline grown by
+OLED_WINDOW_CLEAR = 0.75        # cover's OLED window = module outline grown by
                                  # this each side. 0.5 was tight at the pin end
 COVER_RESET_HOLE_D = 2.0        # paperclip access to the reset switch. Smaller than
                                  # the old plate's 3.0 so it clears the OLED slot
                                  # without the slot having to give way
 COVER_MIN_WALL = 1.0            # JLC3DP's MJF minimum wall
-# Two-piece clear cover (build_clear_cover): printed base + flat clear top
-OLED_TOP_ABOVE_PCB = 14.0       # measured 13-14mm: PCB top to the OLED's glass,
-                                 # plugged fully into its socket. The high end; a
-                                 # direct-soldered OLED sits lower and still fits
-STANDOFF_L = 15.0               # M2 male-female hex standoff body, PCB top to the
-                                 # clear top
-STANDOFF_MALE = 4.0             # its male thread: through the PCB, then 2.4mm into
-                                 # the insert. A 3mm one barely reaches the insert
-                                 # (tried 2026-10-18: won't start); 6mm bottoms out
-STANDOFF_HEX_AF = 4.0           # across flats: M2 standoffs come in 3.5 and 4.0;
-                                 # the bigger one sizes the base's holes
-STANDOFF_HOLE_CLEAR = 0.4       # base hole = hex across corners + this
-CLEAR_UNDERSIDE_ABOVE_PCB = STANDOFF_L
-CLEAR_T = 2.0                   # clear acrylic sheet
-CLEAR_TOP_SCREW_LEN = 5         # M2x5 through the clear top into the standoff
-CLEAR_BASE_WALL_T = 2.0         # JLC3DP's 2mm minimum feature
-CLEAR_PART_CLEARANCE = 0.5      # the base wall stands this far off every part
+COVER_MIN_FEATURE = 2.0        # JLC3DP's 2mm minimum feature
 FAB_MIN_WALL = 2.2   # target minimum plate wall/connect width -- JLCPCB's FR4
                       # routing ask is >=2.0mm; this gives a bit of margin
 PLATE_HOLE_MIN_WALL = 1.5   # a PCB mounting hole still gets its plate hole
@@ -357,6 +341,20 @@ FOAM_PLATE_OPENING = KEY_HOLE + 0.5 # plate foam: switch bodies are 14mm below
 FOAM_PLATE_PUNCH_D = 6.0           # spacer holes: a common hollow-punch size,
                                     # 0.2mm round the 5.6mm spacer
 FOAM_MIN_WIDTH = 2.0               # strips narrower than this are dropped
+# Plate-foam cutting jig (2026-11-18, the user's idea): the foam clamped
+# between two printed copies of its own shape, so the knife follows a
+# template edge at both faces and the webs between openings can't drag.
+# The spacer holes are punched first (tracing template); the bottom
+# template's pins stand in them, set the gap, and press into the top one.
+FOAM_JIG_FOAM_T = 3.0              # the foam it's for
+FOAM_JIG_SQUEEZE = 0.3             # gap this much under the foam: grips it
+                                    # without crushing (a crushed cut springs
+                                    # back with bulged edges)
+FOAM_JIG_T = 2.0                   # each template (JLC3DP's 2mm minimum)
+FOAM_JIG_PIN_D = FOAM_PLATE_PUNCH_D - 0.2  # pin body in the punched hole
+FOAM_JIG_TIP_D = 3.0               # pin tip, pressed into the top template
+FOAM_JIG_TIP_FIT = 0.1             # top template's hole this much over the tip
+FOAM_JIG_CHAMFER = 0.4             # lead-in on the tip and the hole
 
 Z_TOL = 1e-6
 
@@ -1423,6 +1421,65 @@ def build_plate_foam(side, plate_sk, keys, mount_plan, case, metrics, thickness)
     return foam, {"area": foam.area, "dropped": full.area - foam.area}
 
 
+def build_foam_jig(side, foam, mount_plan):
+    """The plate foam's cutting jig: a bottom and a top template, each the
+    foam's outline with every spacer hole filled (it's punched before the
+    foam goes in), the bottom with a stepped pin standing in each punched
+    hole. Built in KiCad's frame like the rest (write() mirrors), the bottom
+    from z=0 and the top from z=0 too, each to be printed flat. It only
+    goes together one way: the punched holes aren't mirror-symmetric, so a
+    flipped foam or the other half's template won't sit on the pins."""
+    centres = [(h["x"], h["y"]) for h, _ in mount_plan]
+    discs = None
+    for x, y in centres:
+        d = b3d.Pos(x, y) * b3d.Circle(FOAM_PLATE_PUNCH_D / 2)
+        discs = d if discs is None else discs + d
+    sk = b3d.Sketch() + [max((foam + discs).faces(), key=lambda f: f.area)]
+    # every cut line stays open: the template is the foam plus the punched
+    # discs and nothing else, and every disc is in the template
+    assert abs(sk.area - (foam + discs).area) < 0.01, f"{side}: a spacer disc came loose from the jig"
+    extra = sk - foam
+    assert overlap(extra, discs) > extra.area - 0.01, f"{side}: jig template covers foam it shouldn't"
+    assert overlap(sk, foam) > foam.area - 0.01, f"{side}: jig template misses part of the foam"
+
+    gap = FOAM_JIG_FOAM_T - FOAM_JIG_SQUEEZE
+    tip_r = FOAM_JIG_TIP_D / 2
+    bottom = extrude_up(sk, 0, FOAM_JIG_T)
+    top = extrude_up(sk, 0, FOAM_JIG_T)
+    for x, y in centres:
+        body = b3d.Pos(x, y, FOAM_JIG_T) * b3d.Cylinder(
+            radius=FOAM_JIG_PIN_D / 2, height=gap, align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN))
+        straight = FOAM_JIG_T - FOAM_JIG_CHAMFER
+        tip = b3d.Pos(x, y, FOAM_JIG_T + gap) * b3d.Cylinder(
+            radius=tip_r, height=straight, align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN))
+        tip += b3d.Pos(x, y, FOAM_JIG_T + gap + straight) * b3d.Cone(
+            bottom_radius=tip_r, top_radius=tip_r - FOAM_JIG_CHAMFER, height=FOAM_JIG_CHAMFER,
+            align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN))
+        bottom = bottom + body + tip
+        hole_r = tip_r + FOAM_JIG_TIP_FIT / 2
+        hole = b3d.Pos(x, y, -0.01) * b3d.Cylinder(
+            radius=hole_r, height=FOAM_JIG_T + 0.02, align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN))
+        hole += b3d.Pos(x, y, -0.01) * b3d.Cone(
+            bottom_radius=hole_r + FOAM_JIG_CHAMFER, top_radius=hole_r, height=FOAM_JIG_CHAMFER + 0.01,
+            align=(b3d.Align.CENTER, b3d.Align.CENTER, b3d.Align.MIN))
+        top = top - hole
+    assert bottom.is_valid and top.is_valid, f"{side}: foam jig solid is not valid"
+    assert len(bottom.solids()) == 1 and len(top.solids()) == 1, f"{side}: foam jig came apart"
+
+    # Assembled: foam on the bottom template, top template on the pins.
+    # The pins stand in the punched holes, clear of the foam; the tips
+    # reach the top template's top face; each tip has its hole.
+    foam_solid = extrude_up(foam, FOAM_JIG_T, gap)
+    hit = overlap(bottom, foam_solid, "volume")
+    assert hit < 0.01, f"{side}: a jig pin reaches the foam ({hit:.3f}mm^3)"
+    top_placed = b3d.Pos(0, 0, FOAM_JIG_T + gap) * top
+    hit = overlap(bottom, top_placed, "volume")
+    assert hit < 0.01, f"{side}: a jig pin's tip hits the top template ({hit:.3f}mm^3)"
+    tb = bottom.bounding_box().max.Z
+    assert abs(tb - (2 * FOAM_JIG_T + gap)) < 1e-3, f"{side}: jig pin tips end at {tb:.2f}, not flush with the top"
+    return bottom, top, {"pins": len(centres), "gap": gap, "stack": 2 * FOAM_JIG_T + gap}
+
+
 def export_foam(name, sk):
     """Cut lines only, in the real-world frame seen from above (the plate's
     top / the case's open side), so a cutting service has nothing to
@@ -1941,16 +1998,6 @@ def build_tent(side, data, metrics, angle_deg):
 # ----------------------------------------------------------------------
 # MCU cover
 # ----------------------------------------------------------------------
-def grip_cut(metrics):
-    """Where a cover over the wall has to give way to the TRRS cable's
-    grip: the wall notch's width, from NOTCH_CLEARANCE inside where the
-    grip starts out past the case."""
-    gx, out, cy, _ = metrics["trrs_grip"]
-    nx0, ny0, nx1, ny1 = metrics["trrs_notch_bb"]
-    start = gx - out * NOTCH_CLEARANCE
-    return rect_from_bb((start, ny0, nx1, ny1) if out > 0 else (nx0, ny0, start, ny1))
-
-
 def bb_of_sketch(sk):
     b = sk.bounding_box()
     return (b.min.X, b.min.Y, b.max.X, b.max.Y)
@@ -1967,64 +2014,6 @@ def trrs_grip_solid(metrics):
     )
 
 
-def cover_footprint(side, data, metrics):
-    """Outline shared by both MCU covers: cover_outline() out to the wall's
-    outer edge -- but not over the USB/TRRS notches (a plug's overmold
-    stands taller than the cover's underside there). cover_outline() keeps
-    it from under every keycap (a pressed keycap's skirt comes down lower
-    than the cover's top). Returns that outline, the part of it on the
-    wall top, the post holes and the plate sketch."""
-    _, post_holes = mcu_zone(side, data)
-    wall_full = metrics["outer_sk"] - metrics["cavity_sk"]
-    wall_sk = wall_full   # the wall top the rim can rest on: not over a notch
-    for nb in metrics["notch_bbs"]:
-        wall_sk = wall_sk - rect_from_bb(nb)
-    # The cover is cut back only where the TRRS cable's grip comes in under
-    # it -- 1mm, since the wall came in (2026-10-26) -- flush with the
-    # notch's sides, which already carry the plug's clearance. It runs
-    # straight across the USB notch: only the socket and the plug's shell
-    # are in there (the grip stays outside), 3.5mm up at most, well under
-    # the cover's 6.0mm underside.
-    notches = [grip_cut(metrics)]
-    limit = (metrics["cavity_sk"] + wall_full) - notches[0]
-    # At the USB end, stop at the outer face of the wall beside the USB
-    # notch, all the way across. Past the Pro Micro on the key side the
-    # wall steps out to the next column, and following it up the step left
-    # a rounded tab on the cover's corner (removed 2026-10-22, the user's
-    # call) where the other corner just stops at this line.
-    y, d = metrics["usb_wall_y"], metrics["usb_dir"]
-    limit = limit & rect_from_bb((-500.0, min(y, y - d * 500.0), 500.0, max(y, y - d * 500.0)))
-    cover_sk = cover_outline(side, data)[0] & limit
-    # Drop anything too narrow to print and keep the one real piece. The
-    # opening that finds those also rounds every outside corner by 0.6mm,
-    # which flared the cover's notch edges wider than the case's sharp ones
-    # right at the outer face (2026-10-24, the user's catch at the TRRS
-    # notch). So the corners round each notch go back in from the original
-    # outline. Only there: everywhere else the opening also smooths away a
-    # 0.007mm jog in the outline that OCC can't offset past.
-    kept = max(open_sketch(cover_sk, 0.6).faces(), key=lambda f: f.area)
-    by_notches = None
-    for (nx0, ny0, nx1, ny1) in [bb_of_sketch(n) for n in notches]:
-        ring = rect_from_bb((nx0 - 1.0, ny0 - 1.0, nx1 + 1.0, ny1 + 1.0)) - rect_from_bb((nx0, ny0, nx1, ny1))
-        by_notches = ring if by_notches is None else by_notches + ring
-    cover_sk = b3d.Sketch() + kept + (cover_sk & by_notches & b3d.offset(b3d.Sketch() + kept, amount=0.6, kind=b3d.Kind.ARC))
-    cover_sk = max(cover_sk.faces(), key=lambda f: f.area)
-    plate_sk, _ = build_plate_sketch(side, data)
-    # The rim runs the full wall width along the USB end, edge to edge: at
-    # the key-side corner the cover's edge is over the plate's edge and the
-    # gap to the wall, not the wall, and the rim stopped 0.9mm short there,
-    # a step in the underside. It rests on the plate's top, level with the
-    # wall top.
-    band = rect_from_bb((-500.0, min(y, y - d * WALL_T), 500.0, max(y, y - d * WALL_T)))
-    for nb in metrics["notch_bbs"]:
-        band = band - rect_from_bb(nb)
-    # ...and off the parts under the cover where it leaves the wall
-    for t in PART_HEIGHTS:
-        band = band - rect_from_bb(part_by_type(data["parts"], t)["bbox"])
-    rim_sk = cover_sk & (wall_sk + band)
-    return cover_sk, rim_sk, post_holes, plate_sk
-
-
 def cover_footprint_inset(side, data, metrics):
     """The inset cover's outline (2026-10-25, the user's idea): the same
     cover, stopped at the plate's outer edge (board_envelope) instead of run
@@ -2034,8 +2023,8 @@ def cover_footprint_inset(side, data, metrics):
     down onto the wall top, wherever that edge faces the wall
     (inset_bevel). A flat lip there first (2026-10-25) needed supports:
     printed top-down, it stuck out 2mm with nothing under it. Returns the
-    outline, the bevel's footprint on the wall, the post holes and the
-    plate sketch, like cover_footprint(), plus where the bevel may go."""
+    outline, the bevel's footprint on the wall, the post holes, the plate
+    sketch and where the bevel may go."""
     _, post_holes = mcu_zone(side, data)
     env = board_envelope(side, data)
     cover_sk = cover_outline(side, data)[0] & env
@@ -2085,7 +2074,7 @@ def reset_access(side, data, cover_sk, bevel=False):
     if max(window_bb[0] - rx, 0, rx - window_bb[2]) - r < COVER_MIN_WALL:
         cut = cut + rect_from_bb((min(rx, window_bb[2]), ry - r, max(rx, window_bb[0]), ry + r))
     wall = hole.faces()[0].outer_wire().distance_to(cover_sk.outer_wire()) + (COVER_T / 2 if bevel else 0.0)
-    if wall >= CLEAR_BASE_WALL_T:
+    if wall >= COVER_MIN_FEATURE:
         return cut, False
     out = rx + (50.0 if side == "left" else -50.0)
     return cut + rect_from_bb((min(rx, out), ry - r, max(rx, out), ry + r)), True
@@ -2118,7 +2107,7 @@ def inset_bevel(side, data, metrics, cover_sk, band, wall_top_z, under_z, top_z)
     kept = b3d.Sketch()
     for f in reach.faces():
         try:
-            piece = open_sketch(b3d.Sketch() + f, CLEAR_BASE_WALL_T / 2)
+            piece = open_sketch(b3d.Sketch() + f, COVER_MIN_FEATURE / 2)
         except RuntimeError:
             # OCC can't offset the long L-shaped main run (round the corner,
             # down to the slot); it's 4mm wide all along, so keep it whole
@@ -2175,179 +2164,15 @@ def oled_module_bb(parts):
     return (cx - OLED_MODULE_W / 2, edge_y - OLED_MODULE_L, cx + OLED_MODULE_W / 2, edge_y)
 
 
-def build_clear_cover(side, data, case, metrics):
-    """Two-piece alternative to build_cover, after the original crkbd's
-    acrylic OLED cover: a printed base -- a wall round the same footprint --
-    under a flat clear top over the whole MCU strip. In place of
-    build_cover's printed posts, an M2 male-female hex standoff at each
-    post hole threads through the PCB into the insert and clamps the PCB;
-    the clear top screws onto the standoffs and holds the base down on the
-    case wall. The OLED sits under it on its socket rather than on top, so
-    the stack is much taller than build_cover's."""
-    keys = data["keys"]
-    parts = data["parts"]
-    cavity_sk = metrics["cavity_sk"]
-    pcb_top_z = metrics["pcb_top_z"]
-    wall_top_z = metrics["wall_top_z"]
-    under_z = pcb_top_z + CLEAR_UNDERSIDE_ABOVE_PCB
-    top_z = under_z + CLEAR_T
-    assert CLEAR_UNDERSIDE_ABOVE_PCB >= OLED_TOP_ABOVE_PCB + 0.5, "clear top is under 0.5mm over the OLED's glass"
-
-    cover_sk, rim_sk, post_holes, plate_sk = cover_footprint(side, data, metrics)
-
-    # base: a wall round the footprint, the full wall width where it sits on
-    # the case wall, from the wall top up to the clear top
-    try:
-        inner_sk = b3d.offset(cover_sk, amount=-CLEAR_BASE_WALL_T, kind=b3d.Kind.INTERSECTION)
-    except RuntimeError:
-        # OCC's sharp-cornered offset trips on a couple of ~0.09mm edges in
-        # the right half's outline since the wall came in (2026-10-26); the
-        # rounded kind only rounds the base's inside corners
-        inner_sk = b3d.offset(cover_sk, amount=-CLEAR_BASE_WALL_T, kind=b3d.Kind.ARC)
-    ring_sk = (cover_sk - inner_sk) + rim_sk
-    # Off the case wall, the wall crosses parts (the Pro Micro runs under its
-    # key-side and USB-side runs), so there it starts above the tallest one.
-    # That leaves the same 1mm gap over the plate's edge as build_cover's
-    # underside. Stepping it down to the plate between parts left strips
-    # under 2mm wide beside them.
-    band_z = pcb_top_z + max(PART_HEIGHTS.values()) + CLEAR_PART_CLEARANCE
-    assert wall_top_z < band_z < under_z, f"{side}: clear cover base band is out of order"
-    # Clipped to the cavity: the Pro Micro's bbox includes its USB
-    # connector's overhang past the board edge, which is the wall notch's
-    # business
-    part_boxes = {
-        t: extrude_up(rect_from_bb(part_by_type(parts, t)["bbox"]) & cavity_sk, pcb_top_z, height)
-        for t, height in PART_HEIGHTS.items()
-    }
-    # a collar round each standoff, from the band up
-    hex_r = STANDOFF_HEX_AF / math.sqrt(3)  # across corners / 2
-    hole_r = hex_r + STANDOFF_HOLE_CLEAR / 2
-    wall_sk = ring_sk
-    for h in post_holes:
-        wall_sk = wall_sk + (b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(hole_r + CLEAR_BASE_WALL_T) & cover_sk)
-    # Below the TRRS notch the collar all but fills the wall's corner, and
-    # left a closed slot ~1.4mm wide between itself and the rim. Fill every
-    # pocket but the one big opening over the MCU strip.
-    pockets = sorted((cover_sk - wall_sk).faces(), key=lambda f: f.area)
-    filled = pockets[:-1]
-    for f in filled:
-        assert f.area < 30, f"{side}: clear cover base would fill a {f.area:.0f}mm^2 pocket"
-        wall_sk = wall_sk + f
-    base = extrude_up(wall_sk, band_z, under_z - band_z) + extrude_up(rim_sk, wall_top_z, band_z - wall_top_z)
-
-    standoffs = []
-    edge_gaps = []
-    for h in post_holes:
-        at = b3d.Pos(h["x"], h["y"], 0)
-        cut = at * b3d.Circle(hole_r)
-        # Both post holes sit under 1mm from the footprint's edge (the
-        # key-side edge, the angled thumb-keycap edge): open the hole out
-        # through the edge rather than leave a sliver of wall there
-        c, p = b3d.Vertex(h["x"], h["y"], 0).closest_points(cover_sk.outer_wire())
-        gap = (p - c).length - hole_r
-        if gap < CLEAR_BASE_WALL_T:
-            d = (p - c).normalized()
-            reach = (p - c).length + 1.0
-            cut = cut + b3d.Pos(h["x"] + d.X * reach / 2, h["y"] + d.Y * reach / 2, 0) * b3d.Rot(
-                0, 0, math.degrees(math.atan2(d.Y, d.X))
-            ) * b3d.Rectangle(reach, 2 * hole_r)
-            edge_gaps.append(gap)
-        base = base - extrude_up(cut, pcb_top_z - 1.0, under_z - pcb_top_z + 2.0)
-        standoffs.append(extrude_up(at * b3d.Circle(hex_r), pcb_top_z, STANDOFF_L))
-
-    # clear top: the whole footprint, with the screw holes and a paperclip
-    # hole over the reset switch (beside the OLED module, not over it)
-    rx, ry = part_by_type(parts, "ResetSW_1side")["pos"]
-    clear_sk = cover_sk - (b3d.Pos(rx, ry, 0) * b3d.Circle(COVER_RESET_HOLE_D / 2))
-    for h in post_holes:
-        clear_sk = clear_sk - (b3d.Pos(h["x"], h["y"], 0) * b3d.Circle(COVER_SCREW_D / 2))
-    clear = extrude_up(clear_sk, under_z, CLEAR_T)
-
-    # the standoff's male thread goes through the PCB into the insert, whose
-    # bore is blind: it can't run past the insert's bottom
-    max_male = PCB_T + INSERT_DEPTH
-    engagement = STANDOFF_MALE - PCB_T
-    assert 2.0 <= engagement and STANDOFF_MALE <= max_male, (
-        f"{side}: a {STANDOFF_MALE}mm standoff thread gets {engagement:.1f}mm into the insert "
-        f"(needs 2.0mm or more, and at most {max_male:.1f}mm of thread)"
-    )
-
-    # ---- verification ----
-    module_bb = oled_module_bb(parts)
-    reset_to_module = max(module_bb[0] - rx, 0, rx - module_bb[2]) - COVER_RESET_HOLE_D / 2
-    assert reset_to_module > 0, f"{side}: the clear top's reset hole is over the OLED module"
-    for label, solid in (("base", base), ("clear top", clear)):
-        assert solid.is_valid, f"{side}: clear cover {label} is not valid"
-        assert len(solid.solids()) == 1, f"{side}: clear cover {label} came out as {len(solid.solids())} pieces"
-        clash = overlap(solid, case, "volume")
-        assert clash < 0.01, f"{side}: clear cover {label} intersects the case ({clash:.2f}mm^3)"
-        hit = overlap(solid, trrs_grip_solid(metrics), "volume")
-        assert hit < 0.01, f"{side}: a {TRRS_PLUG_D:.0f}mm TRRS grip would hit the clear cover {label} ({hit:.2f}mm^3)"
-        for t, box in part_boxes.items():
-            hit = overlap(solid, box, "volume")
-            assert hit < 0.01, f"{side}: clear cover {label} collides with {t} ({hit:.2f}mm^3)"
-    # each standoff, as a cylinder over its hex corners, misses every part,
-    # the case, the plate and the base
-    for so in standoffs:
-        for label, other in [("case", case), ("base", base)] + list(part_boxes.items()):
-            hit = overlap(so, other, "volume")
-            assert hit < 0.01, f"{side}: a clear cover standoff collides with the {label} ({hit:.2f}mm^3)"
-        so_sk = so.faces().sort_by(b3d.Axis.Z)[0]
-        assert overlap(plate_sk, so_sk) < 0.01, f"{side}: a clear cover standoff runs through the plate"
-    assert overlap(cover_sk, keycap_sketch(keys, 0)) < 1e-6, f"{side}: clear cover runs under a keycap"
-    assert rim_sk.area > 20, f"{side}: clear cover base has almost no rim on the wall top ({rim_sk.area:.1f}mm^2)"
-    plate_top_z = pcb_top_z + PLATE_TOP_ABOVE_PCB
-    thickest = max(POM_PLATE_T, FR4_PLATE_T, MJF_PLATE_T)
-    plate = extrude_up(plate_sk, plate_top_z - thickest, thickest)
-    clash = overlap(base, plate, "volume")
-    assert clash < 0.01, f"{side}: clear cover base intersects the plate ({clash:.2f}mm^3)"
-    # the plugged-in OLED, from 0.5mm under its board up to its glass top,
-    # must clear the base wall (grown by 0.5mm round its sides) and the top
-    oled_box = extrude_up(
-        rect_from_bb(bbox_union([module_bb], margin=0.5)),
-        pcb_top_z + OLED_BOARD_ABOVE_PCB - 0.5, OLED_TOP_ABOVE_PCB - OLED_BOARD_ABOVE_PCB + 0.5,
-    )
-    for label, solid in (("base", base), ("clear top", clear)):
-        hit = overlap(solid, oled_box, "volume")
-        assert hit < 0.01, f"{side}: clear cover {label} is within 0.5mm of the OLED module ({hit:.2f}mm^3)"
-    seat = overlap(ring_sk, cover_sk)  # what the clear top rests on, before posts
-    info = {
-        "under_above_pcb": under_z - pcb_top_z,
-        "top_above_pcb": top_z - pcb_top_z,
-        "footprint_bb": cover_sk.bounding_box(),
-        "base_h": under_z - wall_top_z,
-        "seat_area": seat,
-        "max_male": max_male,
-        "engagement": engagement,
-        "hole_d": 2 * hole_r,
-        "edge_gaps": edge_gaps,
-        "filled_pockets": [f.area for f in filled],
-        "oled_gap": CLEAR_UNDERSIDE_ABOVE_PCB - OLED_TOP_ABOVE_PCB,
-    }
-    return base, clear, clear_sk, info
-
-
-def export_clear_top(side, clear, clear_sk):
-    """STL/STEP for a look, plus the DXF a laser-cutting shop takes. The DXF
-    is in the real-world frame, read from above, like the mat template --
-    a through-cut sheet's mirror image is the same part flipped over, but
-    this way the drawing matches the board as you see it."""
-    write(clear, f"cover-clear-{side}", indent="  ")
-    dxf_path = os.path.join(OUT_DIR, f"cover-clear-{side}.dxf")
-    exp = b3d.ExportDXF()
-    exp.add_shape(to_physical(clear_sk))
-    exp.write(dxf_path)
-    print(f"  wrote {dxf_path}")
-
-
-def build_cover(side, data, case, metrics, inset=False):
-    """Flat cover over the MCU strip. Its rim rests on the case wall top
-    along the board's top and inner edges; at the other end it stands on
-    posts over the PCB mounting holes beside the TRRS jack, and one long
-    screw per post goes through cover, post and PCB into the same
-    heat-set insert an ordinary PCB screw would use. inset=True builds the
-    optional inset cover instead: stopped at the plate's outline, resting
-    on the wall top by a lip under its edge (cover_footprint_inset)."""
+def build_cover(side, data, case, metrics):
+    """The inset cover over the MCU strip: stopped at the plate's outline,
+    resting on the wall top by a 45 degree bevel under its edge
+    (cover_footprint_inset). At the other end it stands on posts over the
+    PCB mounting holes beside the TRRS jack, and one long screw per post
+    goes through cover, post and PCB into the same heat-set insert an
+    ordinary PCB screw would use. The flat cover (out over the wall top)
+    and the two-piece clear cover were removed 2026-11-21 (the user's
+    call); both are in git history before that."""
     keys = data["keys"]
     parts = data["parts"]
     cavity_sk = metrics["cavity_sk"]
@@ -2357,14 +2182,9 @@ def build_cover(side, data, case, metrics, inset=False):
     top_z = under_z + COVER_T
     assert under_z > wall_top_z, f"{side}: cover underside is below the wall top"
 
-    if inset:
-        cover_sk, rim_sk, post_holes, plate_sk, band = cover_footprint_inset(side, data, metrics)
-        cover = b3d.Pos(0, 0, under_z) * b3d.extrude(cover_sk, amount=COVER_T)
-        cover = cover + inset_bevel(side, data, metrics, cover_sk, band, wall_top_z, under_z, top_z)
-    else:
-        cover_sk, rim_sk, post_holes, plate_sk = cover_footprint(side, data, metrics)
-        cover = b3d.Pos(0, 0, under_z) * b3d.extrude(cover_sk, amount=COVER_T)
-        cover = cover + b3d.Pos(0, 0, wall_top_z) * b3d.extrude(rim_sk, amount=under_z - wall_top_z)
+    cover_sk, rim_sk, post_holes, plate_sk, band = cover_footprint_inset(side, data, metrics)
+    cover = b3d.Pos(0, 0, under_z) * b3d.extrude(cover_sk, amount=COVER_T)
+    cover = cover + inset_bevel(side, data, metrics, cover_sk, band, wall_top_z, under_z, top_z)
     # A skirt down onto the plate where the plate laps under the cover's
     # edge (the angled thumb-keycap side): the cover's underside is 1mm
     # above the plate's top, and from the keys you could see straight
@@ -2377,7 +2197,7 @@ def build_cover(side, data, case, metrics, inset=False):
     kept = b3d.Sketch()
     for f in (rest.faces() if rest is not None else []):
         try:
-            piece = open_sketch(b3d.Sketch() + f, CLEAR_BASE_WALL_T / 2)
+            piece = open_sketch(b3d.Sketch() + f, COVER_MIN_FEATURE / 2)
         except RuntimeError:
             piece = b3d.Sketch() + f
         if piece.faces() and piece.area > 1.0:
@@ -2407,10 +2227,10 @@ def build_cover(side, data, case, metrics, inset=False):
     assert overlap(window_sk, cover_sk) > window_sk.area - 0.01, f"{side}: OLED window runs off the cover's edge"
     # what's left round it is the narrowest part of the cover
     window_wall = window_sk.faces()[0].outer_wire().distance_to(cover_sk.outer_wire())
-    assert window_wall >= CLEAR_BASE_WALL_T, (
+    assert window_wall >= COVER_MIN_FEATURE, (
         f"{side}: only {window_wall:.2f}mm of cover between the OLED window and the cover's edge"
     )
-    reset_sk, reset_slot = reset_access(side, data, cover_sk, bevel=inset)
+    reset_sk, reset_slot = reset_access(side, data, cover_sk, bevel=True)
     if not reset_slot:
         assert overlap(reset_sk, cover_sk) > reset_sk.area - 0.01, f"{side}: reset hole runs off the cover's edge"
     cover = cover - extrude_up(window_sk + reset_sk, wall_top_z - 1.0, top_z - wall_top_z + 2.0)
@@ -2423,7 +2243,7 @@ def build_cover(side, data, case, metrics, inset=False):
     assert clash < 0.01, f"{side}: cover intersects the case ({clash:.2f}mm^3)"
     hit = overlap(cover, trrs_grip_solid(metrics), "volume")
     assert hit < 0.01, f"{side}: a {TRRS_PLUG_D:.0f}mm TRRS grip would hit the cover ({hit:.2f}mm^3)"
-    if inset and not reset_slot:
+    if not reset_slot:
         # the reset hole's thin top wall leans on the bevel: make sure it's there
         rx, ry = part_by_type(parts, "ResetSW_1side")["pos"]
         cb = cover_sk.bounding_box()
@@ -2698,8 +2518,23 @@ def main():
         export_foam(f"foam-plate-{side}", pfoam)
         # one bold word, as big as fits on the foam's webs: plain foam can be
         # flipped, and a label reading backwards shows the template is
-        export_floor_mat(side, pfoam, name="foam-plate-template", sub=None,
+        # Since the cutting jig (2026-11-18, the user's call) the template
+        # only places the spacer holes for the punch: the foam's outline,
+        # solid, with a full punch circle at each spacer. The cut-only DXF,
+        # printed 1:1, still has every cut line for cutting without the jig.
+        assert len(pfoam.faces()) == 1, f"{side}: plate foam isn't one piece"
+        punch_tpl = b3d.Sketch() + b3d.Face(pfoam.faces()[0].outer_wire())
+        for h, _ in mount_plan:
+            punch_tpl = punch_tpl - b3d.Pos(h["x"], h["y"]) * b3d.Circle(FOAM_PLATE_PUNCH_D / 2)
+        assert len(punch_tpl.faces()) == 1 and len(punch_tpl.faces()[0].inner_wires()) == len(mount_plan), (
+            f"{side}: punch template should be one piece with a hole per spacer")
+        export_floor_mat(side, punch_tpl, name="foam-plate-template", sub=None,
                          sizes=tuple((h, None) for h in (8.0, 7.0, 6.0, 5.0)), margin=0.5, bold=True)
+        jig_bottom, jig_top, jig_info = build_foam_jig(side, pfoam, mount_plan)
+        write(jig_bottom, f"foam-plate-jig-bottom-{side}", indent="  ")
+        write(jig_top, f"foam-plate-jig-top-{side}", indent="  ")
+        print(f"  plate foam jig: {jig_info['pins']} pins, {jig_info['gap']:.1f}mm gap for {FOAM_JIG_FOAM_T}mm foam, "
+              f"{FOAM_JIG_T}mm templates: the knife reaches {jig_info['stack']:.1f}mm")
         gaps = ", ".join(f"{PLATE_TOP_ABOVE_PCB - t:.1f}mm under {g}" for g, t in plates)
         print(f"  plate foam (with the loose spacers): {pfoam_info['area'] / 100:.0f}cm^2, "
               f"{FOAM_PLATE_OPENING}mm switch openings; gap {gaps}"
@@ -2730,40 +2565,17 @@ def main():
               f"{[(round(x, 1), round(y, 1)) for x, y in metrics['tent_screws']]}")
 
         cover, info = build_cover(side, data, case, metrics)
-        write(cover, f"cover-{side}", indent="  ")
-        inset, iinfo = build_cover(side, data, case, metrics, inset=True)
-        write(inset, f"cover-inset-{side}", indent="  ")
-        ib = iinfo["footprint_bb"]
-        print(f"  inset cover (optional): {ib.size.X:.1f} x {ib.size.Y:.1f}mm inside the wall, 45deg bevel onto "
-              f"the wall top ({iinfo['rim_area']:.0f}mm^2), {iinfo['window_wall']:.1f}mm round the OLED window, "
-              f"reset {'slot' if iinfo['reset_slot'] else 'hole'}")
+        write(cover, f"cover-inset-{side}", indent="  ")
         fb = info["footprint_bb"]
-        print(f"  cover: {fb.size.X:.1f} x {fb.size.Y:.1f}mm, top {info['top_above_pcb']:.1f}mm above the PCB, "
-              f"{len(info['post_holes'])} posts at {[(round(x,1), round(y,1)) for x, y in info['post_holes']]}")
+        print(f"  inset cover: {fb.size.X:.1f} x {fb.size.Y:.1f}mm inside the wall, top {info['top_above_pcb']:.1f}mm "
+              f"above the PCB, 45deg bevel onto the wall top ({info['rim_area']:.0f}mm^2), reset "
+              f"{'slot' if info['reset_slot'] else 'hole'}, {len(info['post_holes'])} posts at "
+              f"{[(round(x,1), round(y,1)) for x, y in info['post_holes']]}")
         print(f"  cover screws: head to boss top is {info['screw_grip']:.1f}mm -- an M2x12 leaves "
               f"{12 - info['screw_grip']:.1f}mm in the {INSERT_DEPTH}mm insert")
         wb = info["window_bb"]
         print(f"  OLED window: {wb[2] - wb[0]:.1f} x {wb[3] - wb[1]:.1f}mm through the cover, "
               f"{info['window_wall']:.1f}mm of cover left at its narrowest")
-
-        base, clear, clear_sk, cinfo = build_clear_cover(side, data, case, metrics)
-        write(base, f"cover-base-{side}", indent="  ")
-        export_clear_top(side, clear, clear_sk)
-        fb = cinfo["footprint_bb"]
-        print(f"  clear cover: {fb.size.X:.1f} x {fb.size.Y:.1f}mm, {CLEAR_T}mm clear top from "
-              f"{cinfo['under_above_pcb']:.1f} to {cinfo['top_above_pcb']:.1f}mm above the PCB "
-              f"({cinfo['oled_gap']:.1f}mm over the OLED's glass); base {cinfo['base_h']:.1f}mm tall, "
-              f"{cinfo['seat_area']:.0f}mm^2 of wall top under the clear top")
-        print(f"  clear cover standoffs: M2 male-female, {STANDOFF_L:.0f}mm body, {STANDOFF_MALE:.0f}mm male "
-              f"thread ({cinfo['engagement']:.1f}mm in the insert, {cinfo['max_male']:.1f}mm at most); "
-              f"base holes {cinfo['hole_d']:.1f}mm, "
-              f"for up to {STANDOFF_HEX_AF}mm hex; M2x{CLEAR_TOP_SCREW_LEN} on top")
-        if cinfo["filled_pockets"]:
-            print(f"  clear cover base: filled {len(cinfo['filled_pockets'])} closed pocket(s) in the wall, "
-                  f"{[round(a, 1) for a in cinfo['filled_pockets']]}mm^2")
-        if cinfo["edge_gaps"]:
-            print(f"  clear cover base: {len(cinfo['edge_gaps'])} standoff hole(s) opened out through the edge "
-                  f"(would have left {[round(g, 2) for g in cinfo['edge_gaps']]}mm of wall)")
 
     print("\nDone.")
 

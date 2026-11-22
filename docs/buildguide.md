@@ -14,6 +14,15 @@ case that replaces Corne's sandwich plates.
 
 ## Parts
 
+![Cornison](images/pcb/cornison-v1.1%20pcb%20build%20parts.jpg)
+-- Pcb build parts
+
+![Left Case Parts](images/case/cornison-v1.1%20left%20case%20ready%20for%20assembly.jpg)
+-- Left case parts
+
+![Left half PCB parts](images/pcb/cornison-v1.1%20pcb%20build%20parts%20left.jpg)
+-- Left half PCB parts
+
 ### Required
 
 | Part | Qty | Notes |
@@ -81,8 +90,8 @@ plugged in, short its `RST` and `GND` pins and note what appears:
 
 ## Verification
 
-<!-- TODO photo: assets/confirm_front.jpg — panel, top side -->
-<!-- TODO photo: assets/confirm_back.jpg — panel, bottom side -->
+![v1.1 pcb front](images/pcb/v1.1%20pcb%20front.jpg)
+![v1.1 pcb back](images/pcb/v1.1%20pcb%20back.jpg)
 
 Check the PCB for visible damage before you start.
 
@@ -98,15 +107,15 @@ Snap the two halves apart at the breakaway tabs and file the tab stubs
 flush. The case has only 0.5mm of clearance around the board, so a stub
 left on the edge will stop the PCB dropping in.
 
-<!-- TODO photo: assets/confirm_remove_tabs.jpg — halves separated, edges filed -->
-
 ## Assembly
 
 Do every step on both halves.
 
+![v1.1 finished pcb left](images/pcb/cornison-v1.1%20pcb%20build%20finished%20left.jpg)
+
 ### Diodes
 
-<!-- TODO photo: assets/build_diode.jpg — one diode, showing orientation -->
+![diode](images/pcb/diode.jpg)
 <!-- TODO photo: assets/build_diode_overview.jpg — bottom side, all diodes -->
 
 Solder the 24 diodes per half to the **bottom** side. Diodes are
@@ -208,7 +217,7 @@ power to ground and damage the controllers.
 
 ### Hotswap sockets
 
-<!-- TODO photo: assets/build_socket.jpg -->
+<img src="images/pcb/hot-swap-socket.jpg" alt="hot swap socket" width="400">
 <!-- TODO photo: assets/build_socket_overview.jpg -->
 
 Solder the 24 sockets per half to the **bottom** side, each seated flat
@@ -217,7 +226,7 @@ force of every switch insertion.
 
 ### Heat-set inserts
 
-<!-- TODO photo: assets/build_inserts.jpg -->
+![case with inserts](images/case/cornison-v1.1%20right%20case%20inserts%20top.jpg)
 
 Each case half has 7 bosses, one under each hole in the PCB. Press an M2
 heat-set insert into each of them with a soldering iron or heat-set tip,
@@ -227,6 +236,10 @@ inserts cool before the next step.
 In a resin (SLA) case, glue the inserts in instead of heating them.
 
 ### Tenting legs (optional)
+
+![tent inserts in the case bottom](images/case/cornison-v1.1%20right%20case%20inserts%20bottom.jpg)
+![bottom with tent](images/case/cornison-v1.1%20right%20case%20bottom%20with%20tent.jpg)
+![tent and case bottom](images/case/cornison-v1.1%20right%20case%20tent%20top.jpg)
 
 The tent screws into inserts in the bottom of the case, from below, so
 it can go on or come off at any time. Fit the inserts now, with the
@@ -238,10 +251,20 @@ other inserts:
 
 The tent itself goes on at the end (see Finishing).
 
+**Weights (optional):** the 3 × 3 grid of cells in the middle of the
+tent takes stick-on tire weight segments (19 × 16 × 4mm, cut from the
+strip), up to 9 per half. Peel the backing and press one into each cell,
+before the tent goes on; the case bottom covers them once it's screwed
+on.
+
+![tent adding weights](images/case/cornison-v1.1%20right%20tent%20adding%20weights.jpg)
+![tent with weights](images/case/cornison-v1.1%20right%20tent%20with%20weights.jpg)
+
 ### Mount the PCB and plate
 
-<!-- TODO photo: assets/build_pcb_in_case.jpg -->
-<!-- TODO photo: assets/build_plate_switches.jpg -->
+![PCB in the case](images/case/cornison-v1.1%20right%20case%20inserts%20top%20with%20pcb.jpg)
+![spacers on the PCB](images/case/cornison-v1.1%20right%20case%20spacers%20top%20with%20pcb.jpg)
+![plate screwed down](images/case/cornison-v1.1%20right%20case%20top%20with%20fr4%20plate.jpg)
 
 1. Lower the PCB onto the bosses, top side up, with the USB connector and
    TRRS jack lined up with their wall notches. Nothing screws it down
@@ -251,9 +274,7 @@ The tent itself goes on at the end (see Finishing).
    top hole nearest the Pro Micro. Or lay the spacer frame on instead,
    pilots down.
 3. Lay the plate on top and screw it down with 5 M2 × 10mm low-head
-   screws, through plate, spacer and PCB into the inserts. The plate has
-   two holes near the outer bottom corner; only the one over your PCB's
-   hole gets a screw. The two PCB holes beside the TRRS jack stay empty
+   screws, through plate, spacer and PCB into the inserts. The two PCB holes beside the TRRS jack stay empty
    for now; the cover's screws go there.
 
 Screw the plate down before fitting any switches. The screw head at the
@@ -283,19 +304,21 @@ Don't fill the plate with switches first and then try to seat them all at
 once. Two of the thumb keys on each half are rotated (15° and 60°);
 follow the plate cutouts.
 
+![top right switches](images/finished/cornison-v1.1%20right%20top%20switches.jpg)
+
 ### Cover, OLED, keycaps, feet
 
-<!-- TODO photo: assets/build_cover.jpg -->
-<!-- TODO photo: assets/build_oled_cover.jpg -->
-<!-- TODO photo: assets/build_finish.jpg -->
+![cover and OLED](images/finished/cornison-v1.1%20right%20top%20finished.jpg)
+![tent fitted](images/case/cornison-v1.1%20right%20case%20top%20with%20tent.jpg)
+![rubber feet on the tent legs](images/case/cornison-v1.1%20right%20tent%20bottom%20with%20skid%20pads.jpg)
 
 1. Set the MCU cover over the Pro Micro, posts down onto the two empty
-   mounting holes, rim on the case wall. Fasten it with two M2 × 12mm
+   mounting holes, its bevelled edge resting on the case wall. Fasten it with two M2 × 12mm
    screws. No washers: the posts clamp the PCB. (Building without a
    cover? Put an M2 × 4mm screw in those two holes instead. They are
    2.2mm holes, so they don't need a washer.)
-2. Plug the OLED module into its socket through the slot in the cover. It
-   lies on top of the cover. The small round hole beside it is for
+2. Plug the OLED module into its socket through the window in the cover.
+   Its pins hold it, just above the cover's top. The small round hole beside it is for
    reaching the reset switch with a paperclip.
 3. Fit the keycaps. The 1.5u caps go on the innermost thumb key of each
    half.

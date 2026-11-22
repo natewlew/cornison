@@ -38,14 +38,20 @@ extra keys in a Levinson-style arrangement — the name mixes Corne + Levinson.
   2. `case.py` (`./build.sh generate`; runs under `uv run --with
      build123d`) reads
      `board.json` and writes the case tray + switch plates (STEP/STL/DXF)
-     plus a printed MCU cover (`cover-{left,right}`) and a cutting
+     plus a printed MCU cover (`cover-inset-{left,right}`) and a cutting
      template for a butyl floor mat (`mat-template-{left,right}`, STL +
      DXF, both in the physical frame unlike the plate DXF), foam
      (added 2026-11-11, not cut yet): case foam, 2mm in place of the
      mat, cut with the mat template; plate foam, between PCB and plate
      with the loose spacers, with its own tracing template
      (`foam-plate-template-*`); plus cut-only `foam-{case,plate}-*.dxf`
-     for a cutting service, to
+     for a cutting service; and (2026-11-18, the user's idea) a
+     plate-foam cutting jig, `foam-plate-jig-{bottom,top}-*`: the
+     foam clamped between two copies of its shape, spacer holes punched
+     first, the bottom's pins standing in them and pressing into the top.
+     Work in progress since 2026-11-21: on the first test print the foam
+     kept pulling out from between the templates while cutting; the
+     docs point to the 1:1 paper DXF instead. All of these go to
      `out/`. The same files serve a home printer and a print service:
      there's no separate prototype mode any more (it only skipped the
      MagSafe recess, which is gone). Each run first deletes the old
@@ -181,7 +187,13 @@ came out wrong.
   (`COVER_PLATE_REST_IN` past the plate's 1mm lap) now rests on the plate
   there, level with the rim. A part-bbox cut-out unclipped to the cavity
   once sliced the bevel along the USB end (the Pro Micro's bbox includes
-  its connector's overhang).
+  its connector's overhang). 2026-11-21 (the user's call): the inset cover
+  is the only cover now. The flat cover (`cover-{left,right}`,
+  `cover_footprint()`, `grip_cut()`) and the clear two-piece cover
+  (`build_clear_cover()`, `cover-base-*`/`cover-clear-*`, the STANDOFF_/
+  CLEAR_ constants) were removed; they're in git history before that.
+  `build_cover()` builds the inset cover, still written as
+  `cover-inset-{left,right}`. The notes above about them are history.
 - **`dxf_to_loops.py` reconstructs closed loops via a point-adjacency
   graph**, not by trusting the DXF's own edge ordering — build123d's own
   `Wire.order_edges()` has a real bug on this geometry (it silently
@@ -517,8 +529,7 @@ came out wrong.
   Taller mounts (machined DIP ~7–8mm, standard 8.5mm sockets ~11mm) are
   out of scope: the OLED module overlaps the Pro Micro in plan and sits
   8–9mm up on its socket, so they collide with it whatever the cover.
-  The single-piece printed cover (`build_cover()`) is the default cover;
-  the clear two-piece one is an optional upgrade for the same builds.
+  The inset cover (`build_cover()`) is the only cover since 2026-11-21.
   First cover test: the printed one on the direct-soldered prototype with
   trimmed stubs.
 - 2026-10-14: case, plate and spacer frame carry both the current and

@@ -7,6 +7,8 @@ layout (an ortholinear grid-plus-thumb-keys arrangement in the same family
 as [Let's Split](https://github.com/qmk/qmk_firmware/tree/master/keyboards/lets_split)) —
 the name is a mix of **Corne** and **Levinson**.
 
+![Cornison](docs/images/finished/cornison-v1.1%20both%20front%20portrait%20finished.jpg)
+
 - **Left half:** the standard Corne 3×6 grid, plus 3 thumb keys and
   dedicated Ctrl, Alt, and Cmd keys.
 - **Right half:** the standard Corne 3×6 grid, plus 2 thumb keys and 4
@@ -16,6 +18,14 @@ the name is a mix of **Corne** and **Levinson**.
   TRRS between halves, optional per-key and underglow RGB LEDs.
 - A 3D-printed case and switch plate, generated directly from the PCB
   rather than hand-modeled, so it stays in sync with any board change.
+
+## Gallery
+
+<img src="docs/images/finished/cornison-v1.1%20left%20top%20finished.jpg" alt="Left half from above" width="49%"> <img src="docs/images/finished/cornison-v1.1%20right%20top%20finished.jpg" alt="Right half from above" width="49%">
+
+<img src="docs/images/finished/cornison-v1.1%20both%20front%20finished.jpg" alt="Both halves" width="49%"> <img src="docs/images/case/cornison-v1.1%20case%20assembled%20portrait.jpg" alt="Both halves on tents, from the side" width="49%">
+
+<img src="docs/images/finished/cornison-v1.1%20right%20front%20finished.jpg" alt="Right half tented, from the front" width="49%"> <img src="docs/images/finished/cornison-v1.1%20right%20front%20portrait%20finished.jpg" alt="Right half tented, portrait" width="49%">
 
 ## Repository layout
 
@@ -96,15 +106,62 @@ regenerated after any PCB change instead of hand-edited. See
 [firmware/qmk/cornison/readme.md](firmware/qmk/cornison/readme.md) for
 flashing, bootloader, and handedness setup.
 
+## 3D printing the case
+
+![Assembled case](docs/images/case/cornison-v1.1%20case%20assembled.jpg)
+
+The printable files aren't checked in. Generate them into `case/out/`
+first; `case/board.json` is in the repo, so this step needs only
+[uv](https://docs.astral.sh/uv/), not KiCad:
+
+```sh
+./build.sh generate
+```
+
+Print one of each part per half, unless the table says otherwise:
+
+| Part | Files | Needed? | Orientation |
+|---|---|---|---|
+| Case | `case-{left,right}.stl` | Yes | Floor down |
+| Plate-mount spacers | `spacer-{pom,fr4,mjf}.stl` (4 per half) and `spacer-narrow-{pom,fr4,mjf}.stl` (1 per half) | Yes, unless you skip the plate mount. Pick the set that matches your plate material: the spacer height depends on the plate's thickness | — |
+| …or a spacer frame | `spacer-frame-{pom,fr4,mjf}-{left,right}.stl` | Replaces the 10 loose spacers | Top face down, pilots up |
+| MCU cover | `cover-inset-{left,right}.stl` | Yes (covers the Pro Micro, TRRS jack and reset switch, with a window for the OLED) | Top face down, posts up |
+| Tenting legs | `tent-{left,right}.stl` | Optional, 18° | Flat mounting face down, legs up |
+| Switch plate | `plate-pom-{left,right}.stl` (1.5mm) or `plate-mjf-{left,right}.stl` (2.0mm) | Only if you aren't ordering the FR4 plate | Flat |
+| Cutting templates | `mat-template-{left,right}.stl`, `foam-plate-template-{left,right}.stl` | Only for the optional floor mat or foam | Flat (0.6mm) |
+
+None of these need supports. Each run of `./build.sh generate` also
+writes STEP files for every part (for a service that prefers them) and
+deletes the old files in `case/out/` first.
+
+**Home printer (FDM):** PETG works well; PLA is fine for a fit check but
+more brittle. Dry PETG before printing: an undried spool leaves
+rough, separated top surfaces. The walls are thin, so 4 perimeters
+helps. Heat-set inserts go into a PETG case the same way as MJF.
+
+The parts in the photos were printed on a Bambu Lab P1S in Prusament
+PETG: Galaxy Black for the cases, Chalky Blue for the tents and covers.
+The switch plate is FR4, ordered from JLCPCB. Bambu Lab's own PETG
+Matte (black and white) also works and may print a little cleaner on a
+Bambu printer, since its profiles are tuned for it. The Prusament colours
+just look better.
+
+**Print service:** MJF PA12 nylon (JLC3DP or similar) is the recommended
+material, and takes heat-set inserts well. SLA resin works too, but glue
+the inserts in instead of heat-setting them. Home and service prints use
+the same files.
+
+See [case/README.md](case/README.md) for each part in detail: the
+stack-up, mounting hardware, the hardware BOM, and the assembly order.
+
 ## Ordering
 
 - **PCB:** upload the Gerbers in `pcb/production/` to a fab (JLCPCB).
 - **Switch plate (FR4):** upload `case/plate-fr4-{left,right}/production/`
   to a fab as two separate PCB orders — see
   [case/README.md](case/README.md#ordering-the-plate) for settings.
-- **Case:** send `case/out/case-{left,right}.stl` to a 3D-print service
-  (MJF nylon recommended) or print at home — see
-  [case/README.md](case/README.md#ordering-the-case).
+- **Case and other printed parts:** print them at home or send them to a
+  3D-print service, see [3D printing the case](#3d-printing-the-case).
 
 ## Credits
 
