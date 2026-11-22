@@ -127,8 +127,11 @@ flashing, bootloader, and handedness setup.
 
 ![Assembled case](docs/images/case/cornison-v1.1%20case%20assembled.jpg)
 
-The printable files aren't checked in. Generate them into `case/out/`
-first; `case/board.json` is in the repo, so this step needs only
+**Download:** the [latest release](https://github.com/natewlew/cornison/releases/latest)
+has every STL ready to print (`cornison-v1.1-printed-parts-stl.zip`).
+
+**Or generate them yourself** into `case/out/` (they aren't checked in).
+`case/board.json` is in the repo, so this needs only
 [uv](https://docs.astral.sh/uv/), not KiCad:
 
 ```sh
@@ -172,6 +175,9 @@ See [case/README.md](case/README.md) for each part in detail: the
 stack-up, mounting hardware, the hardware BOM, and the assembly order.
 
 ## Ordering
+
+The [latest release](https://github.com/natewlew/cornison/releases/latest)
+has all of these files in one place.
 
 - **PCB:** upload the Gerbers in `pcb/production/` to a fab (JLCPCB).
 - **Switch plate (FR4):** upload `case/plate-fr4-{left,right}/production/`
