@@ -384,286 +384,48 @@ came out wrong.
   `D3_SMD_v2` footprint's pad spacing and 3D model) — a visually-similar
   "0805" SMD diode is a different, incompatible package.
 
-## Order status (as of 2026-10-12 — verify before relying on this)
+## Firmware, versioning and the controller
 
-- **2026-11-11: v1.1 PCBs and FR4 plates arrived** (JLCPCB, ordered from
-  the 2026-10-28 exports, which included the D43/D45 reroute and the
-  plate's 2026-10-26 sliver). Silkscreen reads Cornison v1.1. The PCB fits
-  the current case and the user found everything lines up (bosses, plate
-  holes). The v1.1 build waits on LCSC parts. Notes below that call the
-  boards in hand v1.0, or the fab outputs stale, predate this.
-- **2026-11-16: v1.1 right half assembled and working** on its own over
-  USB: every key on the `natewlew` keymap (`-bl avrdude-split-right`),
-  and the OLED. Not yet tested: left half, TRRS split link on v1.1,
-  RGB. Two new Pro Micros were bench-tested first, unsoldered: they ship
-  with an Arduino Leonardo sketch (2341:8036), so the first flash needs
-  no reset at all: `stty -f /dev/cu.usbmodemXXXX 1200` drops it into
-  Caterina, then run avrdude on the port when it comes back. Once QMK is
-  on, the reset button needs a quick double-tap; a single press or a slow
-  pair only reboots it. Bootmagic (hold the top outer key while plugging
-  in) also works.
-
-- PCB versions (2026-10-16): the boards in hand are **v1.0** (their
-  silkscreen still reads foostan's "Corne Cherry v3.0.1"). The next PCB,
-  with the moved mounting hole, is **v1.1**. Since 2026-10-25 the version
-  lives in one place, `VERSION` at the repo root: bump it there and run
+- **Version lives in `VERSION`** at the repo root: bump it there and run
   `./build.sh version` (`pcb/sync_version.py`), which copies it into the
   title blocks (`rev`, in `.kicad_pcb` and `.kicad_sch`), the FR4 plates'
   title blocks and every fabrication-toolkit `ARCHIVE_NAME`;
   `make_fr4_plate.py` reads it too. KiCad can't read an outside file, so a
-  revision changed in KiCad's Page Settings drifts:
-  `./build.sh version --check` catches that. The silkscreen label
-  ("Cornison v${REVISION}", one line per half, since 2026-10-18) reads the
-  PCB title block, so don't edit the text. The plates carry the PCB's
-  number (a plate for that revision). v1.1 also moves the right half's lower-centre mounting hole
-  (2026-10-24, the user's catch): at (225.0, 99.5) since foostan's file,
-  its 4.3mm hole ran 1.6mm off the board's bottom edge; now (227.6, 97.0).
-  Only 3.6mm apart, so unlike the outer/lower hole the case and plate
-  can't carry both spots: they follow v1.1, and a v1.0 board in a new case
-  loses that one plate screw.
-- PCBs arrived from JLCPCB and look good. Both halves flashed and bench
-  tested individually with the default keymap (bare board, no
-  case/plate/switches — tested by shorting each hotswap socket's pads
-  with tweezers): all 24 matrix positions register correctly on each
-  half. Confirms two things that were previously only inferred:
-  - `diode_direction: COL2ROW` is correct.
-  - The Keebio Pro Micro USB-C actually used ships with a **Caterina**
-    bootloader, confirming `development_board: promicro` in
-    `firmware/qmk/cornison/keyboard.json`. Flash with e.g. `qmk flash -kb
-    cornison -km default -bl avrdude-split-left` (or `-right` for that
-    half) — writes `eeprom-{lefthand,righthand}.eep` in the same step,
-    so no separate EH_LEFT/EH_RGHT tap is needed. First attempt after a
-    reset sometimes fails with `butterfly_recv`/"Device not configured"
-    from avrdude losing the Caterina handshake timing — harmless,
-    nothing is written yet, just retry.
-  - Both halves confirmed working together over TRRS, not just
-    individually.
-  - The `natewlew` keymap (ported from `keyboards/keebio/nyquist/keymaps/natewlew`
-    in the `qmk_firmware` fork) is flashed to both halves and working on
-    real hardware as of 2026-10-12, split connection included. Since
-    2026-10-25 it lives in this repo, `firmware/qmk/cornison/keymaps/natewlew/`,
-    self-contained: `natewlew.c/.h` started as a copy of `users/natewlew` from
-    `qmk_userspace` and have moved on (2026-10-25: OS detection with
-    `OS_DETECTION_KEYBOARD_RESET` for the user's monitor KVM, a shortcut
-    table, alt-tab ended on leaving the layer, Colemak/Dvorak dropped); the
-    user may port it to the Nyquist later. Its `rules.mk` sets `USER_NAME`
-    so QMK doesn't also pull in that userspace copy (both define
-    `process_record_user`). It was moved out of
-    `qmk_userspace/keyboards/cornison/`, where it had never been committed;
-    a userspace keymap of the same name would shadow this one. Its readme
-    shows `keymap.svg`, drawn by `firmware/qmk/draw_keymap.py`
-    (`./build.sh keymap-svg`; plain python3) from keymap.c and
-    keyboard.json's positions, keys coloured by function: redraw it
-    whenever keymap.c changes, and add new custom keycodes to its `LABELS`.
-  - Full firmware bring-up is done: matrix, bootloader, handedness, and
-    split link all confirmed on real hardware.
-- `firmware/qmk/cornison` builds against a `git worktree` of
-  `~/Development/natewlew/qmk_firmware` checked out to real upstream
-  QMK (`git remote add upstream https://github.com/qmk/qmk_firmware.git`),
-  not `bastardkb-qmk` (a vendor fork for bastardkb's own boards — wrong
-  home for an unrelated personal keyboard) and not that repo's own stale
-  2022 branch/fork `master` (from 2023 — old enough that its keyboard
-  discovery doesn't support a `keyboard.json`-only keyboard with no
-  `rules.mk`).
-- FR4 switch plates (JLCPCB orders, most recently order numbers Y10/Y11)
-  were fabricated from pre-fix files: the two angled thumb-key holes per
-  half are rotated 30° off, and the plate's thumb-area outline also
-  doesn't fit the corrected case cavity. They also sit over the TRRS jack
-  and reset switch, which are taller than the gap under the plate, and
-  their OLED slot is too short for the header's fourth pin. Don't reorder
-  until a home test print of the regenerated plate confirms the fix.
-  Plates printed at home from the current files on 2026-10-25; PCB test
-  fit still to do. The boards in hand are v1.0, so on that fit the plate's
-  outer/lower hole (both halves) and the right half's lower-centre hole
-  won't line up with a PCB hole: expect 4 of 5 plate screws on the left
-  and 3 of 5 on the right. That's the v1.0 board, not the plate.
-- `case/plate-fr4-{left,right}/` were regenerated 2026-10-13 from the
-  current plate (MCU opening, 5 mounting holes per half) and pass
-  `./build.sh drc` with 0 violations. Checked in pcbnew: 24 switch holes
-  + 5 M2 holes per half, every M2 hole on a PCB mounting hole, plate area
-  matching the generator. The Gerber zips in each `production/` folder
-  are still the 2026-10-02 export of the old design — re-export from
-  KiCad before any order. The fifth hole's 1.62mm wall is under JLCPCB's
-  2.0mm ask and may be queried. Plate exports are now named
-  `cornison_fr4_plate_{left,right}_v<VERSION>` (they were
-  `Corne_Cherry_Plus_FR4_Plate_*_v1`). The user exported
-  `cornison_fr4_plate_{left,right}_v1.1.zip` on 2026-10-25; their Edge.Cuts
-  Gerbers were checked identical to the plate projects then. Stale since
-  2026-10-26 (the MCU-side wall came in and the plate lost a ~1.5mm^2
-  sliver): re-export before ordering. The `_v1` zips beside them are the
-  old, pre-fix export.
-- PCB v1.1 fab outputs exported 2026-10-25 by the user:
-  `pcb/production/cornison_v1.1{.zip,_bom,_designators,_positions}`, from
-  the board in commit 4c72978 (per-key LEDs, DRC cleanup); positions file
-  checked to include LED55-60. The `corne-cherry-plus_v1.*` files beside
-  them are the v1.0 order record. Re-exported 2026-10-28 (checked
-  identical to the board then), then stale the same day after the D43/D45
-  reroute: re-export before ordering.
-- Any case printed before 2026-10-12 has one boss per half ~10mm off its
-  PCB hole (the outer-edge one nearer the thumb row) — skip that screw on
-  it; fixed in the generator, needs a reprint.
-- First test build has the Pro Micro **direct-soldered** (no socket), so
-  it goes without the MCU cover and OLED. On this build, the printed case
-  needed hand-trimming along the top wall near the Pro Micro, away from
-  the USB notch (not at the plug opening itself) — measured against the
-  real geometry: the wall there sits flush against the Pro Micro
-  footprint's edge with 0 clearance in the model already, independent of
-  mounting method. Fixed 2026-11-17 (`PRO_MICRO_CLEARANCE`): the v1.1
-  right half needed the same, both sides of the USB notch. The Pro
-  Micro's own board sticks out 2mm past the PCB's edge (measured), where
-  the footprint's F.Fab has it 1.3mm inside, so it ran 1.5mm into the
-  wall across its 18mm width beside the 12mm notch. From the PCB's top
-  up, the notch is now the Pro Micro's width + 0.5mm a side (19mm); below
-  it stays 12mm. On the key side the wall steps out to the next column
-  0.1-0.2mm past the Pro Micro's edge; cutting to the clearance there left
-  a sliver of the step's face and a lip of its rounded corner (the user's
-  catch), so a side that finds the cavity within `PRO_MICRO_SNAP` (2mm)
-  ends flush with it, and the cut runs out past the step: the step ends
-  in one straight face. The covers are unchanged: they span the wider
-  notch, their rim resting on the Pro Micro's board where the wall is
-  gone, as on the user's hand-trimmed cases (2026-11-18).
-- **Pro Micro mount standard (2026-10-19):** the Pro Micro must top out
-  at 5.5mm or less above the PCB — direct-soldered with the stubs trimmed
-  to the solder, or on Mill-Max low-profile sockets. Both are supported
-  equally; Mill-Max is optional (removable controller), not the target.
-  Taller mounts (machined DIP ~7–8mm, standard 8.5mm sockets ~11mm) are
-  out of scope: the OLED module overlaps the Pro Micro in plan and sits
-  8–9mm up on its socket, so they collide with it whatever the cover.
-  The inset cover (`build_cover()`) is the only cover since 2026-11-21.
-  First cover test: the printed one on the direct-soldered prototype with
-  trimmed stubs.
-- 2026-10-14: case, plate and spacer frame carry both the current and
-  the next-revision outer/lower mounting spot (8 bosses, 6 plate holes per
-  half); the support ribs are gone. (Undone 2026-10-24 when v1.0 was
-  retired: back to 7 bosses and 5 plate holes, for v1.1.) Cases printed 2026-10-12/13 have ribs
-  and no second boss; plates printed before have only 5 holes. FR4
-  projects regenerated, DRC 0 violations, Gerber zips still stale.
-- Plate-mount spacers added (2026-10-12); a fifth plate-mount hole per
-  half added 2026-10-13 (the top one nearest the MCU strip, narrow
-  spacer). Plates printed before 2026-10-13 lack that hole — reprint, or
-  drill 2.3mm at the PCB hole's position. The case is unchanged by both.
-  Screw-head fit at the fifth hole confirmed on the v1.1 build
-  (2026-11-21). Not yet physically confirmed: keycap-skirt clearance over the 4 (of 5) screw heads per half that land
-  under a keycap (see TODO.md).
-- Spacer frame added 2026-10-14 (`spacer-frame-{pom,fr4,mjf}-{left,right}`):
-  the 10 loose spacers as one plate-shaped piece per half, between PCB and
-  plate. Openings 15.6mm per switch; outer border strips only 1.2–2mm.
-  Not printed yet.
-- Cover/plate seam fixed 2026-10-14, after a printed cover came out short.
-  The cover now reaches the wall's outer edge; it used to stop 1mm short
-  because the old lap was 1.5mm onto a 2.5mm wall. The plate also fills the
-  triangle the cover leaves where it's cut back for the angled thumb keycap,
-  reaching 1mm in under the cover's edge. Cover posts are trimmed to stay
-  0.6mm off the plate: before this, the plate overlapped the upper post by
-  0.2mm. The case is unchanged (same volume).
-- Straight-sided case and plate outline, 2026-10-14 (see
-  `board_envelope()` above). The overall cavity bbox is unchanged
-  (137.3 × 93.3mm), and the old cavity and plate fit inside the new ones
-  except at the top-edge steps. There, the taller column's
-  reinforcement corner (20mm patch on a 19mm pitch) is trimmed back to
-  the step: ~0.6mm² of cavity and ~0.8mm² of plate per half. Every switch
-  hole keeps ≥2.2mm of plate to the edge. Steps sit midway between real
-  columns (2+ keys). A first version counted the left half's lone
-  bottom-row thumb key as a column, which carried the middle column's top
-  ~4mm over the next one. Cases and plates printed before this have
-  the scalloped outline and are not interchangeable with new ones (a new
-  plate won't drop into an old case).
-- FR4 projects regenerated 2026-10-14 after both changes above: DRC 0
-  violations; read back in pcbnew as 1 outline + 30 holes per half, area
-  within 0.7mm^2 of the generator's plate. (Gerber zips re-exported
-  2026-10-25, see above.)
-- OLED bezel (printed part over the OLED, on top of the cover) added and
-  then removed 2026-10-14: the user didn't like it. It was never committed.
-  If it comes back, these are the OLED measurements it used (Unicorne kit
-  module): 38 × 12mm module (re-measured 2026-10-19; 33mm before was
-  wrong), screen starting 6mm from the pin edge and
-  27mm long, solder ~3mm, module board ~10mm above the PCB.
-- USB/TRRS notch floors raised 2026-10-21 (user's request): they used to
-  run down to the floor top, leaving the wall open under the PCB (bottom
-  at 6.5mm). USB: wall up to 7.1mm, from measured parts (USB-C socket 3mm
-  tall, centred 1–2mm above the PCB, mouth nearly flush with the outer
-  face, so the cable grip stays outside). TRRS: the grip sits ~2mm into
-  the wall, so the notch is a U round the jack axis sized for a 10mm grip
-  ("most TRRS cables", the user's call; their own cable's grip is 7mm),
-  11mm wide, bottom 5.1mm. The 10mm is a guess, not a survey. Cases
-  printed before this have the full-depth notches.
-- A hood on the USB-end wall to hold the cover's free end down was built
-  and then removed, 2026-10-21. The user wants every part printable at
-  JLC3DP eventually, and a hood flush with the cover top can't meet their
-  2mm minimum: lip, tongue and clearance share the cover's 3mm edge. Kept
-  in mind if it comes back: a flat slide-in needs the plate cut back round
-  the cover posts (it wraps them at 2.7-3.3mm), and the JLC-sized version
-  is a 2mm lip standing on top of the cover. The user's thumb keycaps are
-  1u.
-- 2026-10-22: both covers' USB end is cut straight at the outer face of
-  the wall beside the USB notch (`cover_footprint()`). On the key side the
-  wall steps out to the next column, and the cover used to follow it up
-  the step as a ~3.6mm rounded tab; the user wanted that corner to match
-  the other one. Covers are 2.9mm shorter (63.7mm). The plate is
-  unchanged (it uses `cover_outline()`, not the footprint). Same day: the
-  rim (the 1mm on the cover's underside that rests on the wall top) now
-  runs the wall's full width along the USB end, edge to edge. At the
-  key-side corner the cover's edge is over the plate edge and its gap to
-  the wall, and the rim stopped 0.9mm short there; it now rests on the
-  plate top (level with the wall top) instead. Also: the covers' edges
-  at the USB and TRRS notches are flush with the case's notch sides now;
-  they used to stand 0.5mm back from them (an extra plug margin the
-  notches already carry). 2026-10-24: the corners at the notch mouths
-  are sharp now too. The cleanup that drops unprintable slivers
-  (`open_sketch`, 0.6mm) had rounded them, flaring the cover's notches
-  wider than the case's right at the outer face (the user spotted it at
-  the TRRS notch); `cover_footprint()` puts them back from the original
-  outline, but only round the notches.
-- First working prototype assembled 2026-10-13 (printed case, plate,
-  spacers and tents).
-- MagSafe ring dimensions corrected (2026-10-12) from Apple's generic
-  published spec (54.10mm OD, 2mm thick — the wrong reference) to the
-  real Keebio ring, measured directly: **50mm OD, 0.5mm thick**. Any case
-  printed before this has an oversized, overdeep recess (54mm/2mm). The
-  recess has since been removed entirely (2026-10-15); the ring sticks to
-  the flat bottom.
-- Printed tenting legs added (2026-10-12), reworked 2026-10-13: 20mm
-  legs, flat mounting face, legs cut to one desk plane, beams with a
-  middle brace. Alternative to the MagSafe stand (kept — see
-  case/README.md). Default 18° (`TENT_ANGLE_DEG`), raised from 12° on
-  2026-10-14 at the user's request: 51mm at the case's inner edge vs 35mm
-  at 12°. 20° had been the first idea and was turned down for height.
-  The 2026-10-12 tent files were wrong (frame 2mm below the leg tops,
-  square-cut leg ends) — don't print those. Any case printed before
-  2026-10-12 has a blind 1mm foot recess, not the through-hole the tent
-  needs. Not yet physically confirmed: screw-head clearance under the
-  PCB, and desk stability at 18° (see TODO.md). 2026-10-23 (user's
-  request): the two inner legs lean 18° toward the outer edge so they
-  look plumb on the desk; their feet land 13–15mm further in. Tents
-  printed before this have all four legs square to the case. Same day,
-  the mounting was reversed (inserts in a 4mm case floor, screws up from
-  below through a platform beside each leg) and the corner spots became
-  rubber-foot recesses again; earlier cases and tents don't mix with new
-  ones. Also added that day: a weight tray in the middle of the tent (the
-  user wanted weight without a taller case). A deep box for steel flat
-  bar came first; the user found it didn't blend in, so it's a shallow
-  band beam to beam, square to the case (it followed the brace's few-degree lean at first and looked like it pointed forward), 6.4mm deep, with a 3 × 3 grid of
-  cells for the user's own tire weight segments (19 × 16 × 4mm; they want
-  about 8). Not printed yet.
-- The already-printed JLC3DP case is the mirror-image bug described above
-  (3.9mm M2 insert bores too, from before that was corrected) — needs a
-  reprint from the current `case/out/case-*.stl`.
-- Any MJF nylon plates ordered from that same pre-fix batch are flat, so
-  flipping one over gives the correct (non-mirrored) part — no reorder
-  needed for those specifically.
-- Switched home printer from an Ender-3 V2 to a Bambu Lab P1S (bought at
-  $399 during the 2026-10-06 Prime Day/Bambu Halloween sale), with a BIQU
-  CryoGrip Pro Frostbite plate. Printing Bambu PETG Matte, dried 8h at
-  65°C in a Sunlu S2 dryer before printing and calibrated (Flow Dynamics +
-  Flow Rate) for it. Plate type: whichever of Smooth PEI/Cool Plate
-  SuperTack is selected, set that row's bed temp to 65°C in the filament
-  profile. The Ender is still a fallback; its known-good settings (4
-  perimeters, slower first layer, retensioned Y belt) carry over to any
-  printer for this case's thin walls.
-- First case print on the P1S had rough top-surface peaks/line separation
-  on the hidden underside — traced to printing from an undried spool;
-  cosmetic only (hidden under the PCB), no reprint needed once the spool's
-  dried.
+  revision changed in KiCad's Page Settings drifts: `./build.sh version
+  --check` catches that. The silkscreen label ("Cornison v${REVISION}")
+  reads the PCB title block, so don't edit the text. v1.0 boards (foostan's
+  "Corne Cherry v3.0.1" silkscreen) are retired; v1.1 moved two mounting
+  holes, so case and plate follow v1.1 only.
+- **Firmware build:** against real upstream QMK
+  (https://github.com/qmk/qmk_firmware), not a vendor fork such as
+  bastardkb's, and not a QMK old enough (2023) that keyboard discovery
+  doesn't support a `keyboard.json`-only keyboard with no `rules.mk`.
+- **Confirmed on real hardware:** `diode_direction: COL2ROW`; the Keebio
+  Pro Micro USB-C ships with **Caterina** (`development_board: promicro`).
+  Flash with e.g. `qmk flash -kb cornison -km default -bl
+  avrdude-split-left` (or `-right`), which writes the handedness EEPROM in
+  the same step. A first attempt after reset sometimes fails with
+  `butterfly_recv`/"Device not configured" (avrdude losing the Caterina
+  timing): nothing is written yet, just retry. New Pro Micros ship with an
+  Arduino Leonardo sketch (2341:8036), so the first flash needs no reset:
+  `stty -f /dev/cu.usbmodemXXXX 1200` drops it into Caterina, then run
+  avrdude on the port when it comes back. Once QMK is on, the reset button
+  needs a quick double-tap; Bootmagic (hold the top outer key while
+  plugging in) also works.
+- **`natewlew` keymap** lives in `firmware/qmk/cornison/keymaps/natewlew/`,
+  self-contained (`natewlew.c/.h`, OS detection, shortcut table). Its
+  `rules.mk` sets `USER_NAME` so QMK doesn't also pull in a userspace copy
+  (both define `process_record_user`). Its readme shows `keymap.svg`,
+  drawn by `firmware/qmk/draw_keymap.py` (`./build.sh keymap-svg`): redraw
+  it whenever keymap.c changes, and add new custom keycodes to its
+  `LABELS`.
+- **Pro Micro mount standard:** the Pro Micro must top out at 5.5mm or
+  less above the PCB: direct-soldered with the stubs trimmed to the
+  solder, or on Mill-Max low-profile sockets. Taller mounts (machined DIP
+  ~7-8mm, standard 8.5mm sockets ~11mm) are out of scope: the OLED module
+  overlaps the Pro Micro in plan and sits 8-9mm up on its socket. The Pro
+  Micro's own board sticks out 2mm past the PCB's edge (measured), so the
+  USB notch is 19mm wide from the PCB's top up (`PRO_MICRO_CLEARANCE`).
 
 ## Working style for this project
 
@@ -679,3 +441,10 @@ came out wrong.
   ordered or printed without asking first — ask, then apply the fix only
   once there's a clear go-ahead.
 - Keep replies short and concrete.
+
+## Private notes
+
+The maintainer's dated build and order log is kept outside the repo and
+imported here; for anyone else this line does nothing.
+
+@~/.claude/cornison-private.md

@@ -19,6 +19,23 @@ the name is a mix of **Corne** and **Levinson**.
 - A 3D-printed case and switch plate, generated directly from the PCB
   rather than hand-modeled, so it stays in sync with any board change.
 
+## Status
+
+**v1.1 is built and in daily use.** Confirmed on real hardware:
+
+- Every key on both halves, the split link over TRRS, and the OLEDs.
+- The printed case, FR4 switch plate, inset MCU cover and tenting legs,
+  all from the files in this repo.
+- Pro Micro (Caterina bootloader) as the controller.
+
+Not tested yet:
+
+- Per-key and underglow RGB LEDs.
+- Elite-C and Sea-Picro EXT, which should be pin-compatible.
+- POM and MJF nylon plates (only the FR4 plate has been built).
+- The spacer frame on v1.1. It has been tested on a v1.0 board; the
+  v1.1 build uses loose spacers.
+
 ## Gallery
 
 <img src="docs/images/finished/cornison-v1.1%20left%20top%20finished.jpg" alt="Left half from above" width="49%"> <img src="docs/images/finished/cornison-v1.1%20right%20top%20finished.jpg" alt="Right half from above" width="49%">
