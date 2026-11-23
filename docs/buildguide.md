@@ -34,12 +34,35 @@ case that replaces Corne's sandwich plates.
 | Key switch | 48 | MX-compatible only |
 | Keycap | 48 | 46 × 1u, 2 × 1.5u (the innermost thumb key on each half) |
 | M2 heat-set insert, 3.2mm long | 14 | 7 per half, in the case bosses. [McMaster 94459A767](https://www.mcmaster.com/94459A767/) is a confirmed fit |
-| Plate-mount spacers | 8 standard + 2 narrow | 3D printed, 4 + 1 per half, matching your plate material (`spacer-pom`, `spacer-narrow-pom`, …). Or 2 spacer frames (`spacer-frame-*-{left,right}`) instead. See [case/README.md](../case/README.md#mounting) |
+| Plate-mount spacers | 8 standard + 2 narrow | 3D printed, 4 + 1 per half, matching your plate material (`spacer-pom`, `spacer-narrow-pom`, …). Or 2 spacer frames (`spacer-frame-*-{left,right}`) instead. See [Plate and spacer options](#plate-and-spacer-options) |
 | M2 × 10mm screw | 10 | Low-head, 5 per half: plate → spacer → PCB → case |
 | M2 × 12mm screw | 4 | Pan-head, for the MCU covers |
 | Rubber feet, 10 × 2mm round | 8 | 4 per half |
 | TRRS cable | 1 | A TRS (3-pole) cable also works |
 | USB cable | 1 | To match your controller. Must carry data, not charge-only |
+
+### Plate and spacer options
+
+The plate's top always sits 5mm above the PCB, so the spacers are cut to
+the plate's thickness. Print the spacers named for your plate:
+
+| Plate | Thickness | Files | Spacers |
+|---|---|---|---|
+| FR4, ordered from JLCPCB (the v1.1 build) | 1.6mm | `plate-fr4-{left,right}/` KiCad projects | `fr4` |
+| POM, laser or CNC cut | 1.5mm | `plate-pom-{left,right}.dxf` | `pom` |
+| 3D printed at home | 1.5mm | `plate-pom-{left,right}.stl` | `pom` |
+| 3D printed, MJF nylon service | 2.0mm (JLC3DP's minimum) | `plate-mjf-{left,right}.stl` | `mjf` |
+
+Then pick one way to hold the plate up:
+
+- **Loose spacers:** 5 per half, 4 standard (`spacer-<plate>`) and 1
+  narrow (`spacer-narrow-<plate>`) for the top hole nearest the Pro Micro.
+  Use these if you want the optional plate foam.
+- **Spacer frame:** one piece per half (`spacer-frame-<plate>-{left,right}`)
+  with the same five posts, so there's nothing to place hole by hole. It
+  fills the gap the plate foam would go in.
+
+Both have been fitted on the v1.1 build.
 
 ### Optional
 
@@ -106,12 +129,13 @@ left on the edge will stop the PCB dropping in.
 
 Do every step on both halves.
 
-![v1.1 finished pcb left](images/pcb/cornison-v1.1%20pcb%20build%20finished%20left.jpg)
+<img src="images/pcb/cornison-v1.1%20pcb%20left%20finished%20top.jpg" alt="Finished left half, top side" width="45%"> <img src="images/pcb/cornison-v1.1%20pcb%20right%20finished%20top.jpg" alt="Finished right half, top side" width="48%">
 
 ### Diodes
 
 ![diode](images/pcb/diode.jpg)
-<!-- TODO photo: assets/build_diode_overview.jpg — bottom side, all diodes -->
+
+<img src="images/pcb/cornison-v1.1%20pcb%20left%20finished%20bottom.jpg" alt="Finished left half, bottom side" width="45%"> <img src="images/pcb/cornison-v1.1%20pcb%20right%20finished%20bottom.jpg" alt="Finished right half, bottom side" width="47%">
 
 Solder the 24 diodes per half to the **bottom** side. Diodes are
 directional: match the bar on the diode to the bar on the PCB marking.
@@ -142,14 +166,12 @@ one.
 
 ### TRRS jack, reset switch, OLED socket
 
-<!-- TODO photo: assets/build_trrs_reset_oled.jpg -->
+![TRRS jack, Pro Micro and OLED on the left half's top side](images/pcb/cornison-v1.1%20pcb%20build%20finished%20mcu.jpg)
 
 Insert all three from the **top** side and solder them on the bottom.
 Tape them down while you flip the board so they stay seated flat.
 
 ### Pro Micro
-
-<!-- TODO photo: assets/build_promicro.jpg -->
 
 The Pro Micro goes on the **top** side, in the footprint outline, with
 the USB connector pointing at the top edge of the board.
@@ -208,7 +230,6 @@ power to ground and damage the controllers.
 ### Hotswap sockets
 
 <img src="images/pcb/hot-swap-socket.jpg" alt="hot swap socket" width="400">
-<!-- TODO photo: assets/build_socket_overview.jpg -->
 
 Solder the 24 sockets per half to the **bottom** side, each seated flat
 in its footprint outline. Use plenty of solder; these joints take the
@@ -229,7 +250,7 @@ In a resin (SLA) case, glue the inserts in instead of heating them.
 
 ![tent inserts in the case bottom](images/case/cornison-v1.1%20right%20case%20inserts%20bottom.jpg)
 ![bottom with tent](images/case/cornison-v1.1%20right%20case%20bottom%20with%20tent.jpg)
-![tent and case bottom](images/case/cornison-v1.1%20right%20case%20tent%20top.jpg)
+<img src="images/case/cornison-v1.1%20right%20case%20tent%20top.jpg" alt="tent and case bottom" width="35%">
 
 The tent screws into inserts in the bottom of the case, from below, so
 it can go on or come off at any time. Fit the inserts now, with the
@@ -248,11 +269,12 @@ before the tent goes on; the case bottom covers them once it's screwed
 on.
 
 ![tent adding weights](images/case/cornison-v1.1%20right%20tent%20adding%20weights.jpg)
-![tent with weights](images/case/cornison-v1.1%20right%20tent%20with%20weights.jpg)
+<img src="images/case/cornison-v1.1%20right%20tent%20with%20weights.jpg" alt="tent with weights" width="50%">
 
 ### Mount the PCB and plate
 
 ![PCB in the case](images/case/cornison-v1.1%20right%20case%20inserts%20top%20with%20pcb.jpg)
+![Finished PCB in the case, Pro Micro over the USB notch](images/pcb/cornison-v1.1%20pcb%20finished%20in%20case%20%28with%20notch%29.jpg)
 ![spacers on the PCB](images/case/cornison-v1.1%20right%20case%20spacers%20top%20with%20pcb.jpg)
 ![plate screwed down](images/case/cornison-v1.1%20right%20case%20top%20with%20fr4%20plate.jpg)
 
@@ -266,6 +288,14 @@ on.
 3. Lay the plate on top and screw it down with 5 M2 × 10mm low-head
    screws, through plate, spacer and PCB into the inserts. The two PCB holes beside the TRRS jack stay empty
    for now; the cover's screws go there.
+
+<img src="images/case/cornison-v1.1%20spacer%203d%20print%20bottom.jpg" alt="Printed spacer frames" width="49%"> <img src="images/case/cornison-v1.1%20plate%203d%20print%20top.jpg" alt="Printed switch plates" width="49%">
+
+Printed parts work here too, both in PETG on the v1.1 build: a spacer
+frame (left) in place of the loose spacers in step 2, and a printed
+switch plate (right) in place of the FR4 one in step 3. Print the spacers
+or frame for your plate (see
+[Plate and spacer options](#plate-and-spacer-options)).
 
 Screw the plate down before fitting any switches. The screw head at the
 narrow-spacer hole slightly overlaps the two neighbouring switches' top
@@ -293,11 +323,11 @@ Don't fill the plate with switches first and then try to seat them all at
 once. Two of the thumb keys on each half are rotated (15° and 60°);
 follow the plate cutouts.
 
-![top right switches](images/finished/cornison-v1.1%20right%20top%20switches.jpg)
+<img src="images/finished/cornison-v1.1%20right%20top%20switches.jpg" alt="top right switches" width="50%">
 
 ### Cover, OLED, keycaps, feet
 
-![cover and OLED](images/finished/cornison-v1.1%20right%20top%20finished.jpg)
+![cover and OLED](images/finished/cornison-v1.1%20oled%20cover%20finished.jpg)
 ![tent fitted](images/case/cornison-v1.1%20right%20case%20top%20with%20tent.jpg)
 ![rubber feet on the tent legs](images/case/cornison-v1.1%20right%20tent%20bottom%20with%20skid%20pads.jpg)
 

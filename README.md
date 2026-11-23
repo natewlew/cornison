@@ -26,23 +26,24 @@ the name is a mix of **Corne** and **Levinson**.
 - Every key on both halves, the split link over TRRS, and the OLEDs.
 - The printed case, FR4 switch plate, inset MCU cover and tenting legs,
   all from the files in this repo.
+- A printed PETG switch plate and the spacer frame.
 - Pro Micro (Caterina bootloader) as the controller.
 
 Not tested yet:
 
 - Per-key and underglow RGB LEDs.
 - Elite-C and Sea-Picro EXT, which should be pin-compatible.
-- POM and MJF nylon plates (only the FR4 plate has been built).
-- The spacer frame on v1.1. It has been tested on a v1.0 board; the
-  v1.1 build uses loose spacers.
+- POM and MJF nylon plates (the FR4 plate and a PETG print have been
+  built).
 
 ## Gallery
 
-<img src="docs/images/finished/cornison-v1.1%20left%20top%20finished.jpg" alt="Left half from above" width="49%"> <img src="docs/images/finished/cornison-v1.1%20right%20top%20finished.jpg" alt="Right half from above" width="49%">
+<img src="docs/images/finished/cornison-v1.1%20left%20top%20finished.jpg" alt="Left half from above" width="32%"> <img src="docs/images/finished/cornison-v1.1%20right%20top%20finished.jpg" alt="Right half from above" width="32%"> <img src="docs/images/finished/cornison-v1.1%20both%20front%20finished.jpg" alt="Both halves" width="32%">
 
-<img src="docs/images/finished/cornison-v1.1%20both%20front%20finished.jpg" alt="Both halves" width="49%"> <img src="docs/images/case/cornison-v1.1%20case%20assembled%20portrait.jpg" alt="Both halves on tents, from the side" width="49%">
+<img src="docs/images/case/cornison-v1.1%20case%20assembled%20portrait.jpg" alt="Both halves on tents, from the side" width="32%"> <img src="docs/images/finished/cornison-v1.1%20right%20front%20portrait%20finished.jpg" alt="Right half tented, portrait" width="32%"> <img src="docs/images/finished/cornison-v1.0%20finished%20build%20portrait.jpg" alt="The v1.0 build, tented, from the front" width="32%">
 
-<img src="docs/images/finished/cornison-v1.1%20right%20front%20finished.jpg" alt="Right half tented, from the front" width="49%"> <img src="docs/images/finished/cornison-v1.1%20right%20front%20portrait%20finished.jpg" alt="Right half tented, portrait" width="49%">
+*Last photo: the first build, on a v1.0 board, in an earlier all-black
+case with black cover and tenting legs.*
 
 ## Repository layout
 
@@ -154,6 +155,8 @@ None of these need supports. Each run of `./build.sh generate` also
 writes STEP files for every part (for a service that prefers them) and
 deletes the old files in `case/out/` first.
 
+<img src="docs/images/case/cornison-v1.1%20plate%203d%20print%20top.jpg" alt="Printed switch plates" width="49%"> <img src="docs/images/case/cornison-v1.1%20spacer%203d%20print%20bottom.jpg" alt="Printed spacer frames" width="49%">
+
 **Home printer (FDM):** PETG works well; PLA is fine for a fit check but
 more brittle. Dry PETG before printing: an undried spool leaves
 rough, separated top surfaces. The walls are thin, so 4 perimeters
@@ -161,7 +164,8 @@ helps. Heat-set inserts go into a PETG case the same way as MJF.
 
 The parts in the photos were printed on a Bambu Lab P1S in Prusament
 PETG: Galaxy Black for the cases, Chalky Blue for the tents and covers.
-The switch plate is FR4, ordered from JLCPCB. Bambu Lab's own PETG
+The switch plate in the finished keyboard is FR4, ordered from JLCPCB;
+the printed plate and spacer frame above are Prusament PETG. Bambu Lab's own PETG
 Matte (black and white) also works and may print a little cleaner on a
 Bambu printer, since its profiles are tuned for it. The Prusament colours
 just look better.

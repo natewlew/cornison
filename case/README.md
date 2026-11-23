@@ -329,6 +329,11 @@ it's tar-like and hard to get off once it's on the plastic. The foil is
 conductive and faces the sockets with ~0.5mm to spare; a layer of Kapton
 tape over it is cheap insurance.
 
+<img src="../docs/images/case/cornison-v1.0%20cutting%20dynamat%20using%20templates.jpg" alt="Printed templates taped to the mat for tracing" width="49%"> <img src="../docs/images/case/cornison-v1.0%20dynamat%20installed.jpg" alt="Mat stuck down in both case halves" width="49%">
+
+*From the first build, in the v1.0 case: it has one boss more per half
+than the current case, so the current templates have one hole fewer.*
+
 ## Foam (optional)
 
 ![case foam](../docs/images/case/cornison-v1.1%20left%20case%20with%20case%20foam.jpg)
@@ -529,6 +534,9 @@ See the [root README](../README.md#build-commands) for requirements.
   grip (`TRRS_PLUG_D` in `case.py`) so most TRRS cables fit. Its bottom is
   1.4mm under the PCB's underside at the middle; its sides come up past
   the underside. Not yet checked against a range of real cables.
+
+  ![USB notch, empty and with the Pro Micro over it](../docs/images/pcb/cornison-v1.1%20pcb%20finished%20and%20one%20empty%20%28with%20notch%29.jpg)
+
 - The case's convex outer corners are rounded by the wall offset (~3mm);
   the inside corners where the top edge steps between columns stay sharp.
 - Two M2 mounting points per half don't get a plate clearance hole (see
